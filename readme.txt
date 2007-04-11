@@ -9,14 +9,14 @@ Stable tag: 3.0
 Simple statistictool for feeds.
 
 == Description ==
-_You can customize in options._
+_You can customize in options:_
 
-1. Amount of days that is supposed to be saved in the statistics.
-1. Minimum level of WordPress-user, who is allowed to see the statistics.
-1. Time of a stay/visit (1hour values 3600seconds is common but might be changed)
-1. Visitors onlinetime (5minutes value 300s is a recommendation)
-1. IP, that is supposed not to be saved, ex.: your own IP
-1. Statistics can be shown on the dashboard
+*   Amount of days that is supposed to be saved in the statistics.
+*   Minimum level of WordPress-user, who is allowed to see the statistics.
+*   Time of a stay/visit (1hour values 3600seconds is common but might be changed)
+*   Visitors onlinetime (5minutes value 300s is a recommendation)
+*   IP, that is supposed not to be saved, ex.: your own IP
+*   Statistics can be shown on the dashboard
 
 Please visit [the official website](http://bueltge.de/wp-feedstats-de-plugin/171/ "FeedStats") for further details and the latest information on this plugin.
 
