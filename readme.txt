@@ -10,6 +10,7 @@ Simple statistictool for feeds.
 
 == Description ==
 _You can customize in options._
+
 1. Amount of days that is supposed to be saved in the statistics.
 1. Minimum level of WordPress-user, who is allowed to see the statistics.
 1. Time of a stay/visit (1hour values 3600seconds is common but might be changed)
