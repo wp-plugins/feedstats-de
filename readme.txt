@@ -1,12 +1,12 @@
 === FeedStats ===
-Contributors: Bueltge
+Contributors: [Andres Nieto Porras](http://www.anieto2k.com "Andres Nieto Porras") and [Frank Bueltge](http://bueltge.de "Frank Bueltge")
 Donate link: http://bueltge.de/wunschliste/
 Tags: feed, statistics, stats, rss
 Requires at least: 1.5
 Tested up to: 2.1.3
 Stable tag: 3.0
 
-Simple statistictool for feeds, by [Andres Nieto Porras](http://www.anieto2k.com "Andres Nieto Porras") and [Frank Bueltge](http://bueltge.de "Frank Bueltge")
+Simple statistictool for feeds, by [Andres Nieto Porras](http://www.anieto2k.com "Andres Nieto Porras") and [Frank Bueltge](http://bueltge.de "Frank Bueltge").
 
 == Description ==
 _You can customize in options:_
