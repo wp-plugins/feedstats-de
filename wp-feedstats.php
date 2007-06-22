@@ -3,7 +3,7 @@
 Plugin Name: FeedStats
 Plugin URI: http://bueltge.de/wp-feedstats-de-plugin/171/
 Description: Simple statistictool for feeds. By <a href="http://www.anieto2k.com">Andres Nieto Porras</a>, <a href="http://bueltge.de">Frank Bueltge</a>
-Version: 2.1
+Version: 2.2
 */
 
 /*
@@ -15,7 +15,38 @@ for many improvements for a better code and performance
 
 Thx to Frank Bueltge - http://bueltge.de
 Statistic, multilingualism and improvements
+
+FeadReaderButton (gif) by http://www.nasendackel.de
 ------------------------------------------------------
+*/
+
+/*
+------------------------------------------------------
+FEED-READER BUTTON
+------------------------------------------------------
+Function for button with reader:
+------------------------------------------------------
+fs_getfeeds_button()
+
+Example:
+------------------------------------------------------
+<div id="feeds_button"><?php fs_getfeeds_button(); ?></div>
+
+
+Example for style-css:
+------------------------------------------------------
+#feeds_button {
+	width:74px;
+	height:14px;
+	text-align: left;
+	font-size: 11px;
+	padding-left: 6px;
+	padding-top:1px;
+	padding-bottom: 0px;
+	color: #fff;
+	background: url(wp-content/plugins/wp-feedstats.gif) no-repeat;
+	margin-bottom: 2px;
+}
 */
 
 if(function_exists('load_plugin_textdomain'))
@@ -260,8 +291,8 @@ function fs_displayStats() {
 ?>
 	
 	<div class="wrap">
-	<h2>FeedStats</h2>
-	<table width="100%"  border="0" cellspacing="0" cellpadding="0" >
+	<h2>FeedStats </h2>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" >
 		<tr> 
 			<td width="6%" rowspan="2" valign="top">
 				<table cellpadding="3" cellspacing="3">
@@ -365,6 +396,7 @@ function fs_displayStats() {
 			</td>
 		</tr>
 	</table>
+	<p id="feeds_button"><?php fs_getfeeds_button(); ?></p>
 	<p align="center" style="margin-top: 50px;"><a href="index.php?page=<?php echo basename(__FILE__); ?>&fs_action=reset" onclick="return confirm('<?php echo _e('You are about to delete all data and reset stats. OK to delete, Cancel to stop', 'feedstats'); ?>');">&gt;&gt; <?php echo _e('Reset Statistic', 'feedstats'); ?> &lt;&lt;</a></p>	
 	</div>
 
@@ -401,9 +433,44 @@ function fs_getfeeds() {
 	<?
 }
 
+// feedstats-button
+function fs_getfeeds_button() {
+	global $wpdb;
+	
+	$total_visits = $wpdb->get_var("SELECT count(*) FROM " . $wpdb->prefix . 'fs_visits');
+	
+	$time = time();
+	$time_begin = fs_getMidnight($wpdb->get_var("SELECT time_install FROM " . $wpdb->prefix . 'fs_data'));
+	$num_days = ceil(($time-$time_begin)/fs_DAY);
+	if ($num_days>get_option('fs_days'))
+		$num_days = get_option('fs_days') + 1;
+		
+	$average_visits = ($num_days) ? round($total_visits/($num_days)) : '0';
+	echo $average_visits;
+}
+
+// style im header
+function FeedStats_Admin_Header() {
+	$fs_feed_button_style = '<style type="text/css" media="screen">';
+	$fs_feed_button_style.= '#feeds_button {
+		width: 74px;
+		height: 14px;
+		text-align: left;
+		font-size: 11px;
+		padding-left: 6px;
+		padding-top: 0;
+		padding-bottom: 15px;
+		color: #fff;
+		background: url('.get_settings(home).'/wp-content/plugins/wp-feedstats.gif) no-repeat 0 1px;
+		margin: 0;
+	}';
+	$fs_feed_button_style.= '</style>';
+	$fs_feed_button_style.= "\n";
+	print($fs_feed_button_style);
+}
+
 // wp-dashboard (Tellerrand) information
-function FeedStats_Admin_Footer()
-{
+function FeedStats_Admin_Footer() {
 	// Daten lesen von Funktion fs_getfeeds()
 	global $wpdb;
 
@@ -440,9 +507,9 @@ function FeedStats_Admin_Footer()
 }
 
 function fs_activate() {
-	add_option("fs_days","30");    
+	add_option("fs_days","15");    
 	add_option("fs_user_level","1");    
-	add_option("fs_session_timeout","300");    
+	add_option("fs_session_timeout","3600");    
 	add_option("fs_visits_online","300");    
 }
 
@@ -455,6 +522,7 @@ if(function_exists('add_action')) {
 	}
 add_action('the_title_rss','fs_track');
 add_action('admin_menu','fs_addAdminMenu');
+add_action('admin_head', 'FeedStats_Admin_Header');
 add_action('admin_footer', 'FeedStats_Admin_Footer');
 }
 
