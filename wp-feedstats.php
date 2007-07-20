@@ -3,7 +3,7 @@
 Plugin Name: FeedStats
 Plugin URI: http://bueltge.de/wp-feedstats-de-plugin/171/
 Description: Simple statistictool for feeds.
-Version: 2.3
+Version: 2.4
 Author: <a href="http://www.anieto2k.com">Andres Nieto Porras</a> and <a href="http://bueltge.de">Frank Bueltge</a>
 */
 
@@ -278,8 +278,10 @@ function fs_displayStats() {
 	$referers = array();
 	if ($referers_query) {
 		foreach ($referers_query as $r) {
-			$refer['cont'] =  $wpdb->get_var("SELECT count(*) FROM " . $wpdb->prefix . "fs_visits WHERE url = '".$r->url."';");
+			$refer['cont'] = $wpdb->get_var("SELECT count(*) FROM " . $wpdb->prefix . "fs_visits WHERE url = '".$r->url."';");
+			$refer['cont'] = htmlspecialchars($refer['cont']);
 			$refer['title'] = $r->url;
+			$refer['title'] = htmlspecialchars($refer['title']);
 			array_push($referers,$refer);
 		}
 	}
@@ -371,8 +373,8 @@ function fs_displayStats() {
 							$class = ($class=='alternate') ? '' : 'alternate';
 					?>
 					<tr class="<?php echo $class; ?>"> 
-						<td><? echo $r['cont'];?></td>
-						<td><?php echo (strlen($r['title'])>80) ? substr_replace($r['title'],"...",80) : $r['title']; ?></td>
+						<td><? echo htmlspecialchars($r['cont']);?></td>
+						<td><?php echo htmlspecialchars((strlen($r['title'])>80) ? substr_replace($r['title'],"...",80) : $r['title']); ?></td>
 					</tr>
 					<?php } //end foreach
 					} //end if ?>
@@ -512,7 +514,7 @@ function FeedStats_Admin_Footer() {
 			
 			$content = "<h3>" . _('FeedStats') . " <a href='admin.php?page=wp-feedstats.php'>&raquo;</a> </h3>";
 			$content.= "<ul><li>Gesamt: " . attribute_escape($total_visits) . " (Letzten " . "$num_days" . " Tage)" . "</li>";
-			$content.= "<li>Maximum: " . attribute_escape($max_visits) ." (" . "attribute_escape($max_visits_time9" . ")" . "</li>";
+			$content.= "<li>Maximum: " . attribute_escape($max_visits) ." (" . attribute_escape($max_visits_time) . ")" . "</li>";
 			$content.= "<li>Durchschnitt: " . attribute_escape($average_visits) . "</li>";
 			$content.= "</ul>";
 
