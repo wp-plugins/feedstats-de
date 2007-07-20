@@ -374,7 +374,7 @@ function fs_displayStats() {
 					?>
 					<tr class="<?php echo $class; ?>"> 
 						<td><? echo htmlspecialchars($r['cont']);?></td>
-						<td><?php echo htmlspecialchars((strlen($r['title'])>80) ? substr_replace($r['title'],"...",80) : $r['title']); ?></td>
+						<td><?php echo htmlspecialchars((strlen($r['title'])>50) ? substr_replace($r['title'],"...",50) : $r['title']); ?></td>
 					</tr>
 					<?php } //end foreach
 					} //end if ?>
