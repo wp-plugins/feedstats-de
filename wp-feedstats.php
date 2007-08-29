@@ -3,7 +3,7 @@
 Plugin Name: FeedStats
 Plugin URI: http://bueltge.de/wp-feedstats-de-plugin/171/
 Description: Simple statistictool for feeds.
-Version: 2.5
+Version: 2.6
 Author: <a href="http://www.anieto2k.com">Andres Nieto Porras</a> and <a href="http://bueltge.de">Frank Bueltge</a>
 */
 
@@ -96,13 +96,16 @@ function fs_generateDB() {
 	} elseif (file_exists(ABSPATH . WPINC . '/upgrade.php')) {
 		@require_once (ABSPATH . WPINC . '/upgrade.php');
 		// In Wordpress 2.1, a new file name is being used
+	} elseif (file_exists(ABSPATH . '/wp-admin/includes/upgrade.php')) {
+		@require_once (ABSPATH . '/wp-admin/includes/upgrade.php');
+		// for WordPress 2.3
 	} else {
 		die (__('Error in file: ' . __FILE__ . ' on line: ' . __LINE__ . '.<br />The Wordpress file "upgrade-functions.php" or "upgrade.php" could not be included.'));
 	}
 
 	
-	maybe_create_table($wpdb->prefix . 'fs_data',$fs_data_query);
-	maybe_create_table($wpdb->prefix . 'fs_visits',$fs_visits_query);
+	maybe_create_table($wpdb->prefix . 'fs_data', $fs_data_query);
+	maybe_create_table($wpdb->prefix . 'fs_visits', $fs_visits_query);
 
 	$time = time();
 	
