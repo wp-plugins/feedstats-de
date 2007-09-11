@@ -1,0 +1,130 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2007-09-11 08:49+0100\n"
+"Last-Translator: Frank Bueltge <frank@bueltge.de>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _e;__\n"
+
+#: wp-feedstats.php:103
+msgid "Error in file: "
+msgstr ""
+
+#: wp-feedstats.php:103
+msgid " on line: "
+msgstr ""
+
+#: wp-feedstats.php:103
+msgid ".<br />The Wordpress file \"upgrade-functions.php\" or \"upgrade.php\" could not be included."
+msgstr ""
+
+#: wp-feedstats.php:329
+msgid "Day"
+msgstr "Tag"
+
+#: wp-feedstats.php:330
+#: wp-feedstats.php:406
+msgid "Visits"
+msgstr "Besuche"
+
+#: wp-feedstats.php:338
+msgid "Today"
+msgstr "heute"
+
+#: wp-feedstats.php:340
+msgid "First Day"
+msgstr "erster Tag"
+
+#: wp-feedstats.php:368
+#: wp-feedstats.php:409
+#: wp-feedstats.php:465
+msgid "Average"
+msgstr "Durchschnitt"
+
+#: wp-feedstats.php:369
+#: wp-feedstats.php:413
+#: wp-feedstats.php:464
+msgid "Maximum"
+msgstr "Maximum"
+
+#: wp-feedstats.php:385
+msgid "Last %N% Referer"
+msgstr "letzten %N% Referer"
+
+#: wp-feedstats.php:405
+msgid "Statistic"
+msgstr "Statistik"
+
+#: wp-feedstats.php:417
+#: wp-feedstats.php:463
+msgid "Total"
+msgstr "Gesamt"
+
+#: wp-feedstats.php:417
+msgid "Last %N% Days"
+msgstr "letzten %N% Tage"
+
+#: wp-feedstats.php:421
+msgid "Maximum online"
+msgstr "Maximum online"
+
+#: wp-feedstats.php:429
+msgid "You are about to delete all data and reset stats. OK to delete, Cancel to stop"
+msgstr "Du willst die Daten löschen und die Statistik zurück setzen. OK für löschen, Cancel für Abbrechen."
+
+#: wp-feedstats.php:429
+msgid "Reset Statistic"
+msgstr "Statistik zurück setzen"
+
+#: wp-feedstats.php:534
+msgid "FeedStats"
+msgstr "FeedStats"
+
+#: wp-feedstats.php:575
+msgid "FeedStats settings"
+msgstr "FeedStats Einstellungen"
+
+#: wp-feedstats.php:582
+msgid "Description"
+msgstr "Beschreibung"
+
+#: wp-feedstats.php:582
+msgid "Version"
+msgstr "Version"
+
+#: wp-feedstats.php:583
+msgid "Value"
+msgstr "Wert"
+
+#: wp-feedstats.php:586
+msgid "Amount of days that is supposed to be saved in the statistics."
+msgstr "Anzahl der Tage die in der Statistik gespeichert werden sollen."
+
+#: wp-feedstats.php:590
+msgid "Minimum level of WordPress-user, who is allowed to see the statistics."
+msgstr "Level das ein WordPress-Benutzer mindestens haben muss um die Statistiken einsehen zu können."
+
+#: wp-feedstats.php:594
+msgid "Time of a stay/visit (1hour values 3600seconds is common but might be changed)"
+msgstr "Zeit, die ein Besuch dauert (1 Stunde sind 3600 Sekunden; Standardwert der geändert werden kann)."
+
+#: wp-feedstats.php:598
+msgid "Visitors onlinetime (5minutes value 300s is a recommendation)"
+msgstr "Onlinezeit eines Besuchers (5 Minuten sind 300 Sekunden; empfohlener Wert)"
+
+#: wp-feedstats.php:602
+msgid "IP, that is supposed not to be saved, ex.: your own IP"
+msgstr "IP, die nicht gespeichert werden soll; Bsp.: die eigene IP"
+
+#: wp-feedstats.php:606
+msgid "Statistics can be shown on the dashboard ?"
+msgstr "Statistiken können im Tellerrand angezeigt werden?"
+
+#: wp-feedstats.php:618
+msgid "Plugin created by <a href=\"http://www.anieto2k.com\">Andr&eacute;s Nieto</a>, in cooperation/base with plugin <a href=\"http://www.deltablog.com/\">PopStats</a>. German and english adjustments, little extensions and new coding by <a href=\"http://bueltge.de\">Frank Bueltge</a>. Thx to <a href=\"http://blog.tomk32.de\">Thomas R. Koll</a> for many improvements for a better code and performance. Possible updates available at : <a href=\"http://www.anieto2k.com/mis-plugins/\">aNieto2k</a> or <a href=\"http://bueltge.de/wp-feedstats-de-plugin/171/\">bueltge.de</a>."
+msgstr ""
+

@@ -3,7 +3,7 @@
 Plugin Name: FeedStats
 Plugin URI: http://bueltge.de/wp-feedstats-de-plugin/171/
 Description: Simple statistictool for feeds.
-Version: 2.6
+Version: 2.7
 Author: <a href="http://www.anieto2k.com">Andres Nieto Porras</a> and <a href="http://bueltge.de">Frank Bueltge</a>
 */
 
@@ -45,29 +45,26 @@ Example for style-css:
 	padding-top:1px;
 	padding-bottom: 0px;
 	color: #fff;
-	background: url(wp-content/plugins/wp-feedstats.gif) no-repeat;
+	background: url(wp-content/plugins/wp-feedstats/wp-feedstats.gif) no-repeat;
 	margin-bottom: 2px;
 }
 */
 
 if(function_exists('load_plugin_textdomain'))
-  load_plugin_textdomain('feedstats','wp-content/plugins');
+	load_plugin_textdomain('feedstats','wp-content/plugins/wp-feedstats');
 
-define('FEEDSTATS_VERSION', '2.3');
+define('FEEDSTATS_VERSION', '2.7');
 define('fs_DAY',60*60*24);
 
-$location = get_option('siteurl') . '/wp-admin/options-general.php?page=wp-feedstats.php'; // Form Action URI
-//$location = ( function_exists('wp_nonce_url') ) ? wp_nonce_url($location, 'plugin-name-action_' . $feedstats_nonce) : $location;
+$location = get_option('siteurl') . '/wp-admin/options-general.php?page=wp-feedstats/wp-feedstats.php'; // Form Action URI
 
 if (('insert' == $HTTP_POST_VARS['action']) && $_POST['fs_ifs_save'] ) {
-	//check_admin_referer('feedstats-action_' . $feedstats_nonce);
-	
-	update_option("fs_days",$HTTP_POST_VARS['fs_days']);	
-	update_option("fs_user_level",$HTTP_POST_VARS['fs_user_level']);	
-	update_option("fs_session_timeout",$HTTP_POST_VARS['fs_session_timeout']);		
-	update_option("fs_visits_online",$HTTP_POST_VARS['fs_visits_online']);		
-	update_option("fs_ifs_not_tracked",$HTTP_POST_VARS['fs_ifs_not_tracked']);
-	update_option("fs_ifs_dashboardinfo",$HTTP_POST_VARS['fs_ifs_dashboardinfo']);
+	update_option("fs_days", $HTTP_POST_VARS['fs_days']);	
+	update_option("fs_user_level", $HTTP_POST_VARS['fs_user_level']);	
+	update_option("fs_session_timeout", $HTTP_POST_VARS['fs_session_timeout']);		
+	update_option("fs_visits_online", $HTTP_POST_VARS['fs_visits_online']);		
+	update_option("fs_ifs_not_tracked", $HTTP_POST_VARS['fs_ifs_not_tracked']);
+	update_option("fs_ifs_dashboardinfo", $HTTP_POST_VARS['fs_ifs_dashboardinfo']);
 }
 
 // Installation functions
@@ -111,7 +108,7 @@ function fs_generateDB() {
 	
 	$count_data = $wpdb->get_var("SELECT count(*) FROM " . $wpdb->prefix . 'fs_data');
 	if ($count_data==0) {
-		$wpdb->query("INSERT INTO " . $wpdb->prefix . "fs_data (time_install,max_visits,max_visits_time) VALUES (".$time.",0,".$time.")");
+		$wpdb->query("INSERT INTO " . $wpdb->prefix . "fs_data (time_install, max_visits, max_visits_time) VALUES (".$time.",0,".$time.")");
 	}
 }
 
@@ -185,10 +182,10 @@ function fs_getMidnight($time) {
 }
 
 // Main/System functions
-function fs_track($title = '') {
+function fs_track($title = '', $more_link_text, $stripteaser, $more_file, $cut, $encode_html) {
 	if (!is_feed()) return;
 	
-	global $wpdb,$_SERVER;
+	global $wpdb, $_SERVER;
 
 	$time = time();
 	$url = $_SERVER['REQUEST_URI'];
@@ -202,6 +199,8 @@ function fs_track($title = '') {
 		$url = "ATOM";
 	} else if ($url == get_bloginfo('comments_rss2_url')) {
 		$url = "COMMENT RSS";
+	} else if ($url == get_bloginfo('comments_atom_url')) {
+		$url = "COMMENT ATOM";
 	}
 
 	$time_delete = fs_getMidnight($time-(fs_DAY*get_option('fs_days')));	
@@ -242,6 +241,11 @@ function fs_track($title = '') {
 		$wpdb->query("UPDATE " . $wpdb->prefix . "fs_data SET max_online = ".$count_online.",max_online_time = ".$time);
 	}
 	return $title;
+	return $more_link_text;
+	return $stripteaser;
+	return $more_file;
+	return $cut;
+	return $encode_html;
 }
 
 function fs_displayStats() {
@@ -313,7 +317,7 @@ function fs_displayStats() {
 ?>
 	
 	<div class="wrap">
-	<h2>FeedStats </h2>
+	<h2>FeedStats</h2>
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" >
 		<tr> 
 			<td width="6%" rowspan="2" valign="top">
@@ -375,7 +379,7 @@ function fs_displayStats() {
 			<td width="45%" align="right" valign="top" style="border-right:1px #CCC solid;">
 				<table align="center" cellpadding="3" cellspacing="3" style="margin-top: 30px;">
 					<tr> 
-						<th width="278" colspan="2" scope="col"><?php echo str_replace('%N%',get_option('fs_num_referers'),__('Last %N% Referer', 'feedstats')); ?></th>
+						<th width="278" colspan="2" scope="col"><?php echo str_replace('%N%', get_option('fs_num_referers'), __('Last %N% Referer', 'feedstats')); ?></th>
 					</tr>
 					<?php
 					if ($referers) {
@@ -407,7 +411,7 @@ function fs_displayStats() {
 						<td align="center"><?php echo $max_visits ?><br />(<?php echo $max_visits_time ?>)</td>
 					</tr>
 					<tr class="alternate"> 
-						<td align="center"><strong><?php echo _e('Total', 'feedstats'); ?></strong><br />(<?php echo str_replace('N',$num_days,fs_tr('Letzen N Tage')); ?>)</td>
+						<td align="center"><strong><?php echo _e('Total', 'feedstats'); ?></strong><br />(<?php echo str_replace('%N%', $num_days, __('Last %N% Days', 'feedstats')); ?>)</td>
 						<td align="center"><?php echo $total_visits ?></td>
 					</tr>
 					<tr class="alternate"> 
@@ -419,20 +423,20 @@ function fs_displayStats() {
 		</tr>
 	</table>
 	<p id="feeds_button"><?php fs_getfeeds_button(); ?></p>
-	<p align="center" style="margin-top: 50px;"><a href="index.php?page=<?php echo basename(__FILE__); ?>&fs_action=reset" onclick="return confirm('<?php echo _e('You are about to delete all data and reset stats. OK to delete, Cancel to stop', 'feedstats'); ?>');">&gt;&gt; <?php echo _e('Reset Statistic', 'feedstats'); ?> &lt;&lt;</a></p>	
+	<p align="center" style="margin-top: 50px;"><a href="index.php?page=wp-feedstats.php&amp;fs_action=reset" onclick="return confirm('<?php echo _e('You are about to delete all data and reset stats. OK to delete, Cancel to stop', 'feedstats'); ?>');">&gt;&gt; <?php echo _e('Reset Statistic', 'feedstats'); ?> &lt;&lt;</a></p>	
 	</div>
 
 <?php
 }
 
 function fs_addAdminMenu() {
-	add_submenu_page('index.php','FeedStats','FeedStats',get_option('fs_user_level'),__FILE__,'fs_displayStats');
+	add_submenu_page('index.php', 'FeedStats', 'FeedStats', get_option('fs_user_level'), __FILE__, 'fs_displayStats');
 	add_options_page('Konfiguration FeedStats', 'FeedStats', 9, __FILE__, 'fb_admin_feedstats_option_page');
 }
 
 function fs_getfeeds() {
 	global $wpdb;
-		
+	
 	$total_visits = $wpdb->get_var("SELECT count(*) FROM " . $wpdb->prefix . 'fs_visits');
 	$total_visits = htmlspecialchars($total_visits, ENT_QUOTES);
 
@@ -447,11 +451,11 @@ function fs_getfeeds() {
 	$average_visits = htmlspecialchars($average_visits, ENT_QUOTES);
 	$max_visits = $wpdb->get_var("SELECT max_visits FROM " . $wpdb->prefix . 'fs_data');
 	$max_visits = htmlspecialchars($max_visits, ENT_QUOTES);
-	$max_visits_time = date(get_option('date_format'),$wpdb->get_var("SELECT max_visits_time FROM " . $wpdb->prefix . 'fs_data'));
+	$max_visits_time = date(get_option('date_format'), $wpdb->get_var("SELECT max_visits_time FROM " . $wpdb->prefix . 'fs_data'));
 	$max_visits_time = htmlspecialchars($max_visits_time, ENT_QUOTES);
 	?>
 	<div id="feeds_readers">
-		<h2 class="threest"><?php echo fs_tr('FeedReaders'); ?></h2>
+		<h3><?php echo fs_tr('FeedReaders'); ?></h3>
 		<ul>
 			<li><?php echo _e('Total', 'feedstats'), ": ", $total_visits; ?> <small>(<?php echo str_replace('N',$num_days,fs_tr('Letzen N Tage')); ?>)</small></li>
 			<li><?php echo _e('Maximum', 'feedstats'), ": ", $max_visits; ?> <small>(<?=$max_visits_time?>)</small></li>
@@ -491,7 +495,7 @@ function FeedStats_Admin_Header() {
 		padding-top: 0;
 		padding-bottom: 15px;
 		color: #fff;
-		background: url('.get_settings(home).'/wp-content/plugins/wp-feedstats.gif) no-repeat 0 1px;
+		background: url('.get_settings(home).'/wp-content/plugins/wp-feedstats/wp-feedstats.gif) no-repeat 0 1px;
 		margin: 0;
 	}';
 	$fs_feed_button_style.= '</style>';
@@ -524,7 +528,7 @@ function FeedStats_Admin_Footer() {
 		$admin = substr($admin, strrpos($admin, '/')+1);
 		if ($admin == 'wp-admin' && basename($_SERVER['SCRIPT_FILENAME']) == 'index.php' and get_option('fs_ifs_dashboardinfo') == isset($_POST["get_option('fs_ifs_dashboardinfo')"]) ? $_POST["get_option('fs_ifs_dashboardinfo')"] : 1) {
 			
-			$content = "<h3>" . _('FeedStats') . " <a href='admin.php?page=wp-feedstats.php'>&raquo;</a> </h3>";
+			$content = "<h3>" . _('FeedStats') . " <a href='admin.php?page=wp-feedstats/wp-feedstats.php'>&raquo;</a> </h3>";
 			$content.= "<ul><li>Gesamt: " . attribute_escape($total_visits) . " (Letzten " . "$num_days" . " Tage)" . "</li>";
 			$content.= "<li>Maximum: " . attribute_escape($max_visits) ." (" . attribute_escape($max_visits_time) . ")" . "</li>";
 			$content.= "<li>Durchschnitt: " . attribute_escape($average_visits) . "</li>";
@@ -540,10 +544,10 @@ function FeedStats_Admin_Footer() {
 }
 
 function fs_activate() {
-	add_option("fs_days","15");    
-	add_option("fs_user_level","1");    
-	add_option("fs_session_timeout","3600");    
-	add_option("fs_visits_online","300");    
+	add_option("fs_days", "15");
+	add_option("fs_user_level", "1");
+	add_option("fs_session_timeout", "3600");
+	add_option("fs_visits_online", "300");
 }
 
 // Program flow
@@ -553,10 +557,15 @@ if(function_exists('add_action')) {
 		add_action('init', 'fs_activate');
 		add_action('init', 'fs_versionControl');
 	}
-add_action('the_title_rss','fs_track');
-add_action('admin_menu','fs_addAdminMenu');
-add_action('admin_head', 'FeedStats_Admin_Header');
-add_action('admin_footer', 'FeedStats_Admin_Footer');
+	add_action('the_title_rss', 'fs_track');
+	add_action('the_content_rss', 'fs_track');
+	add_action('admin_menu', 'fs_addAdminMenu');
+	if (strpos($_SERVER['REQUEST_URI'], 'index.php?page=wp-feedstats') !== false) {
+		add_action('admin_head', 'FeedStats_Admin_Header');
+	}
+	if (strpos($_SERVER['REQUEST_URI'], 'index.php') !== false) {
+		add_action('admin_footer', 'FeedStats_Admin_Footer');
+	}
 }
 
 // Option Page
@@ -570,45 +579,45 @@ function fb_admin_feedstats_option_page() {
 		wp_nonce_field('feedstats-action_' . $feedstats_nonce);
 	} ?>
 	<table width="100%" border="0">
-	  <tr>
+		<tr>
 		<th width="80%" class="alternate"><?=_e('Description', 'feedstats');?> (<?=_e('Version', 'feedstats');?>: <a href="http://bueltge.de/wp-feedstats-de-plugin/171"><?php echo htmlspecialchars(FEEDSTATS_VERSION, ENT_QUOTES); ?></a>)</th>
 		<th class="alternate"><?=_e('Value', 'feedstats');?></th>
-	  </tr>
-	  <tr>
+		</tr>
+		<tr>
 		<td><?=_e('Amount of days that is supposed to be saved in the statistics.', 'feedstats');?></td>
 		<td><input name="fs_days" value="<?=get_option("fs_days");?>" type="text" /></td>
-	  </tr>
-	  <tr>
+		</tr>
+		<tr>
 		<td class="alternate"><?=_e('Minimum level of WordPress-user, who is allowed to see the statistics.', 'feedstats');?></td>
 		<td class="alternate"><input name="fs_user_level" value="<?=get_option("fs_user_level");?>" type="text" /></td>
-	  </tr>
-	  <tr>
+		</tr>
+		<tr>
 		<td><?=_e('Time of a stay/visit (1hour values 3600seconds is common but might be changed)','feedstats');?></td>
 		<td><input name="fs_session_timeout" value="<?=get_option("fs_session_timeout");?>" type="text" /></td>
-	  </tr>
-	  <tr>
+		</tr>
+		<tr>
 		<td class="alternate"><?=_e('Visitors onlinetime (5minutes value 300s is a recommendation)', 'feedstats');?></td>
 		<td class="alternate"><input name="fs_visits_online" value="<?=get_option("fs_visits_online");?>" type="text" /></td>
-	  </tr>
-	  <tr>
+		</tr>
+		<tr>
 		<td><?=_e('IP, that is supposed not to be saved, ex.: your own IP', 'feedstats');?></td>
 		<td><input name="fs_ifs_not_tracked" value="<?=get_option("fs_ifs_not_tracked");?>"  type="text" /></td>
-	  </tr>
-	  <tr>
+		</tr>
+		<tr>
 		<td class="alternate"><?=_e('Statistics can be shown on the dashboard ?', 'feedstats');?></td>
 		<td class="alternate"><input name="fs_ifs_dashboardinfo" value='1' <?php if(get_option('fs_ifs_dashboardinfo')=='1') { echo "checked='checked'";  } ?> type="checkbox" /></td>
-	  </tr>
-	  <tr>
+		</tr>
+		<tr>
 		<td>&nbsp;</td>
 		<td><input type="submit" name="fs_ifs_save" value="Speichern" /></td>
-	  </tr>
+		</tr>
 	</table>
 	<input name="action" value="insert" type="hidden" />
-  </form>
-  <hr/>
-  <small>
-  <?=_e('Plugin created by <a href="http://www.anieto2k.com">Andr&eacute;s Nieto</a>, in cooperation/base with plugin <a href="http://www.deltablog.com/">PopStats</a>. German and english adjustments, little extensions and new coding by <a href="http://bueltge.de">Frank Bueltge</a>. Thx to <a href="http://blog.tomk32.de">Thomas R. Koll</a> for many improvements for a better code and performance. Possible updates available at : <a href="http://www.anieto2k.com/mis-plugins/">aNieto2k</a> or <a href="http://bueltge.de/wp-feedstats-de-plugin/171/">bueltge.de</a>.', 'feedstats');?>
-  </small>
+	</form>
+	<hr/>
+	<small>
+	<?=_e('Plugin created by <a href="http://www.anieto2k.com">Andr&eacute;s Nieto</a>, in cooperation/base with plugin <a href="http://www.deltablog.com/">PopStats</a>. German and english adjustments, little extensions and new coding by <a href="http://bueltge.de">Frank Bueltge</a>. Thx to <a href="http://blog.tomk32.de">Thomas R. Koll</a> for many improvements for a better code and performance. Possible updates available at : <a href="http://www.anieto2k.com/mis-plugins/">aNieto2k</a> or <a href="http://bueltge.de/wp-feedstats-de-plugin/171/">bueltge.de</a>.', 'feedstats');?>
+	</small>
 </div>
 
 <?php } //End Options-Page ?>
