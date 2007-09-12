@@ -3,7 +3,7 @@
 Plugin Name: FeedStats
 Plugin URI: http://bueltge.de/wp-feedstats-de-plugin/171/
 Description: Simple statistictool for feeds.
-Version: 2.7
+Version: 2.8
 Author: <a href="http://www.anieto2k.com">Andres Nieto Porras</a> and <a href="http://bueltge.de">Frank Bueltge</a>
 */
 
@@ -53,18 +53,18 @@ Example for style-css:
 if(function_exists('load_plugin_textdomain'))
 	load_plugin_textdomain('feedstats','wp-content/plugins/wp-feedstats');
 
-define('FEEDSTATS_VERSION', '2.7');
+define('FEEDSTATS_VERSION', '2.8');
 define('fs_DAY',60*60*24);
 
 $location = get_option('siteurl') . '/wp-admin/options-general.php?page=wp-feedstats/wp-feedstats.php'; // Form Action URI
 
-if (('insert' == $HTTP_POST_VARS['action']) && $_POST['fs_ifs_save'] ) {
-	update_option("fs_days", $HTTP_POST_VARS['fs_days']);	
-	update_option("fs_user_level", $HTTP_POST_VARS['fs_user_level']);	
-	update_option("fs_session_timeout", $HTTP_POST_VARS['fs_session_timeout']);		
-	update_option("fs_visits_online", $HTTP_POST_VARS['fs_visits_online']);		
-	update_option("fs_ifs_not_tracked", $HTTP_POST_VARS['fs_ifs_not_tracked']);
-	update_option("fs_ifs_dashboardinfo", $HTTP_POST_VARS['fs_ifs_dashboardinfo']);
+if (('insert' == $_POST['action']) && $_POST['fs_ifs_save'] ) {
+	update_option("fs_days", $_POST['fs_days']);	
+	update_option("fs_user_level", $_POST['fs_user_level']);	
+	update_option("fs_session_timeout", $_POST['fs_session_timeout']);		
+	update_option("fs_visits_online", $_POST['fs_visits_online']);		
+	update_option("fs_ifs_not_tracked", $_POST['fs_ifs_not_tracked']);
+	update_option("fs_ifs_dashboardinfo", $_POST['fs_ifs_dashboardinfo']);
 }
 
 // Installation functions
