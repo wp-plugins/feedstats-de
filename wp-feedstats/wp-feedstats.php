@@ -3,7 +3,7 @@
 Plugin Name: FeedStats
 Plugin URI: http://bueltge.de/wp-feedstats-de-plugin/171/
 Description: Simple statistictool for feeds.
-Version: 2.8
+Version: 2.9
 Author: <a href="http://www.anieto2k.com">Andres Nieto Porras</a> and <a href="http://bueltge.de">Frank Bueltge</a>
 */
 
@@ -182,7 +182,7 @@ function fs_getMidnight($time) {
 }
 
 // Main/System functions
-function fs_track($title = '', $more_link_text, $stripteaser, $more_file, $cut, $encode_html) {
+function fs_track($title = '', $more_link_text = '', $stripteaser = '', $more_file = '', $cut = '', $encode_html = '') {
 	if (!is_feed()) return;
 	
 	global $wpdb, $_SERVER;
