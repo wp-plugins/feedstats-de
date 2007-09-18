@@ -53,7 +53,7 @@ Example for style-css:
 if(function_exists('load_plugin_textdomain'))
 	load_plugin_textdomain('feedstats','wp-content/plugins/wp-feedstats');
 
-define('FEEDSTATS_VERSION', '2.8');
+define('FEEDSTATS_VERSION', '3.0');
 define('fs_DAY',60*60*24);
 
 $location = get_option('siteurl') . '/wp-admin/options-general.php?page=wp-feedstats/wp-feedstats.php'; // Form Action URI
