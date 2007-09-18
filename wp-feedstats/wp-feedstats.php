@@ -3,7 +3,7 @@
 Plugin Name: FeedStats
 Plugin URI: http://bueltge.de/wp-feedstats-de-plugin/171/
 Description: Simple statistictool for feeds.
-Version: 2.9
+Version: 3.0
 Author: <a href="http://www.anieto2k.com">Andres Nieto Porras</a> and <a href="http://bueltge.de">Frank Bueltge</a>
 */
 
@@ -423,7 +423,7 @@ function fs_displayStats() {
 		</tr>
 	</table>
 	<p id="feeds_button"><?php fs_getfeeds_button(); ?></p>
-	<p align="center" style="margin-top: 50px;"><a href="index.php?page=wp-feedstats.php&amp;fs_action=reset" onclick="return confirm('<?php echo _e('You are about to delete all data and reset stats. OK to delete, Cancel to stop', 'feedstats'); ?>');">&gt;&gt; <?php echo _e('Reset Statistic', 'feedstats'); ?> &lt;&lt;</a></p>	
+	<p align="center" style="margin-top: 50px;"><a href="index.php?page=wp-feedstats/wp-feedstats.php&amp;fs_action=reset" onclick="return confirm('<?php echo _e('You are about to delete all data and reset stats. OK to delete, Cancel to stop', 'feedstats'); ?>');">&gt;&gt; <?php echo _e('Reset Statistic', 'feedstats'); ?> &lt;&lt;</a></p>	
 	</div>
 
 <?php
