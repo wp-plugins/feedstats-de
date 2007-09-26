@@ -3,9 +3,12 @@
 Plugin Name: FeedStats
 Plugin URI: http://bueltge.de/wp-feedstats-de-plugin/171/
 Description: Simple statistictool for feeds.
-Version: 3.0
+Version: 3.1
 Author: <a href="http://www.anieto2k.com">Andres Nieto Porras</a> and <a href="http://bueltge.de">Frank Bueltge</a>
 */
+
+define('FEEDSTATS_VERSION', '3.1');
+define('fs_DAY', 60*60*24);
 
 /*
 ------------------------------------------------------
@@ -23,7 +26,7 @@ FeadReaderButton (gif) by http://www.nasendackel.de
 
 /*
 ------------------------------------------------------
-FEED-READER BUTTON
+ FEED-READER BUTTON
 ------------------------------------------------------
 Function for button with reader:
 ------------------------------------------------------
@@ -37,24 +40,20 @@ Example:
 Example for style-css:
 ------------------------------------------------------
 #feeds_button {
-	width:74px;
-	height:14px;
+	width: 74px;
+	height: 14px;
 	text-align: left;
-	font-size: 11px;
-	padding-left: 6px;
-	padding-top:1px;
-	padding-bottom: 0px;
+	font-size: 10px;
+	padding: 1px 15px 15px 3px;
 	color: #fff;
 	background: url(wp-content/plugins/wp-feedstats/wp-feedstats.gif) no-repeat;
 	margin-bottom: 2px;
 }
 */
 
-if(function_exists('load_plugin_textdomain'))
-	load_plugin_textdomain('feedstats','wp-content/plugins/wp-feedstats');
-
-define('FEEDSTATS_VERSION', '3.0');
-define('fs_DAY',60*60*24);
+if(function_exists('load_plugin_textdomain')) {
+	load_plugin_textdomain('feedstats', 'wp-content/plugins/wp-feedstats');
+}
 
 $location = get_option('siteurl') . '/wp-admin/options-general.php?page=wp-feedstats/wp-feedstats.php'; // Form Action URI
 
@@ -87,7 +86,7 @@ function fs_generateDB() {
 					PRIMARY KEY (visit_id)
 				) TYPE=MyISAM;";
 	
-	if(file_exists(ABSPATH . '/wp-admin/upgrade-functions.php')) {
+	if (file_exists(ABSPATH . '/wp-admin/upgrade-functions.php')) {
 		@require_once (ABSPATH . '/wp-admin/upgrade-functions.php');
 		// It's Wordpress 1.5.2 or 2.x. since it has been loaded successfully
 	} elseif (file_exists(ABSPATH . WPINC . '/upgrade.php')) {
@@ -99,7 +98,6 @@ function fs_generateDB() {
 	} else {
 		die (__('Error in file: ' . __FILE__ . ' on line: ' . __LINE__ . '.<br />The Wordpress file "upgrade-functions.php" or "upgrade.php" could not be included.'));
 	}
-
 	
 	maybe_create_table($wpdb->prefix . 'fs_data', $fs_data_query);
 	maybe_create_table($wpdb->prefix . 'fs_visits', $fs_visits_query);
@@ -148,6 +146,7 @@ function fs_versionControl() {
 // Global set of functions
 function fs_tr($s) {
 	global $fs_tr;
+
 	$return = ($fs_tr[$s]!='') ? $fs_tr[$s] : $s;
 	if (get_bloginfo('charset') == 'UTF-8') {
 		$return = utf8_encode($return);
@@ -176,19 +175,21 @@ function fs_getIP() {
 	}
 }
 
-
 function fs_getMidnight($time) {
-	return date('U',mktime(0,0,0,1,date('z',$time)+1,date('y',$time)));
+	return date('U', mktime(0, 0, 0, 1, date('z', $time)+1, date('y',$time)));
 }
 
 // Main/System functions
 function fs_track($title = '', $more_link_text = '', $stripteaser = '', $more_file = '', $cut = '', $encode_html = '') {
-	if (!is_feed()) return;
+	if (!is_feed()) {
+		return;
+	}
 	
 	global $wpdb, $_SERVER;
 
 	$time = time();
-	$url = $_SERVER['REQUEST_URI'];
+	$url  = $_SERVER['REQUEST_URI'];
+
 	if ($url == get_bloginfo('rdf_url')) {
 		$url = "RDF";
 	} else if ($url == get_bloginfo('rss_url')) {
@@ -206,40 +207,50 @@ function fs_track($title = '', $more_link_text = '', $stripteaser = '', $more_fi
 	$time_delete = fs_getMidnight($time-(fs_DAY*get_option('fs_days')));	
 	$wpdb->query("DELETE FROM " . $wpdb->prefix . "fs_visits WHERE time_begin < ".$time_delete);
 	
-	if(in_array(fs_getIP(),array(get_option('fs_ifs_not_tracked'))))
-		return;
+	if(in_array(fs_getIP(), array(get_option("fs_ifs_not_tracked")))) {
+		return $title;
+		return $more_link_text;
+		return $stripteaser;
+		return $more_file;
+		return $cut;
+		return $encode_html;
+	}
 		
 	$time_insert_visit = $time - get_option('fs_session_timeout');
 	
-	if($wpdb->is_admin || strstr($_SERVER['PHP_SELF'],'wp-admin/')) {
-		$sessions = $wpdb->get_var("SELECT count(*) FROM " . $wpdb->prefix . "fs_visits WHERE ip='".fs_getIP()."' AND time_last > ".$time_insert_visit);
+	if ($wpdb->is_admin || strstr($_SERVER['PHP_SELF'], 'wp-admin/')) {
+		$sessions = $wpdb->get_var("SELECT count(*) FROM " . $wpdb->prefix . "fs_visits WHERE ip='" . fs_getIP() . "' AND time_last > " . $time_insert_visit);
 		if ($sessions>0) {
-			$wpdb->query("UPDATE " . $wpdb->prefix . "fs_visits SET time_last=".$time.",url='".$url."' WHERE ip='".fs_getIP()."' AND time_last > ".$time_insert_visit);
+			$wpdb->query("UPDATE " . $wpdb->prefix . "fs_visits SET time_last=" . $time . ",url='" . $url . "' WHERE ip='" . fs_getIP() . "' AND time_last > " . $time_insert_visit);
 		}
 		return;
 	}
-	$ip_time_query = $wpdb->get_var("SELECT count(*) FROM " . $wpdb->prefix . "fs_visits WHERE ip='".fs_getIP()."' AND time_last > ".$time_insert_visit);
+	
+	$ip_time_query = $wpdb->get_var("SELECT count(*) FROM " . $wpdb->prefix . "fs_visits WHERE ip='".fs_getIP()."' AND time_last > " . $time_insert_visit);
+	
 	if ($ip_time_query==0) {
-
-		$wpdb->query("INSERT INTO " . $wpdb->prefix . "fs_visits (ip,url,time_begin,time_last) VALUES ('".fs_getIP()."','".$url."',".$time.",".$time.")");
+		$wpdb->query("INSERT INTO " . $wpdb->prefix . "fs_visits (ip, url, time_begin, time_last) VALUES ('" . fs_getIP() . "','" . $url . "'," . $time . "," . $time . ")");
 	} else {
-		$wpdb->query("UPDATE " . $wpdb->prefix . "fs_visits SET time_last=".$time.",url='".$url."' WHERE ip='".fs_getIP()."' AND time_last > ".$time_insert_visit);
+		$wpdb->query("UPDATE " . $wpdb->prefix . "fs_visits SET time_last=" . $time . ",url='" . $url . "' WHERE ip='" . fs_getIP() . "' AND time_last > " . $time_insert_visit);
 	}
 	
-	$time_start = fs_getMidnight($time);
-	$time_end = $time_start + fs_DAY;
-	
-	$count_visits_day = $wpdb->get_var("SELECT count(*) FROM " . $wpdb->prefix . "fs_visits WHERE time_begin >= ".$time_start." AND time_begin < ".$time_end);
-	$max_visits = $wpdb->get_var("SELECT max_visits FROM " . $wpdb->prefix . 'fs_data');
+	$time_start       = fs_getMidnight($time);
+	$time_end         = $time_start + fs_DAY;
+	$count_visits_day = $wpdb->get_var("SELECT count(*) FROM " . $wpdb->prefix . "fs_visits WHERE time_begin >= " . $time_start . " AND time_begin < " . $time_end);
+	$max_visits       = $wpdb->get_var("SELECT max_visits FROM " . $wpdb->prefix . 'fs_data');
+
 	if ($count_visits_day>=$max_visits) {
-		$wpdb->query("UPDATE " . $wpdb->prefix . "fs_data SET max_visits = ".$count_visits_day.",max_visits_time = ".$time);		
+		$wpdb->query("UPDATE " . $wpdb->prefix . "fs_data SET max_visits = " . $count_visits_day . ", max_visits_time = " . $time);		
 	}
+	
 	$time_visits_online = $time - get_option('fs_visits_online');
-	$count_online = $wpdb->get_var("SELECT COUNT(*) FROM " . $wpdb->prefix . "fs_visits WHERE time_last > ".$time_visits_online);
+	$count_online = $wpdb->get_var("SELECT COUNT(*) FROM " . $wpdb->prefix . "fs_visits WHERE time_last > " . $time_visits_online);
 	$max_online = $wpdb->get_var("SELECT max_online FROM " . $wpdb->prefix . 'fs_data');
+	
 	if ($count_online>=$max_online) {
-		$wpdb->query("UPDATE " . $wpdb->prefix . "fs_data SET max_online = ".$count_online.",max_online_time = ".$time);
+		$wpdb->query("UPDATE " . $wpdb->prefix . "fs_data SET max_online = " . $count_online . ", max_online_time = " . $time);
 	}
+	
 	return $title;
 	return $more_link_text;
 	return $stripteaser;
@@ -257,8 +268,8 @@ function fs_displayStats() {
 	$time = time();
 	
 	$time_begin = fs_getMidnight($wpdb->get_var("SELECT time_install FROM " . $wpdb->prefix . 'fs_data'));
-	$num_days = ceil(($time-$time_begin)/fs_DAY);
-	$num_days = htmlspecialchars($num_days, ENT_QUOTES);
+	$num_days   = ceil(($time-$time_begin)/fs_DAY);
+	$num_days   = htmlspecialchars($num_days, ENT_QUOTES);
 	if ($num_days>get_option('fs_days')) {
 		$num_days = get_option('fs_days') + 1;
 	}
@@ -266,36 +277,44 @@ function fs_displayStats() {
 	$count_visits_total  = 0;
 	
 	for ($i=0; $i<$num_days; $i++) {
-		$day_time = $time - ($i * fs_DAY);
-		$time_start = fs_getMidnight($day_time);
-		$time_end = $time_start + fs_DAY;
-		$count_visits_day = $wpdb->get_var("SELECT count(*) FROM " . $wpdb->prefix . "fs_visits WHERE time_begin >= ".$time_start." AND time_begin < ".$time_end);
+		$day_time          = $time - ($i * fs_DAY);
+		$time_start        = fs_getMidnight($day_time);
+		$time_end          = $time_start + fs_DAY;
+		$count_visits_day  = $wpdb->get_var("SELECT count(*) FROM " . $wpdb->prefix . "fs_visits WHERE time_begin >= " . $time_start . " AND time_begin < " . $time_end);
 		$visits[$day_time] = $count_visits_day;
+		
 		if ($i!=0 && $time_start!=$time_begin) {
 			$count_visits_total += $count_visits_day;
 		}
+		
 	}
-	$total_visits = $wpdb->get_var("SELECT count(*) FROM " . $wpdb->prefix . 'fs_visits');
-	$total_visits = htmlspecialchars($total_visits, ENT_QUOTES);
-	$average_visits = ($num_days) ? round($total_visits/($num_days)) : '0';
-	$average_visits = htmlspecialchars($average_visits, ENT_QUOTES);
+	
+	$total_visits    = $wpdb->get_var("SELECT count(*) FROM " . $wpdb->prefix . 'fs_visits');
+	$total_visits    = htmlspecialchars($total_visits, ENT_QUOTES);
+	
+	$average_visits  = ($num_days) ? round($total_visits/($num_days)) : '0';
+	$average_visits  = htmlspecialchars($average_visits, ENT_QUOTES);
 
-	$max_visits = $wpdb->get_var("SELECT max_visits FROM " . $wpdb->prefix . 'fs_data');
-	$max_visits = htmlspecialchars($max_visits, ENT_QUOTES);
-	$max_visits_time = date(get_option('date_format'),$wpdb->get_var("SELECT max_visits_time FROM " . $wpdb->prefix . 'fs_data'));
+	$max_visits      = $wpdb->get_var("SELECT max_visits FROM " . $wpdb->prefix . 'fs_data');
+	$max_visits      = htmlspecialchars($max_visits, ENT_QUOTES);
+	
+	$max_visits_time = date(get_option('date_format'), $wpdb->get_var("SELECT max_visits_time FROM " . $wpdb->prefix . 'fs_data'));
 	$max_visits_time = htmlspecialchars($max_visits_time, ENT_QUOTES);
 	
-	$max_online = $wpdb->get_var("SELECT max_online FROM " . $wpdb->prefix . 'fs_data');
-	$max_online = htmlspecialchars($max_online, ENT_QUOTES);
-	$max_online_time = date(get_option('date_format') . " " . get_option('time_format'),$wpdb->get_var("SELECT max_online_time FROM " . $wpdb->prefix . 'fs_data'));
+	$max_online      = $wpdb->get_var("SELECT max_online FROM " . $wpdb->prefix . 'fs_data');
+	$max_online      = htmlspecialchars($max_online, ENT_QUOTES);
+	
+	$max_online_time = date(get_option('date_format') . " " . get_option('time_format'), $wpdb->get_var("SELECT max_online_time FROM " . $wpdb->prefix . 'fs_data'));
 	$max_online_time = htmlspecialchars($max_online_time, ENT_QUOTES);
 
-	$referers_query = $wpdb->get_results("SELECT DISTINCT url FROM " . $wpdb->prefix . "fs_visits WHERE LEFT(url, '".strlen(get_settings('home'))."') != '".get_settings('home')."' AND url <> '' ORDER BY url DESC");
-	$referers = array();
+	$referers_query  = $wpdb->get_results("SELECT DISTINCT url FROM " . $wpdb->prefix . "fs_visits WHERE LEFT(url, '" . strlen(get_settings('home')) . "') != '" . get_settings('home') . "' AND url <> '' ORDER BY url DESC");
+	
+	$referers        = array();
+	
 	if ($referers_query) {
 		foreach ($referers_query as $r) {
-			$refer['cont'] = $wpdb->get_var("SELECT count(*) FROM " . $wpdb->prefix . "fs_visits WHERE url = '".$r->url."';");
-			$refer['cont'] = htmlspecialchars($refer['cont']);
+			$refer['cont']  = $wpdb->get_var("SELECT count(*) FROM " . $wpdb->prefix . "fs_visits WHERE url = '" . $r->url . "';");
+			$refer['cont']  = htmlspecialchars($refer['cont']);
 			$refer['title'] = $r->url;
 			$refer['title'] = htmlspecialchars($refer['title']);
 			array_push($referers,$refer);
@@ -303,25 +322,29 @@ function fs_displayStats() {
 	}
 
 	$time_visits_online = $time - get_option('fs_visits_online');
-	$online_query = $wpdb->get_results("SELECT ip,url FROM " . $wpdb->prefix . "fs_visits WHERE time_last > ".$time_visits_online);
-	$online = array();
+	
+	$online_query       = $wpdb->get_results("SELECT ip,url FROM " . $wpdb->prefix . "fs_visits WHERE time_last > ".$time_visits_online);
+	
+	$online             = array();
+	
 	if ($online_query) {
 		foreach ($online_query as $visit) {
-			$o['ip'] = $visit->ip;
+			$o['ip']  = $visit->ip;
 			$o['url'] = $visit->url;
 			array_push($online,$o);
 		}
 	}
+	
 	$people_online = count($online);	
 	
 ?>
 	
 	<div class="wrap">
 	<h2>FeedStats</h2>
-	<table width="100%" border="0" cellspacing="0" cellpadding="0" >
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="feedstast view">
 		<tr> 
 			<td width="6%" rowspan="2" valign="top">
-				<table cellpadding="3" cellspacing="3">
+				<table cellpadding="3" cellspacing="3" summary="feedstast view one">
 					<tr>
 						<th scope="col" width="100"><?php echo _e('Day', 'feedstats'); ?></th>
 						<th scope="col" width="110"><?php echo _e('Visits', 'feedstats'); ?></th>
@@ -347,16 +370,16 @@ function fs_displayStats() {
 				</table> 
 			</td>
 			<td colspan="3" align="right" valign="top" style="border-bottom:1px #CCC solid; border-left:1px #CCC solid; height:160px;">
-				<table align="center" cellpadding="1" cellspacing="0" style="height: 140px; border-left: 1px solid #CCC; border-bottom: 1px solid #CCC; border-right: 1px solid #CCC;">
+				<table align="center" cellpadding="1" cellspacing="0" style="height: 140px; border-left: 1px solid #CCC; border-bottom: 1px solid #CCC; border-right: 1px solid #CCC;" summary="feedstast view two">
 					<tr>
-						<td colspan="<?=count($visits);?>" align="center"><?=fs_tr('Visits');?></td>
+						<td colspan="<?php echo count($visits); ?>" align="center"><?php echo fs_tr('Visits'); ?></td>
 					</tr>
 					<tr>
 						<?php ksort($visits); foreach ($visits as $day=>$num) { ?>
-						<td align="center" style="padding-left: 5px; font-size: 10px; color:#A3A3A3;"><?=$num?></td>
+						<td align="center" style="padding-left: 5px; font-size: 10px; color:#A3A3A3;"><?php echo $num; ?></td>
 						<? } ?>
-						<td align="center" style="padding-left: 5px; font-size: 10px; color: #CCC"><?=$average_visits?></td>
-						<td align="center" style="padding-left: 5px; font-size: 10px; color:#FF0000"><?=$max_visits?></td>
+						<td align="center" style="padding-left: 5px; font-size: 10px; color: #CCC"><?php echo $average_visits; ?></td>
+						<td align="center" style="padding-left: 5px; font-size: 10px; color:#FF0000"><?php echo $max_visits; ?></td>
 					</tr>
 					<tr>
 						<?php foreach ($visits as $day=>$num) { ?>
@@ -377,7 +400,7 @@ function fs_displayStats() {
 		</tr>
 		<tr> 
 			<td width="45%" align="right" valign="top" style="border-right:1px #CCC solid;">
-				<table align="center" cellpadding="3" cellspacing="3" style="margin-top: 30px;">
+				<table align="center" cellpadding="3" cellspacing="3" style="margin-top: 30px;" summary="feedstast view three">
 					<tr> 
 						<th width="278" colspan="2" scope="col"><?php echo str_replace('%N%', get_option('fs_num_referers'), __('Last %N% Referer', 'feedstats')); ?></th>
 					</tr>
@@ -389,7 +412,7 @@ function fs_displayStats() {
 							$class = ($class=='alternate') ? '' : 'alternate';
 					?>
 					<tr class="<?php echo $class; ?>"> 
-						<td><? echo htmlspecialchars($r['cont']);?></td>
+						<td><?php echo htmlspecialchars($r['cont']); ?></td>
 						<td><?php echo htmlspecialchars((strlen($r['title'])>50) ? substr_replace($r['title'],"...",50) : $r['title']); ?></td>
 					</tr>
 					<?php } //end foreach
@@ -397,7 +420,7 @@ function fs_displayStats() {
 				</table>
 			</td>
 			<td width="35%" align="right" valign="top" style="border-right:1px #CCC solid; ">
-				<table cellpadding="3" cellspacing="3">
+				<table cellpadding="3" cellspacing="3" summary="feedstast view four">
 					<tr> 
 						<th scope="col" width="100"><?php echo _e('Statistic', 'feedstats'); ?></th>
 						<th scope="col" width="110"><?php echo _e('Visits', 'feedstats'); ?></th>
@@ -423,7 +446,7 @@ function fs_displayStats() {
 		</tr>
 	</table>
 	<p id="feeds_button"><?php fs_getfeeds_button(); ?></p>
-	<p align="center" style="margin-top: 50px;"><a href="index.php?page=wp-feedstats/wp-feedstats.php&amp;fs_action=reset" onclick="return confirm('<?php echo _e('You are about to delete all data and reset stats. OK to delete, Cancel to stop', 'feedstats'); ?>');">&gt;&gt; <?php echo _e('Reset Statistic', 'feedstats'); ?> &lt;&lt;</a></p>	
+	<p align="center" style="margin-top: 50px;"><a href="index.php?page=wp-feedstats/wp-feedstats.php&amp;fs_action=reset" onclick="return confirm('<?php echo _e('You are about to delete all data and reset stats. OK to delete, Cancel to stop', 'feedstats'); ?>');">&raquo;&raquo; <?php echo _e('Reset Statistic', 'feedstats'); ?> &laquo;&laquo;</a></p>
 	</div>
 
 <?php
@@ -440,25 +463,29 @@ function fs_getfeeds() {
 	$total_visits = $wpdb->get_var("SELECT count(*) FROM " . $wpdb->prefix . 'fs_visits');
 	$total_visits = htmlspecialchars($total_visits, ENT_QUOTES);
 
-	$time = time();
+	$time       = time();
 	$time_begin = fs_getMidnight($wpdb->get_var("SELECT time_install FROM " . $wpdb->prefix . 'fs_data'));
-	$num_days = ceil(($time-$time_begin)/fs_DAY);
-	$num_days = htmlspecialchars($num_days, ENT_QUOTES);
-	if ($num_days>get_option('fs_days'))
+	$num_days   = ceil(($time-$time_begin)/fs_DAY);
+	$num_days   = htmlspecialchars($num_days, ENT_QUOTES);
+	
+	if ($num_days>get_option('fs_days')) {
 		$num_days = get_option('fs_days') + 1;
+	}
 		
-	$average_visits = ($num_days) ? round($total_visits/($num_days)) : '0';
-	$average_visits = htmlspecialchars($average_visits, ENT_QUOTES);
-	$max_visits = $wpdb->get_var("SELECT max_visits FROM " . $wpdb->prefix . 'fs_data');
-	$max_visits = htmlspecialchars($max_visits, ENT_QUOTES);
+	$average_visits  = ($num_days) ? round($total_visits/($num_days)) : '0';
+	$average_visits  = htmlspecialchars($average_visits, ENT_QUOTES);
+	
+	$max_visits      = $wpdb->get_var("SELECT max_visits FROM " . $wpdb->prefix . 'fs_data');
+	$max_visits      = htmlspecialchars($max_visits, ENT_QUOTES);
+	
 	$max_visits_time = date(get_option('date_format'), $wpdb->get_var("SELECT max_visits_time FROM " . $wpdb->prefix . 'fs_data'));
 	$max_visits_time = htmlspecialchars($max_visits_time, ENT_QUOTES);
 	?>
 	<div id="feeds_readers">
 		<h3><?php echo fs_tr('FeedReaders'); ?></h3>
 		<ul>
-			<li><?php echo _e('Total', 'feedstats'), ": ", $total_visits; ?> <small>(<?php echo str_replace('N',$num_days,fs_tr('Letzen N Tage')); ?>)</small></li>
-			<li><?php echo _e('Maximum', 'feedstats'), ": ", $max_visits; ?> <small>(<?=$max_visits_time?>)</small></li>
+			<li><?php echo _e('Total', 'feedstats'), ": ", $total_visits; ?> <small>(<?php echo str_replace('N',$num_days,fs_tr(' Last N Days')); ?>)</small></li>
+			<li><?php echo _e('Maximum', 'feedstats'), ": ", $max_visits; ?> <small>(<?php echo $max_visits_time; ?>)</small></li>
 			<li><?php echo _e('Average', 'feedstats'), ": ", $average_visits; ?></li>
 		</ul>
 	</div>
@@ -472,14 +499,17 @@ function fs_getfeeds_button() {
 	$total_visits = $wpdb->get_var("SELECT count(*) FROM " . $wpdb->prefix . 'fs_visits');
 	$total_visits = htmlspecialchars($total_visits, ENT_QUOTES);
 	
-	$time = time();
+	$time       = time();
 	$time_begin = fs_getMidnight($wpdb->get_var("SELECT time_install FROM " . $wpdb->prefix . 'fs_data'));
-	$num_days = ceil(($time-$time_begin)/fs_DAY);
-	if ($num_days>get_option('fs_days'))
+	$num_days   = ceil(($time-$time_begin)/fs_DAY);
+	
+	if ($num_days>get_option('fs_days')) {
 		$num_days = get_option('fs_days') + 1;
+	}
 		
 	$average_visits = ($num_days) ? round($total_visits/($num_days)) : '0';
 	$average_visits = htmlspecialchars($average_visits, ENT_QUOTES);
+	
 	echo $average_visits;
 }
 
@@ -490,57 +520,49 @@ function FeedStats_Admin_Header() {
 		width: 74px;
 		height: 14px;
 		text-align: left;
-		font-size: 11px;
-		padding-left: 6px;
-		padding-top: 0;
-		padding-bottom: 15px;
+		font-size: 10px;
+		padding: 1px 15px 15px 3px;
 		color: #fff;
-		background: url('.get_settings(home).'/wp-content/plugins/wp-feedstats/wp-feedstats.gif) no-repeat 0 1px;
+		background: url('.get_settings('home').'/wp-content/plugins/wp-feedstats/wp-feedstats.gif) no-repeat 0 1px;
 		margin: 0;
 	}';
 	$fs_feed_button_style.= '</style>';
 	$fs_feed_button_style.= "\n";
+	
 	print($fs_feed_button_style);
 }
 
 // wp-dashboard (Tellerrand) information
 function FeedStats_Admin_Footer() {
-	// Daten lesen von Funktion fs_getfeeds()
 	global $wpdb;
 
 	$total_visits = $wpdb->get_var("SELECT count(*) FROM " . $wpdb->prefix . 'fs_visits');
 	$total_visits = htmlspecialchars($total_visits, ENT_QUOTES);
 
-	$time = time();
-	$time_begin = fs_getMidnight($wpdb->get_var("SELECT time_install FROM " . $wpdb->prefix . 'fs_data'));
-	$num_days = ceil(($time-$time_begin)/fs_DAY);
-	if ($num_days>get_option('fs_days'))
+	$time        = time();
+	$time_begin  = fs_getMidnight($wpdb->get_var("SELECT time_install FROM " . $wpdb->prefix . 'fs_data'));
+	$num_days    = ceil(($time-$time_begin)/fs_DAY);
+	
+	if ($num_days>get_option('fs_days')) {
 		$num_days = get_option('fs_days') + 1;
+	}
 		
 	$average_visits = ($num_days) ? round($total_visits/($num_days)) : '0';
 	$average_visits = htmlspecialchars($average_visits, ENT_QUOTES);
+	
 	$max_visits = $wpdb->get_var("SELECT max_visits FROM " . $wpdb->prefix . 'fs_data');
 	$max_visits = htmlspecialchars($max_visits, ENT_QUOTES);
+	
 	//$max_visits_time = date('j. F Y',$wpdb->get_var("SELECT max_visits_time FROM " . $wpdb->prefix . 'fs_data'));
 	$max_visits_time = htmlspecialchars(strftime('%d. %B %Y',$wpdb->get_var("SELECT max_visits_time FROM " . $wpdb->prefix . 'fs_data')), ENT_QUOTES);
 	
-		$admin = dirname($_SERVER['SCRIPT_FILENAME']);
-		$admin = substr($admin, strrpos($admin, '/')+1);
-		if ($admin == 'wp-admin' && basename($_SERVER['SCRIPT_FILENAME']) == 'index.php' and get_option('fs_ifs_dashboardinfo') == isset($_POST["get_option('fs_ifs_dashboardinfo')"]) ? $_POST["get_option('fs_ifs_dashboardinfo')"] : 1) {
-			
-			$content = "<h3>" . _('FeedStats') . " <a href='admin.php?page=wp-feedstats/wp-feedstats.php'>&raquo;</a> </h3>";
-			$content.= "<ul><li>Gesamt: " . attribute_escape($total_visits) . " (Letzten " . "$num_days" . " Tage)" . "</li>";
-			$content.= "<li>Maximum: " . attribute_escape($max_visits) ." (" . attribute_escape($max_visits_time) . ")" . "</li>";
-			$content.= "<li>Durchschnitt: " . attribute_escape($average_visits) . "</li>";
-			$content.= "</ul>";
-
-			print '<script language="javascript" type="text/javascript"> var ele = document.getElementById("zeitgeist");
-			if (ele) {
-				var div = document.createElement("DIV");
-				div.innerHTML = "'.$content.'";
-				ele.appendChild(div);
-			} </script>';
-		}
+	$content = '<h3>' . __('FeedStats', 'feedstats') . ' <a href="admin.php?page=wp-feedstats/wp-feedstats.php">&raquo;</a></h3>';
+	$content .= '<ul><li>' . __('Total', 'feedstats') . ': ' . attribute_escape($total_visits) . __(' (Last ', 'feedstats') . $num_days . __(' Days)', 'feedstats') . '</li>';
+	$content.= '<li>' . __('Maximum', 'feedstats') . ': ' . attribute_escape($max_visits) . ' (' . attribute_escape($max_visits_time) . ')</li>';
+	$content.= '<li>' . __('Average', 'feedstats') . ': ' . attribute_escape($average_visits) . '</li>';
+	$content.= "</ul>";
+		
+	print $content;
 }
 
 function fs_activate() {
@@ -557,14 +579,20 @@ if(function_exists('add_action')) {
 		add_action('init', 'fs_activate');
 		add_action('init', 'fs_versionControl');
 	}
+	
 	add_action('the_title_rss', 'fs_track');
 	add_action('the_content_rss', 'fs_track');
 	add_action('admin_menu', 'fs_addAdminMenu');
-	if (strpos($_SERVER['REQUEST_URI'], 'index.php?page=wp-feedstats') !== false) {
+	
+	if (strpos($_SERVER['REQUEST_URI'], 'page=wp-feedstats/wp-feedstats') !== false) {
 		add_action('admin_head', 'FeedStats_Admin_Header');
 	}
-	if (strpos($_SERVER['REQUEST_URI'], 'index.php') !== false) {
-		add_action('admin_footer', 'FeedStats_Admin_Footer');
+	
+	$admin = dirname($_SERVER['SCRIPT_FILENAME']);
+	$admin = substr($admin, strrpos($admin, '/')+1);
+	
+	if ($admin == 'wp-admin' && basename($_SERVER['SCRIPT_FILENAME']) == 'index.php' && get_option('fs_ifs_dashboardinfo') == '1') {
+		add_action('activity_box_end', 'FeedStats_Admin_Footer');
 	}
 }
 
@@ -573,51 +601,49 @@ function fb_admin_feedstats_option_page() {
 ?>
 
 <div class="wrap">
-	<h2><?=_e('FeedStats settings', 'feedstats');?></h2>
-	<form name="form1" method="post" action="<?=$location ?>">
+	<h2><?php echo _e('FeedStats settings', 'feedstats'); ?></h2>
+	<form name="form1" method="post" action="<?php echo $location; ?>">
 	<?php if ( function_exists('wp_nonce_field') ) {
 		wp_nonce_field('feedstats-action_' . $feedstats_nonce);
 	} ?>
-	<table width="100%" border="0">
+	<table width="100%" border="0" summary="feedstats options">
 		<tr>
-		<th width="80%" class="alternate"><?=_e('Description', 'feedstats');?> (<?=_e('Version', 'feedstats');?>: <a href="http://bueltge.de/wp-feedstats-de-plugin/171"><?php echo htmlspecialchars(FEEDSTATS_VERSION, ENT_QUOTES); ?></a>)</th>
-		<th class="alternate"><?=_e('Value', 'feedstats');?></th>
+		<th width="80%" class="alternate"><?php echo _e('Description', 'feedstats'); ?> (<?php echo _e('Version', 'feedstats'); ?>: <a href="http://bueltge.de/wp-feedstats-de-plugin/171"><?php echo htmlspecialchars(FEEDSTATS_VERSION, ENT_QUOTES); ?></a>)</th>
+		<th class="alternate"><?php echo _e('Value', 'feedstats'); ?></th>
 		</tr>
 		<tr>
-		<td><?=_e('Amount of days that is supposed to be saved in the statistics.', 'feedstats');?></td>
-		<td><input name="fs_days" value="<?=get_option("fs_days");?>" type="text" /></td>
+		<td><?php echo _e('Amount of days that is supposed to be saved in the statistics.', 'feedstats'); ?></td>
+		<td><input name="fs_days" value="<?php echo get_option("fs_days"); ?>" type="text" /></td>
 		</tr>
 		<tr>
-		<td class="alternate"><?=_e('Minimum level of WordPress-user, who is allowed to see the statistics.', 'feedstats');?></td>
-		<td class="alternate"><input name="fs_user_level" value="<?=get_option("fs_user_level");?>" type="text" /></td>
+		<td class="alternate"><?php echo _e('Minimum level of WordPress-user, who is allowed to see the statistics.', 'feedstats'); ?></td>
+		<td class="alternate"><input name="fs_user_level" value="<?php echo get_option("fs_user_level"); ?>" type="text" /></td>
 		</tr>
 		<tr>
-		<td><?=_e('Time of a stay/visit (1hour values 3600seconds is common but might be changed)','feedstats');?></td>
-		<td><input name="fs_session_timeout" value="<?=get_option("fs_session_timeout");?>" type="text" /></td>
+		<td><?php echo _e('Time of a stay/visit (1hour values 3600seconds is common but might be changed)','feedstats'); ?></td>
+		<td><input name="fs_session_timeout" value="<?php echo get_option("fs_session_timeout"); ?>" type="text" /></td>
 		</tr>
 		<tr>
-		<td class="alternate"><?=_e('Visitors onlinetime (5minutes value 300s is a recommendation)', 'feedstats');?></td>
-		<td class="alternate"><input name="fs_visits_online" value="<?=get_option("fs_visits_online");?>" type="text" /></td>
+		<td class="alternate"><?php echo _e('Visitors onlinetime (5minutes value 300s is a recommendation)', 'feedstats'); ?></td>
+		<td class="alternate"><input name="fs_visits_online" value="<?php echo get_option("fs_visits_online"); ?>" type="text" /></td>
 		</tr>
 		<tr>
-		<td><?=_e('IP, that is supposed not to be saved, ex.: your own IP', 'feedstats');?></td>
-		<td><input name="fs_ifs_not_tracked" value="<?=get_option("fs_ifs_not_tracked");?>"  type="text" /></td>
+		<td><?php echo _e('IP, that is supposed not to be saved, ex.: your own IP', 'feedstats'); echo '<small> ' . $_SERVER['REMOTE_ADDR'] . '</small>' ;?></td>
+		<td><input name="fs_ifs_not_tracked" value="<?php echo get_option("fs_ifs_not_tracked"); ?>"  type="text" /></td>
 		</tr>
-		<tr>
-		<td class="alternate"><?=_e('Statistics can be shown on the dashboard ?', 'feedstats');?></td>
+		<tr> 
+		<td class="alternate"><?php echo _e('Statistics can be shown on the dashboard ?', 'feedstats'); ?></td>
 		<td class="alternate"><input name="fs_ifs_dashboardinfo" value='1' <?php if(get_option('fs_ifs_dashboardinfo')=='1') { echo "checked='checked'";  } ?> type="checkbox" /></td>
 		</tr>
 		<tr>
 		<td>&nbsp;</td>
-		<td><input type="submit" name="fs_ifs_save" value="Speichern" /></td>
+		<td><input type="submit" name="fs_ifs_save" value="<?php _e('Update Options'); ?> &raquo;" /></td>
 		</tr>
 	</table>
 	<input name="action" value="insert" type="hidden" />
 	</form>
 	<hr/>
-	<small>
-	<?=_e('Plugin created by <a href="http://www.anieto2k.com">Andr&eacute;s Nieto</a>, in cooperation/base with plugin <a href="http://www.deltablog.com/">PopStats</a>. German and english adjustments, little extensions and new coding by <a href="http://bueltge.de">Frank Bueltge</a>. Thx to <a href="http://blog.tomk32.de">Thomas R. Koll</a> for many improvements for a better code and performance. Possible updates available at : <a href="http://www.anieto2k.com/mis-plugins/">aNieto2k</a> or <a href="http://bueltge.de/wp-feedstats-de-plugin/171/">bueltge.de</a>.', 'feedstats');?>
-	</small>
+	<small><?php echo _e('Plugin created by <a href="http://www.anieto2k.com">Andr&eacute;s Nieto</a>, in cooperation/base with plugin <a href="http://www.deltablog.com/">PopStats</a>. German and english adjustments, little extensions and new coding by <a href="http://bueltge.de">Frank Bueltge</a>. Thx to <a href="http://blog.tomk32.de">Thomas R. Koll</a> for many improvements for a better code and performance. Possible updates available at : <a href="http://www.anieto2k.com/mis-plugins/">aNieto2k</a> or <a href="http://bueltge.de/wp-feedstats-de-plugin/171/">bueltge.de</a>.', 'feedstats'); ?></small>
 </div>
 
 <?php } //End Options-Page ?>
