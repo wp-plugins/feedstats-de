@@ -386,7 +386,7 @@ function fs_displayStats() {
 					<tr>
 						<?php ksort($visits); foreach ($visits as $day=>$num) { ?>
 						<td align="center" style="padding-left: 5px; font-size: 10px; color:#A3A3A3;"><?php echo $num; ?></td>
-						<? } ?>
+						<?php } ?>
 						<td align="center" style="padding-left: 5px; font-size: 10px; color: #CCC"><?php echo $average_visits; ?></td>
 						<td align="center" style="padding-left: 5px; font-size: 10px; color:#FF0000"><?php echo $max_visits; ?></td>
 					</tr>
@@ -498,7 +498,7 @@ function fs_getfeeds() {
 			<li><?php echo _e('Average', 'feedstats'), ": ", $average_visits; ?></li>
 		</ul>
 	</div>
-	<?
+	<?php
 }
 
 // feedstats-button
