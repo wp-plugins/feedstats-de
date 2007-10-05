@@ -3,11 +3,11 @@
 Plugin Name: FeedStats
 Plugin URI: http://bueltge.de/wp-feedstats-de-plugin/171/
 Description: Simple statistictool for feeds.
-Version: 3.1
+Version: 3.2
 Author: <a href="http://www.anieto2k.com">Andres Nieto Porras</a> and <a href="http://bueltge.de">Frank Bueltge</a>
 */
 
-define('FEEDSTATS_VERSION', '3.1');
+define('FEEDSTATS_VERSION', '3.2');
 define('fs_DAY', 60*60*24);
 
 /*
@@ -20,7 +20,12 @@ for many improvements for a better code and performance
 Thx to Frank Bueltge - http://bueltge.de
 Statistic, multilingualism and improvements
 
-FeadReaderButton (gif) by http://www.nasendackel.de
+Thx to Neil - http://wmfield.idv.tw
+for traditional Chinese (zh_TW) translation
+
+FeedReaderButton (gif) by http://www.nasendackel.de
+FeedReaderButton (gif - traditional Chinese (zh_TW))
+ by http://www.wmfield.idv.tw/485
 ------------------------------------------------------
 */
 
@@ -49,6 +54,10 @@ Example for style-css:
 	background: url(wp-content/plugins/wp-feedstats/wp-feedstats.gif) no-repeat;
 	margin-bottom: 2px;
 }
+
+Example for style-css in traditional Chinese (zh_TW) translation:
+------------------------------------------------------
+	background: url(wp-content/plugins/wp-feedstats/wp-feedstats-zh_TW.gif) no-repeat;
 */
 
 if(function_exists('load_plugin_textdomain')) {
