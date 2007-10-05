@@ -37,7 +37,11 @@ See on [the official website](http://bueltge.de/wp-feedstats-de-plugin/171/ "Fee
 1. configure-area
 
 == Other Notes ==
-You can use an Button with yiur average feedreaders. Use function `fs_getfeeds_button()` and format with CSS.
+Use the follow function for write the statistic on your blog.
+
+`&lt;php fs_getfeeds(); ?&gt;`
+
+You can also use an Button with your average feedreaders. Use function `fs_getfeeds_button()` and format with CSS.
 
 _Example:_
 `&lt;div id=&quot;feeds_button&quot;&gt;&lt;?php fs_getfeeds_button(); ?&gt;&lt;/div&gt;`
@@ -54,6 +58,7 @@ _Example:_
 }`
 
 for style-css in traditional Chinese (zh_TW) translation:
+
 `#feeds_button {
 	width: 74px;
 	height: 14px;
@@ -67,6 +72,7 @@ for style-css in traditional Chinese (zh_TW) translation:
 
 = Acknowledgements =
 FeedReaderButton (gif) by [http://www.nasendackel.de](http://www.nasendackel.de "http://www.nasendackel.de")
+
 FeedReaderButton (gif - traditional Chinese (zh_TW)) by [http://www.wmfield.idv.tw/485](http://www.wmfield.idv.tw/485 "http://www.wmfield.idv.tw/485")
  
 == Frequently Asked Questions ==
