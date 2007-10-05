@@ -39,17 +39,17 @@ See on [the official website](http://bueltge.de/wp-feedstats-de-plugin/171/ "Fee
 == Other Notes ==
 Use the follow function for write the statistic on your blog.
 
-`&lt;php fs_getfeeds(); ?&gt;`
+`<php fs_getfeeds(); ?>`
 
 _Example:_
 
-`&lt;?php if (function_exists('fs_getfeeds')) : fs_getfeeds(); endif; ?&gt;`
+`<?php if (function_exists('fs_getfeeds')) : fs_getfeeds(); endif; ?>`
 
 You can also use an Button with your average feedreaders. Use function `fs_getfeeds_button()` and format with CSS.
 
 _Example:_
 
-`&lt;div id=&quot;feeds_button&quot;&gt;&lt;?php fs_getfeeds_button(); ?&gt;&lt;/div&gt;`
+`<div id="feeds_button"><?php fs_getfeeds_button(); ?></div>`
 
 `#feeds_button {
 	width: 74px;
