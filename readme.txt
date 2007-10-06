@@ -4,7 +4,7 @@ Donate link: http://bueltge.de/wunschliste/
 Tags: feed, statistics, stats, rss
 Requires at least: 1.5
 Tested up to: 2.3
-Stable tag: 3.2
+Stable tag: 3.3
 
 Simple statistictool for feeds.
 
@@ -76,10 +76,12 @@ for style-css in traditional Chinese (zh_TW) translation:
 }`
 
 = Acknowledgements =
-FeedReaderButton (gif) by [http://www.nasendackel.de](http://www.nasendackel.de "http://www.nasendackel.de")
+FeedReaderButton (gif) by [Christoph Schr&ouml;der](http://www.nasendackel.de "Christoph Schr&ouml;der")
 
-FeedReaderButton (gif - traditional Chinese (zh_TW)) by [http://www.wmfield.idv.tw/485](http://www.wmfield.idv.tw/485 "http://www.wmfield.idv.tw/485")
- 
+FeedReaderButton (gif - traditional Chinese (zh_TW)) and traditional Chinese translation by [Neil Lin](http://www.wmfield.idv.tw/485 "Neil Lin")
+
+Turkish translation by [Baris Unver](http://beyn.org "Baris Unver")
+
 == Frequently Asked Questions ==
 
 = Where can I get more information? =

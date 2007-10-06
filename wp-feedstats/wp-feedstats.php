@@ -3,11 +3,11 @@
 Plugin Name: FeedStats
 Plugin URI: http://bueltge.de/wp-feedstats-de-plugin/171/
 Description: Simple statistictool for feeds.
-Version: 3.2
+Version: 3.3
 Author: <a href="http://www.anieto2k.com">Andres Nieto Porras</a> and <a href="http://bueltge.de">Frank Bueltge</a>
 */
 
-define('FEEDSTATS_VERSION', '3.2');
+define('FEEDSTATS_VERSION', '3.3');
 define('fs_DAY', 60*60*24);
 
 /*
