@@ -23,6 +23,12 @@ Statistic, multilingualism and improvements
 Thx to Neil - http://wmfield.idv.tw
 for traditional Chinese (zh_TW) translation
 
+Thx to burningHat - http://blog.burninghat.net
+for french (fr_FR) translation
+
+Thx to Baris Unver - http://beyn.org
+for turkish (tr_TR) translation
+
 FeedReaderButton (gif) by http://www.nasendackel.de
 FeedReaderButton (gif - traditional Chinese (zh_TW))
  by http://www.wmfield.idv.tw/485
@@ -198,6 +204,7 @@ function fs_track($title = '', $more_link_text = '', $stripteaser = '', $more_fi
 
 	$time = time();
 	$url  = $_SERVER['REQUEST_URI'];
+
 
 	if ($url == get_bloginfo('rdf_url')) {
 		$url = "RDF";
@@ -582,7 +589,7 @@ function fs_activate() {
 }
 
 // Program flow
-if(function_exists('add_action')) {
+if (function_exists('add_action')) {
 	if (isset($_GET['activate']) && $_GET['activate'] == 'true') {
 		add_action('init', 'fs_generateDB');
 		add_action('init', 'fs_activate');
@@ -640,7 +647,7 @@ function fb_admin_feedstats_option_page() {
 		<td><?php echo _e('IP, that is supposed not to be saved, ex.: your own IP', 'feedstats'); echo '<small> ' . $_SERVER['REMOTE_ADDR'] . '</small>' ;?></td>
 		<td><input name="fs_ifs_not_tracked" value="<?php echo get_option("fs_ifs_not_tracked"); ?>"  type="text" /></td>
 		</tr>
-		<tr> 
+		<tr>
 		<td class="alternate"><?php echo _e('Statistics can be shown on the dashboard ?', 'feedstats'); ?></td>
 		<td class="alternate"><input name="fs_ifs_dashboardinfo" value='1' <?php if(get_option('fs_ifs_dashboardinfo')=='1') { echo "checked='checked'";  } ?> type="checkbox" /></td>
 		</tr>

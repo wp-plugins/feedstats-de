@@ -82,6 +82,8 @@ FeedReaderButton (gif - traditional Chinese (zh_TW)) and traditional Chinese tra
 
 Turkish translation by [Baris Unver](http://beyn.org "Baris Unver")
 
+French translation by [burningHat](http://blog.burninghat.net/ "burningHat")
+
 == Frequently Asked Questions ==
 
 = Where can I get more information? =
