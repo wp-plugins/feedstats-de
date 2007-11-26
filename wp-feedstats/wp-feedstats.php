@@ -3,11 +3,11 @@
 Plugin Name: FeedStats
 Plugin URI: http://bueltge.de/wp-feedstats-de-plugin/171/
 Description: Simple statistictool for feeds.
-Version: 3.3
+Version: 3.4
 Author: <a href="http://www.anieto2k.com">Andres Nieto Porras</a> and <a href="http://bueltge.de">Frank Bueltge</a>
 */
 
-define('FEEDSTATS_VERSION', '3.3');
+define('FEEDSTATS_VERSION', '3.4');
 define('fs_DAY', 60*60*24);
 
 /*
@@ -72,15 +72,6 @@ if(function_exists('load_plugin_textdomain')) {
 
 $location = get_option('siteurl') . '/wp-admin/options-general.php?page=wp-feedstats/wp-feedstats.php'; // Form Action URI
 
-if (('insert' == $_POST['action']) && $_POST['fs_ifs_save'] ) {
-	update_option("fs_days", $_POST['fs_days']);	
-	update_option("fs_user_level", $_POST['fs_user_level']);	
-	update_option("fs_session_timeout", $_POST['fs_session_timeout']);		
-	update_option("fs_visits_online", $_POST['fs_visits_online']);		
-	update_option("fs_ifs_not_tracked", $_POST['fs_ifs_not_tracked']);
-	update_option("fs_ifs_dashboardinfo", $_POST['fs_ifs_dashboardinfo']);
-}
-
 // Installation functions
 function fs_generateDB() {
 	global $wpdb;
@@ -126,7 +117,7 @@ function fs_generateDB() {
 }
 
 // Upgrade functions
-function fs_versionControl() {
+function FeedStats_versionControl() {
 	global $wpdb;
 	
 	// Version 1.6.0 to 1.7.0
@@ -159,17 +150,17 @@ function fs_versionControl() {
 }
 
 // Global set of functions
-function fs_tr($s) {
-	global $fs_tr;
+function FeedStats_tr($s) {
+	global $FeedStats_tr;
 
-	$return = ($fs_tr[$s]!='') ? $fs_tr[$s] : $s;
+	$return = ($FeedStats_tr[$s]!='') ? $FeedStats_tr[$s] : $s;
 	if (get_bloginfo('charset') == 'UTF-8') {
 		$return = utf8_encode($return);
 	}
 	return $return;
 }
 
-function fs_resetDB() {
+function FeedStats_resetDB() {
 	global $wpdb;
 	
 	$wpdb->get_var("DROP TABLE " . $wpdb->prefix . "fs_visits," . $wpdb->prefix . 'fs_data');
@@ -195,7 +186,7 @@ function fs_getMidnight($time) {
 }
 
 // Main/System functions
-function fs_track($title = '', $more_link_text = '', $stripteaser = '', $more_file = '', $cut = '', $encode_html = '') {
+function FeedStats_track($title = '', $more_link_text = '', $stripteaser = '', $more_file = '', $cut = '', $encode_html = '') {
 	if (!is_feed()) {
 		return;
 	}
@@ -275,11 +266,11 @@ function fs_track($title = '', $more_link_text = '', $stripteaser = '', $more_fi
 	return $encode_html;
 }
 
-function fs_displayStats() {
+function FeedStats_displayStats() {
 	global $wpdb;
 
-	if ($_GET['fs_action']=='reset')
-		fs_resetDB();
+	if ($_GET['fs_action'] == 'reset')
+		FeedStats_resetDB();
 		
 	$time = time();
 	
@@ -388,7 +379,7 @@ function fs_displayStats() {
 			<td colspan="3" align="right" valign="top" style="border-bottom:1px #CCC solid; border-left:1px #CCC solid; height:160px;">
 				<table align="center" cellpadding="1" cellspacing="0" style="height: 140px; border-left: 1px solid #CCC; border-bottom: 1px solid #CCC; border-right: 1px solid #CCC;" summary="feedstast view two">
 					<tr>
-						<td colspan="<?php echo count($visits); ?>" align="center"><?php echo fs_tr('Visits'); ?></td>
+						<td colspan="<?php echo count($visits); ?>" align="center"><?php echo FeedStats_tr('Visits'); ?></td>
 					</tr>
 					<tr>
 						<?php ksort($visits); foreach ($visits as $day=>$num) { ?>
@@ -450,7 +441,7 @@ function fs_displayStats() {
 						<td align="center"><?php echo $max_visits ?><br />(<?php echo $max_visits_time ?>)</td>
 					</tr>
 					<tr class="alternate"> 
-						<td align="center"><strong><?php echo _e('Total', 'feedstats'); ?></strong><br />(<?php echo str_replace('%N%', $num_days, __('Last %N% Days', 'feedstats')); ?>)</td>
+						<td align="center"><strong><?php echo _e('Total', 'feedstats'); ?></strong><br /><?php echo _e(' (Last ', 'feedstats') . $num_days . __(' Days)', 'feedstats'); ?></td>
 						<td align="center"><?php echo $total_visits ?></td>
 					</tr>
 					<tr class="alternate"> 
@@ -468,9 +459,9 @@ function fs_displayStats() {
 <?php
 }
 
-function fs_addAdminMenu() {
-	add_submenu_page('index.php', 'FeedStats', 'FeedStats', get_option('fs_user_level'), __FILE__, 'fs_displayStats');
-	add_options_page('Konfiguration FeedStats', 'FeedStats', 9, __FILE__, 'fb_admin_feedstats_option_page');
+function FeedStats_addAdminMenu() {
+	add_submenu_page('index.php', 'FeedStats', 'FeedStats', get_option('fs_user_level'), __FILE__, 'FeedStats_displayStats');
+	add_options_page(__('Konfiguration FeedStats', 'feedstats'), 'FeedStats', 9, __FILE__, 'fb_admin_feedstats_option_page');
 }
 
 function fs_getfeeds() {
@@ -498,11 +489,11 @@ function fs_getfeeds() {
 	$max_visits_time = htmlspecialchars($max_visits_time, ENT_QUOTES);
 	?>
 	<div id="feeds_readers">
-		<h3><?php echo fs_tr('FeedReaders'); ?></h3>
+		<h3><?php echo FeedStats_tr('FeedReaders'); ?></h3>
 		<ul>
-			<li><?php echo _e('Total', 'feedstats'), ": ", $total_visits; ?> <small>(<?php echo str_replace('N',$num_days,fs_tr(' Last N Days')); ?>)</small></li>
-			<li><?php echo _e('Maximum', 'feedstats'), ": ", $max_visits; ?> <small>(<?php echo $max_visits_time; ?>)</small></li>
-			<li><?php echo _e('Average', 'feedstats'), ": ", $average_visits; ?></li>
+			<li><?php echo _e('Total', 'feedstats'), ": ", attribute_escape($total_visits); ?><small><?php echo __(' (Last ', 'feedstats') . $num_days . __(' Days)', 'feedstats'); ?></small></li>
+			<li><?php echo _e('Maximum', 'feedstats'), ": ", attribute_escape($max_visits); ?> <small>(<?php echo $max_visits_time; ?>)</small></li>
+			<li><?php echo _e('Average', 'feedstats'), ": ", attribute_escape($average_visits); ?></li>
 		</ul>
 	</div>
 	<?php
@@ -581,7 +572,7 @@ function FeedStats_Admin_Footer() {
 	print $content;
 }
 
-function fs_activate() {
+function FeedStats_activate() {
 	add_option("fs_days", "15");
 	add_option("fs_user_level", "1");
 	add_option("fs_session_timeout", "3600");
@@ -592,13 +583,13 @@ function fs_activate() {
 if (function_exists('add_action')) {
 	if (isset($_GET['activate']) && $_GET['activate'] == 'true') {
 		add_action('init', 'fs_generateDB');
-		add_action('init', 'fs_activate');
-		add_action('init', 'fs_versionControl');
+		add_action('init', 'FeedStats_activate');
+		add_action('init', 'FeedStats_versionControl');
 	}
 	
-	add_action('the_title_rss', 'fs_track');
-	add_action('the_content_rss', 'fs_track');
-	add_action('admin_menu', 'fs_addAdminMenu');
+	add_action('the_title_rss', 'FeedStats_track');
+	add_action('the_content_rss', 'FeedStats_track');
+	add_action('admin_menu', 'FeedStats_addAdminMenu');
 	
 	if (strpos($_SERVER['REQUEST_URI'], 'page=wp-feedstats/wp-feedstats') !== false) {
 		add_action('admin_head', 'FeedStats_Admin_Header');
@@ -612,52 +603,129 @@ if (function_exists('add_action')) {
 	}
 }
 
+// some basic security with nonce
+if ( !function_exists('wp_nonce_field') ) {
+	function FeedStats_nonce_field($action = -1) {
+		return;
+	}
+	$FeedStats_nonce = -1;
+} else {
+	function FeedStats_nonce_field($action = -1) {
+		wp_nonce_field($action);
+	}
+	$FeedStats_nonce = 'FeedStats_nonce_field';
+}
+
+
+// random key to act an extra signature
+$FeedStats_key = get_option('FeedStats_key');
+
+if ($FeedStats_key == '') {
+	$FeedStats_key = add_option('FeedStats_key', rand(0, 9999));
+}
+
 // Option Page
 function fb_admin_feedstats_option_page() {
+	global $wpdb, $FeedStats_nonce, $FeedStats_key;
+
+	if ( ($_POST['action'] == 'insert') && $_POST['fs_ifs_save'] ) {
+	
+		if (function_exists('current_user_can') && current_user_can('edit_plugins') && $_POST['FeedStats_key'] == $FeedStats_key) {
+			check_admin_referer('$FeedStats_nonce', $FeedStats_nonce);
+
+			update_option("fs_days", $_POST['fs_days']);	
+			update_option("fs_user_level", $_POST['fs_user_level']);	
+			update_option("fs_session_timeout", $_POST['fs_session_timeout']);		
+			update_option("fs_visits_online", $_POST['fs_visits_online']);		
+			update_option("fs_ifs_not_tracked", $_POST['fs_ifs_not_tracked']);
+			update_option("fs_ifs_dashboardinfo", $_POST['fs_ifs_dashboardinfo']);
+			
+			echo '<div class="updated"><p>' . __('The options have been saved!', 'feedstats') . '</p></div>';
+		} else {
+			wp_die('<p>'.__('You do not have sufficient permissions to edit plugins for this blog.').'</p>');
+		}
+	}
+	
+	if ( ($_POST['action'] == 'deactivate') && $_POST['fs_ifs_deactivate'] ) {
+
+		if (function_exists('current_user_can') && current_user_can('edit_plugins') && $_POST['FeedStats_key'] == $FeedStats_key) {
+			check_admin_referer('$FeedStats_nonce', $FeedStats_nonce);
+			
+			$wpdb->query ("DROP TABLE {$wpdb->prefix}fs_data");
+			$wpdb->query ("DROP TABLE {$wpdb->prefix}fs_visits");
+			
+			delete_option("fs_days", $_POST['fs_days']);	
+			delete_option("fs_user_level", $_POST['fs_user_level']);	
+			delete_option("fs_session_timeout", $_POST['fs_session_timeout']);		
+			delete_option("fs_visits_online", $_POST['fs_visits_online']);		
+			delete_option("fs_ifs_not_tracked", $_POST['fs_ifs_not_tracked']);
+			delete_option("fs_ifs_dashboardinfo", $_POST['fs_ifs_dashboardinfo']);
+
+			echo '<div class="updated"><p>' . __('The options have been deleted!', 'feedstats') . '</p></div>';
+		} else {
+			wp_die('<p>'.__('You do not have sufficient permissions to edit plugins for this blog.').'</p>');
+		}
+	}
 ?>
 
 <div class="wrap">
 	<h2><?php echo _e('FeedStats settings', 'feedstats'); ?></h2>
-	<form name="form1" method="post" action="<?php echo $location; ?>">
-	<?php if ( function_exists('wp_nonce_field') ) {
-		wp_nonce_field('feedstats-action_' . $feedstats_nonce);
-	} ?>
-	<table width="100%" border="0" summary="feedstats options">
-		<tr>
-		<th width="80%" class="alternate"><?php echo _e('Description', 'feedstats'); ?> (<?php echo _e('Version', 'feedstats'); ?>: <a href="http://bueltge.de/wp-feedstats-de-plugin/171"><?php echo htmlspecialchars(FEEDSTATS_VERSION, ENT_QUOTES); ?></a>)</th>
-		<th class="alternate"><?php echo _e('Value', 'feedstats'); ?></th>
-		</tr>
-		<tr>
-		<td><?php echo _e('Amount of days that is supposed to be saved in the statistics.', 'feedstats'); ?></td>
-		<td><input name="fs_days" value="<?php echo get_option("fs_days"); ?>" type="text" /></td>
-		</tr>
-		<tr>
-		<td class="alternate"><?php echo _e('Minimum level of WordPress-user, who is allowed to see the statistics.', 'feedstats'); ?></td>
-		<td class="alternate"><input name="fs_user_level" value="<?php echo get_option("fs_user_level"); ?>" type="text" /></td>
-		</tr>
-		<tr>
-		<td><?php echo _e('Time of a stay/visit (1hour values 3600seconds is common but might be changed)','feedstats'); ?></td>
-		<td><input name="fs_session_timeout" value="<?php echo get_option("fs_session_timeout"); ?>" type="text" /></td>
-		</tr>
-		<tr>
-		<td class="alternate"><?php echo _e('Visitors onlinetime (5minutes value 300s is a recommendation)', 'feedstats'); ?></td>
-		<td class="alternate"><input name="fs_visits_online" value="<?php echo get_option("fs_visits_online"); ?>" type="text" /></td>
-		</tr>
-		<tr>
-		<td><?php echo _e('IP, that is supposed not to be saved, ex.: your own IP', 'feedstats'); echo '<small> ' . $_SERVER['REMOTE_ADDR'] . '</small>' ;?></td>
-		<td><input name="fs_ifs_not_tracked" value="<?php echo get_option("fs_ifs_not_tracked"); ?>"  type="text" /></td>
-		</tr>
-		<tr>
-		<td class="alternate"><?php echo _e('Statistics can be shown on the dashboard ?', 'feedstats'); ?></td>
-		<td class="alternate"><input name="fs_ifs_dashboardinfo" value='1' <?php if(get_option('fs_ifs_dashboardinfo')=='1') { echo "checked='checked'";  } ?> type="checkbox" /></td>
-		</tr>
-		<tr>
-		<td>&nbsp;</td>
-		<td><input type="submit" name="fs_ifs_save" value="<?php _e('Update Options'); ?> &raquo;" /></td>
-		</tr>
-	</table>
-	<input name="action" value="insert" type="hidden" />
-	</form>
+	<fieldset class="options">
+		<legend><?php _e('FeedStats settings', 'feedstats'); ?></legend>
+		<form name="form1" method="post" action="<?php echo $location; ?>">
+		<table width="100%" border="0" summary="feedstats options">
+			<tr>
+				<th width="80%" class="alternate"><?php echo _e('Description', 'feedstats'); ?> (<?php echo _e('Version', 'feedstats'); ?>: <a href="http://bueltge.de/wp-feedstats-de-plugin/171"><?php echo htmlspecialchars(FEEDSTATS_VERSION, ENT_QUOTES); ?></a>)</th>
+				<th class="alternate"><?php echo _e('Value', 'feedstats'); ?></th>
+			</tr>
+			<tr>
+				<td><?php echo _e('Amount of days that is supposed to be saved in the statistics.', 'feedstats'); ?></td>
+				<td><input name="fs_days" value="<?php echo get_option("fs_days"); ?>" type="text" /></td>
+			</tr>
+			<tr>
+				<td class="alternate"><?php echo _e('Minimum level of WordPress-user, who is allowed to see the statistics.', 'feedstats'); ?></td>
+				<td class="alternate"><input name="fs_user_level" value="<?php echo get_option("fs_user_level"); ?>" type="text" /></td>
+			</tr>
+			<tr>
+				<td><?php echo _e('Time of a stay/visit (1hour values 3600seconds is common but might be changed)','feedstats'); ?></td>
+				<td><input name="fs_session_timeout" value="<?php echo get_option("fs_session_timeout"); ?>" type="text" /></td>
+			</tr>
+			<tr>
+				<td class="alternate"><?php echo _e('Visitors onlinetime (5minutes value 300s is a recommendation)', 'feedstats'); ?></td>
+				<td class="alternate"><input name="fs_visits_online" value="<?php echo get_option("fs_visits_online"); ?>" type="text" /></td>
+			</tr>
+			<tr>
+				<td><?php echo _e('IP, that is supposed not to be saved, ex.: your own IP', 'feedstats'); echo '<small> ' . $_SERVER['REMOTE_ADDR'] . '</small>' ;?></td>
+				<td><input name="fs_ifs_not_tracked" value="<?php echo get_option("fs_ifs_not_tracked"); ?>"  type="text" /></td>
+			</tr>
+			<tr>
+				<td class="alternate"><?php echo _e('Statistics can be shown on the dashboard ?', 'feedstats'); ?></td>
+				<td class="alternate"><input name="fs_ifs_dashboardinfo" value='1' <?php if(get_option('fs_ifs_dashboardinfo')=='1') { echo "checked='checked'";  } ?> type="checkbox" /></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>
+					<?php FeedStats_nonce_field('$FeedStats_nonce', $FeedStats_nonce); ?>
+					<input type="hidden" name="FeedStats_key" value="<?php echo $FeedStats_key ?>" />
+					<input type="hidden" name="action" value="insert" />
+					<input type="submit" name="fs_ifs_save" value="<?php _e('Update Options'); ?> &raquo;" />
+				</td>
+			</tr>
+		</table>
+		</form>
+	</fieldset>
+	
+	<fieldset class="options">
+		<legend><?php _e('Delete Options', 'feedstats'); ?></legend>
+		<p><?php _e('The follow button delete all tables and options for the FeedStats plugin. Please use it, <strong>before</strong> deactivate the plugin.<br /><strong>Attention: </strong>You <strong>cannot</strong> undo any changes made by this plugin.', 'feedstats'); ?></p>
+		<form name="form2" method="post" action="<?php echo $location; ?>">
+			<?php FeedStats_nonce_field('$FeedStats_nonce', $FeedStats_nonce); ?>
+			<input type="hidden" name="FeedStats_key" value="<?php echo $FeedStats_key ?>" />
+			<input type="hidden" name="action" value="deactivate" />
+			<input type="submit" name="fs_ifs_deactivate" value="<?php _e('Delete Options'); ?> &raquo;" />
+		</form>
+	</fieldset>
+	
 	<hr/>
 	<small><?php echo _e('Plugin created by <a href="http://www.anieto2k.com">Andr&eacute;s Nieto</a>, in cooperation/base with plugin <a href="http://www.deltablog.com/">PopStats</a>. German and english adjustments, little extensions and new coding by <a href="http://bueltge.de">Frank Bueltge</a>. Thx to <a href="http://blog.tomk32.de">Thomas R. Koll</a> for many improvements for a better code and performance. Possible updates available at : <a href="http://www.anieto2k.com/mis-plugins/">aNieto2k</a> or <a href="http://bueltge.de/wp-feedstats-de-plugin/171/">bueltge.de</a>.', 'feedstats'); ?></small>
 </div>
