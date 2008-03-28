@@ -3,7 +3,7 @@ Contributors: Bueltge
 Donate link: http://bueltge.de/wunschliste/
 Tags: feed, statistics, stats, rss
 Requires at least: 1.5
-Tested up to: 2.3
+Tested up to: 2.5
 Stable tag: 3.3
 
 Simple statistictool for feeds.
@@ -23,6 +23,9 @@ _You can customize in options:_
 The Plugin is in english language and have the german and traditional chinese translation in language-file. For traditional chinese translation give it a another icon for feedreaders in an button.
 
 Please visit [the official website](http://bueltge.de/wp-feedstats-de-plugin/171/ "FeedStats") for further details and the latest information on this plugin.
+
+=Information=
+The version >3.4 has a new style, activate for WordPress 2.5. You can found the version 3.4 in the SVN.
 
 == Installation ==
 1. Unpack the download-package
@@ -83,6 +86,8 @@ FeedReaderButton (gif - traditional Chinese (zh_TW)) and traditional Chinese tra
 Turkish translation by [Baris Unver](http://beyn.org "Baris Unver")
 
 French translation by [burningHat](http://blog.burninghat.net/ "burningHat")
+
+Spanich translation by [fportero](http://www.tengotiempo.com "fportero")
 
 = Licence =
 Good news, this plugin is free for everyone! Since it's released under the GPL, you can use it free of charge on your personal or commercial blog. But if you enjoy this plugin, you can thank me and leave a [small donation](http://bueltge.de/wunschliste/ "Wishliste and Donate") for the time I’ve spent writing and supporting this plugin. And I really don’t want to know how many hours of my life this plugin has already eaten ;)

@@ -3,7 +3,7 @@
 Plugin Name: FeedStats
 Plugin URI: http://bueltge.de/wp-feedstats-de-plugin/171/
 Description: Simple statistictool for feeds.
-Version: 3.4
+Version: 3.5
 Author: <a href="http://www.anieto2k.com">Andres Nieto Porras</a> and <a href="http://bueltge.de">Frank Bueltge</a>
 */
 
@@ -92,15 +92,12 @@ function fs_generateDB() {
 					PRIMARY KEY (visit_id)
 				) TYPE=MyISAM;";
 	
-	if (file_exists(ABSPATH . '/wp-admin/upgrade-functions.php')) {
-		@require_once (ABSPATH . '/wp-admin/upgrade-functions.php');
-		// It's Wordpress 1.5.2 or 2.x. since it has been loaded successfully
-	} elseif (file_exists(ABSPATH . WPINC . '/upgrade.php')) {
-		@require_once (ABSPATH . WPINC . '/upgrade.php');
-		// In Wordpress 2.1, a new file name is being used
-	} elseif (file_exists(ABSPATH . '/wp-admin/includes/upgrade.php')) {
+	if (file_exists(ABSPATH . '/wp-admin/includes/upgrade.php')) {
 		@require_once (ABSPATH . '/wp-admin/includes/upgrade.php');
-		// for WordPress 2.3
+	} elseif (file_exists(ABSPATH . WPINC . '/upgrade-functions.php')) {
+		@require_once (ABSPATH . WPINC . '/upgrade-functions.php');
+	} elseif (file_exists(ABSPATH . '/wp-admin/upgrades.php')) {
+		@require_once (ABSPATH . '/wp-admin/upgrades.php');
 	} else {
 		die (__('Error in file: ' . __FILE__ . ' on line: ' . __LINE__ . '.<br />The Wordpress file "upgrade-functions.php" or "upgrade.php" could not be included.'));
 	}
@@ -347,113 +344,138 @@ function FeedStats_displayStats() {
 ?>
 	
 	<div class="wrap">
-	<h2>FeedStats</h2>
-	<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="feedstast view">
-		<tr> 
-			<td width="6%" rowspan="2" valign="top">
-				<table cellpadding="3" cellspacing="3" summary="feedstast view one">
-					<tr>
-						<th scope="col" width="100"><?php echo _e('Day', 'feedstats'); ?></th>
-						<th scope="col" width="110"><?php echo _e('Visits', 'feedstats'); ?></th>
-					</tr>
-					<?php
-						krsort($visits);
-						$class = '';
-						foreach ($visits as $day=>$num) {
-							$class = ($class=='alternate') ? '' : 'alternate';
-							if (date('j M Y',$day)==date('j M Y',time())) {
-								$day_s = __('Today', 'feedstats');
-							} else if (date(get_option('date_format'),$day)==date(get_option('date_format'),$time_begin)) {
-								$day_s = __('First Day', 'feedstats');
-							} else {
-								$day_s = date('j. M',$day);
-							}
-					?>
-					<tr class="<?php echo $class; ?>">
-						<td align="center"><strong><?php echo $day_s; ?></strong></td>
-						<td align="center"><?php echo $num; ?></td>
-					</tr>
-					<?php } //end foreach ?>
-				</table> 
-			</td>
-			<td colspan="3" align="right" valign="top" style="border-bottom:1px #CCC solid; border-left:1px #CCC solid; height:160px;">
-				<table align="center" cellpadding="1" cellspacing="0" style="height: 140px; border-left: 1px solid #CCC; border-bottom: 1px solid #CCC; border-right: 1px solid #CCC;" summary="feedstast view two">
-					<tr>
-						<td colspan="<?php echo count($visits); ?>" align="center"><?php echo FeedStats_tr('Visits'); ?></td>
-					</tr>
-					<tr>
-						<?php ksort($visits); foreach ($visits as $day=>$num) { ?>
-						<td align="center" style="padding-left: 5px; font-size: 10px; color:#A3A3A3;"><?php echo $num; ?></td>
-						<?php } ?>
-						<td align="center" style="padding-left: 5px; font-size: 10px; color: #CCC"><?php echo $average_visits; ?></td>
-						<td align="center" style="padding-left: 5px; font-size: 10px; color:#FF0000"><?php echo $max_visits; ?></td>
-					</tr>
-					<tr>
-						<?php foreach ($visits as $day=>$num) { ?>
-						<td valign="bottom"><div title="<?php echo date('j. M',$day), ": ", $num; ?>" style="width: 16px; height: <?php echo round(100*($num/$max_visits)); ?>px; background-color: #A3A3A3; border-bottom: 1px solid #A3A3A3;">&nbsp;</div></td>
-						<?php } ?>
-						<td valign="bottom" style="padding-left: 5px;"><div title="<?php echo _e('Average', 'feedstats').": ".$average_visits; ?>" style="width: 16px; height: <?php echo round(100*($average_visits/$max_visits)); ?>px; background-color: #CCC; border-bottom: 1px solid #CCC;">&nbsp;</div></td>
-						<td valign="bottom" style="padding-left: 5px;"><div title="<?php echo _e('Maximum', 'feedstats').": ".$max_visits; ?>" style="width: 16px; height: <?php echo round(100*($max_visits/$max_visits)); ?>px; background-color:#FFCC66; border-bottom: 1px solid #CCC;">&nbsp;</div></td>
-					</tr>
-					<tr>
-						<?php foreach ($visits as $day=>$num) { ?>
-						<td align="center" style="font-size: 10px;"><?php echo date('j',$day); ?></td>
-						<?php } ?>
-						<td align="center" style="padding-left: 5px; font-size: 10px;">&Oslash;</td>
-						<td align="center" style="padding-left: 5px; font-size: 10px; color:#FF0000">Max</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		<tr> 
-			<td width="45%" align="right" valign="top" style="border-right:1px #CCC solid;">
-				<table align="center" cellpadding="3" cellspacing="3" style="margin-top: 30px;" summary="feedstast view three">
-					<tr> 
-						<th width="278" colspan="2" scope="col"><?php echo str_replace('%N%', get_option('fs_num_referers'), __('Last %N% Referer', 'feedstats')); ?></th>
-					</tr>
-					<?php
-					if ($referers) {
-						arsort($referers);
-						$class = '';
-						foreach ($referers as $r) {
-							$class = ($class=='alternate') ? '' : 'alternate';
-					?>
-					<tr class="<?php echo $class; ?>"> 
-						<td><?php echo htmlspecialchars($r['cont']); ?></td>
-						<td><?php echo htmlspecialchars((strlen($r['title'])>50) ? substr_replace($r['title'],"...",50) : $r['title']); ?></td>
-					</tr>
-					<?php } //end foreach
-					} //end if ?>
-				</table>
-			</td>
-			<td width="35%" align="right" valign="top" style="border-right:1px #CCC solid; ">
-				<table cellpadding="3" cellspacing="3" summary="feedstast view four">
-					<tr> 
-						<th scope="col" width="100"><?php echo _e('Statistic', 'feedstats'); ?></th>
-						<th scope="col" width="110"><?php echo _e('Visits', 'feedstats'); ?></th>
-					</tr>
-					<tr class="alternate"> 
-						<td align="center"><strong><?php echo _e('Average', 'feedstats'); ?></strong></td>
-						<td align="center"><?php echo ($average_visits!=0) ? $average_visits : '-' ?></td>
-					</tr>
-					<tr class="alternate"> 
-						<td align="center"><strong><?php echo _e('Maximum', 'feedstats'); ?></strong></td>
-						<td align="center"><?php echo $max_visits ?><br />(<?php echo $max_visits_time ?>)</td>
-					</tr>
-					<tr class="alternate"> 
-						<td align="center"><strong><?php echo _e('Total', 'feedstats'); ?></strong><br /><?php echo _e(' (Last ', 'feedstats') . $num_days . __(' Days)', 'feedstats'); ?></td>
-						<td align="center"><?php echo $total_visits ?></td>
-					</tr>
-					<tr class="alternate"> 
-						<td align="center"><strong><?php echo _e('Maximum online', 'feedstats'); ?></strong></td>
-						<td align="center" colspan="2"><?php echo $max_online ?><br />(<?php echo $max_online_time ?>)</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-	</table>
-	<p id="feeds_button"><?php fs_getfeeds_button(); ?></p>
-	<p align="center" style="margin-top: 50px;"><a href="index.php?page=wp-feedstats/wp-feedstats.php&amp;fs_action=reset" onclick="return confirm('<?php echo _e('You are about to delete all data and reset stats. OK to delete, Cancel to stop', 'feedstats'); ?>');">&raquo;&raquo; <?php echo _e('Reset Statistic', 'feedstats'); ?> &laquo;&laquo;</a></p>
+		<p id="feeds_button"><?php fs_getfeeds_button(); ?></p>
+		<h2>FeedStats</h2>
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="feedstast view">
+			<tr valign="top">
+				<td colspan="3" align="right" valign="top" style="height:160px;">
+	
+					<table align="center" cellpadding="1" cellspacing="0" style="height: 140px; border: 1px solid #CCC;" summary="feedstast view two">
+						<tr valign="top">
+							<th colspan="<?php echo count($visits); ?>" align="center"><?php echo FeedStats_tr('Visits'); ?></th>
+						</tr>
+						<tr>
+							<?php ksort($visits); foreach ($visits as $day=>$num) { ?>
+							<td align="center" style="padding-left: 5px; font-size: 10px; color:#A3A3A3;"><?php echo $num; ?></td>
+							<?php } ?>
+							<td align="center" style="padding-left: 5px; font-size: 10px; color: #CCC"><?php echo $average_visits; ?></td>
+							<td align="center" style="padding-left: 5px; font-size: 10px; color:#FF0000"><?php echo $max_visits; ?></td>
+						</tr>
+						<tr>
+							<?php foreach ($visits as $day=>$num) { ?>
+							<td valign="bottom" align="center"><div title="<?php echo date('j. M',$day), ": ", $num; ?>" style="width: 16px; height: <?php echo round(100*($num/$max_visits)); ?>px; background-color: #A3A3A3; border-bottom: 1px solid #A3A3A3;">&nbsp;</div></td>
+							<?php } ?>
+							<td valign="bottom" style="padding-left: 5px;"><div title="<?php echo _e('Average', 'feedstats').": ".$average_visits; ?>" style="width: 16px; height: <?php echo round(100*($average_visits/$max_visits)); ?>px; background-color: #CCC; border-bottom: 1px solid #CCC;">&nbsp;</div></td>
+							<td valign="bottom" style="padding-left: 5px;"><div title="<?php echo _e('Maximum', 'feedstats').": ".$max_visits; ?>" style="width: 16px; height: <?php echo round(100*($max_visits/$max_visits)); ?>px; background-color:#FFCC66; border-bottom: 1px solid #CCC;">&nbsp;</div></td>
+						</tr>
+						<tr>
+							<?php foreach ($visits as $day=>$num) { ?>
+							<td align="center" style="font-size: 10px;"><?php echo date('j',$day); ?></td>
+							<?php } ?>
+							<td align="center" style="padding-left: 5px; font-size: 10px;">&Oslash;</td>
+							<td align="center" style="padding-left: 5px; font-size: 10px; color:#FF0000">Max</td>
+						</tr>
+					</table>
+	
+				</td>
+			</tr>
+
+			<tr valign="top"> 
+				<td width="6%" rowspan="2" valign="top">
+					
+					<table summary="feedstast view one" class="widefat" style="margin: 5px 5px 0 0;">
+						<thead>
+						<tr valign="top">
+							<th><?php echo _e('Day', 'feedstats'); ?></th>
+							<th><?php echo _e('Visits', 'feedstats'); ?></th>
+						</tr>
+						</thead>
+						<tbody>
+						<?php
+							krsort($visits);
+							$class = '';
+							foreach ($visits as $day=>$num) {
+								$class = ($class=='form-invalid') ? '' : 'form-invalid';
+								if (date('j M Y',$day)==date('j M Y',time())) {
+									$day_s = __('Today', 'feedstats');
+								} else if (date(get_option('date_format'),$day)==date(get_option('date_format'),$time_begin)) {
+									$day_s = __('First Day', 'feedstats');
+								} else {
+									$day_s = date('j.M',$day);
+								}
+						?>
+						<tr class="<?php echo $class; ?>">
+							<th><?php echo $day_s; ?></th>
+							<td><?php echo $num; ?></td>
+						</tr>
+						<?php } //end foreach ?>
+					</tbody>
+					</table> 
+					
+				</td>
+			</tr>
+			<tr valign="top"> 
+				<td width="45%" align="right" valign="top" >
+					
+					<table style="margin: 5px 5px 0 0;" summary="feedstast view three" class="widefat">
+						<thead>
+							<tr valign="top"> 
+							<th width="278" colspan="2" scope="col"><?php echo str_replace('%N%', get_option('fs_num_referers'), __('Last %N% Referer', 'feedstats')); ?></th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php
+							if ($referers) {
+								arsort($referers);
+								$class = '';
+								foreach ($referers as $r) {
+									$class = ($class=='form-invalid') ? '' : 'form-invalid';
+							?>
+							<tr class="<?php echo $class; ?>"> 
+								<td><?php echo htmlspecialchars($r['cont']); ?></td>
+								<td><?php echo htmlspecialchars((strlen($r['title'])>50) ? substr_replace($r['title'],"...",50) : $r['title']); ?></td>
+							</tr>
+							<?php } //end foreach
+							} //end if ?>
+						</tbody>
+					</table>
+					
+				</td>
+				<td width="35%" align="right" valign="top">
+					
+					<table style="margin: 5px 0 0 0;" summary="feedstast view four" class="widefat">
+						<thead>
+							<tr> 
+								<th><?php echo _e('Statistic', 'feedstats'); ?></th>
+								<th><?php echo _e('Visits', 'feedstats'); ?></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="form-invalid"> 
+								<th><?php echo _e('Average', 'feedstats'); ?></th>
+								<td><?php echo ($average_visits!=0) ? $average_visits : '-' ?></td>
+							</tr>
+							<tr> 
+								<th><?php echo _e('Maximum', 'feedstats'); ?></th>
+								<td><?php echo $max_visits ?> (<?php echo $max_visits_time ?>)</td>
+							</tr>
+							<tr class="form-invalid"> 
+								<th><?php echo _e('Total', 'feedstats'); ?> <?php echo _e(' (Last ', 'feedstats') . $num_days . __(' Days)', 'feedstats'); ?></th>
+								<td><?php echo $total_visits ?></td>
+							</tr>
+							<tr> 
+								<th><?php echo _e('Maximum online', 'feedstats'); ?></th>
+								<td><?php echo $max_online ?> (<?php echo $max_online_time ?>)</td>
+							</tr>
+							</tbody>
+					</table>
+					
+				</td>
+			</tr>
+		</table>
+	
+		<h3><?php echo _e('Reset Statistic', 'feedstats'); ?></h3>
+		<p><a href="index.php?page=wp-feedstats/wp-feedstats.php&amp;fs_action=reset" onclick="return confirm('<?php echo _e('You are about to delete all data and reset stats. OK to delete, Cancel to stop', 'feedstats'); ?>');">&raquo;&raquo; <?php echo _e('Reset Statistic', 'feedstats'); ?> &laquo;&laquo;</a></p>
 	</div>
 
 <?php
@@ -524,6 +546,7 @@ function fs_getfeeds_button() {
 function FeedStats_Admin_Header() {
 	$fs_feed_button_style = '<style type="text/css" media="screen">';
 	$fs_feed_button_style.= '#feeds_button {
+		float: right;
 		width: 74px;
 		height: 14px;
 		text-align: left;
@@ -572,6 +595,8 @@ function FeedStats_Admin_Footer() {
 	print $content;
 }
 
+
+// Program flow
 function FeedStats_activate() {
 	add_option("fs_days", "15");
 	add_option("fs_user_level", "1");
@@ -579,14 +604,14 @@ function FeedStats_activate() {
 	add_option("fs_visits_online", "300");
 }
 
-// Program flow
-if (function_exists('add_action')) {
-	if (isset($_GET['activate']) && $_GET['activate'] == 'true') {
-		add_action('init', 'fs_generateDB');
-		add_action('init', 'FeedStats_activate');
-		add_action('init', 'FeedStats_versionControl');
-	}
-	
+if ( function_exists('register_activation_hook') ) {
+	register_activation_hook(__FILE__, 'fs_generateDB');
+	register_activation_hook(__FILE__, 'FeedStats_activate');
+	register_activation_hook(__FILE__, 'FeedStats_versionControl');
+}
+
+
+if ( function_exists('add_action') ) {
 	add_action('the_title_rss', 'FeedStats_track');
 	add_action('the_content_rss', 'FeedStats_track');
 	add_action('admin_menu', 'FeedStats_addAdminMenu');
@@ -603,35 +628,25 @@ if (function_exists('add_action')) {
 	}
 }
 
+
 // some basic security with nonce
 if ( !function_exists('wp_nonce_field') ) {
-	function FeedStats_nonce_field($action = -1) {
-		return;
-	}
+	function FeedStats_nonce_field($action = -1) { return; }
 	$FeedStats_nonce = -1;
 } else {
-	function FeedStats_nonce_field($action = -1) {
-		wp_nonce_field($action);
-	}
-	$FeedStats_nonce = 'FeedStats_nonce_field';
+	function FeedStats_nonce_field($action = -1) { return wp_nonce_field($action); }
+	$FeedStats_nonce = 'FeedStats-update-key';
 }
 
-
-// random key to act an extra signature
-$FeedStats_key = get_option('FeedStats_key');
-
-if ($FeedStats_key == '') {
-	$FeedStats_key = add_option('FeedStats_key', rand(0, 9999));
-}
 
 // Option Page
 function fb_admin_feedstats_option_page() {
-	global $wpdb, $FeedStats_nonce, $FeedStats_key;
+	global $wpdb;
 
 	if ( ($_POST['action'] == 'insert') && $_POST['fs_ifs_save'] ) {
 	
-		if (function_exists('current_user_can') && current_user_can('edit_plugins') && $_POST['FeedStats_key'] == $FeedStats_key) {
-			check_admin_referer('$FeedStats_nonce', $FeedStats_nonce);
+		if ( function_exists('current_user_can') && current_user_can('edit_plugins') ) {
+			check_admin_referer($FeedStats_nonce);
 
 			update_option("fs_days", $_POST['fs_days']);	
 			update_option("fs_user_level", $_POST['fs_user_level']);	
@@ -648,8 +663,8 @@ function fb_admin_feedstats_option_page() {
 	
 	if ( ($_POST['action'] == 'deactivate') && $_POST['fs_ifs_deactivate'] ) {
 
-		if (function_exists('current_user_can') && current_user_can('edit_plugins') && $_POST['FeedStats_key'] == $FeedStats_key) {
-			check_admin_referer('$FeedStats_nonce', $FeedStats_nonce);
+		if ( function_exists('current_user_can') && current_user_can('edit_plugins') ) {
+			check_admin_referer($FeedStats_nonce);
 			
 			$wpdb->query ("DROP TABLE {$wpdb->prefix}fs_data");
 			$wpdb->query ("DROP TABLE {$wpdb->prefix}fs_visits");
@@ -670,64 +685,55 @@ function fb_admin_feedstats_option_page() {
 
 <div class="wrap">
 	<h2><?php echo _e('FeedStats settings', 'feedstats'); ?></h2>
-	<fieldset class="options">
-		<legend><?php _e('FeedStats settings', 'feedstats'); ?></legend>
-		<form name="form1" method="post" action="<?php echo $location; ?>">
-		<table width="100%" border="0" summary="feedstats options">
-			<tr>
-				<th width="80%" class="alternate"><?php echo _e('Description', 'feedstats'); ?> (<?php echo _e('Version', 'feedstats'); ?>: <a href="http://bueltge.de/wp-feedstats-de-plugin/171"><?php echo htmlspecialchars(FEEDSTATS_VERSION, ENT_QUOTES); ?></a>)</th>
-				<th class="alternate"><?php echo _e('Value', 'feedstats'); ?></th>
+	<h3><?php _e('FeedStats settings', 'feedstats'); ?></h3>
+	<form name="form1" method="post" action="<?php echo $location; ?>">
+		<?php FeedStats_nonce_field($FeedStats_nonce); ?>
+
+		<table summary="feedstats options" class="form-table">
+			<tr valign="top">
+				<th><?php echo _e('Days', 'feedstats'); ?></th>
+				<td><input name="fs_days" value="<?php echo get_option("fs_days"); ?>" type="text" /><br /><?php echo _e('Amount of days that is supposed to be saved in the statistics.', 'feedstats'); ?></td>
 			</tr>
-			<tr>
-				<td><?php echo _e('Amount of days that is supposed to be saved in the statistics.', 'feedstats'); ?></td>
-				<td><input name="fs_days" value="<?php echo get_option("fs_days"); ?>" type="text" /></td>
+			<tr valign="top">
+				<th><?php echo _e('User Level', 'feedstats'); ?></th>
+				<td><input name="fs_user_level" value="<?php echo get_option("fs_user_level"); ?>" type="text" /><br /><?php echo _e('Minimum level of WordPress-user, who is allowed to see the statistics.', 'feedstats'); ?></td>
 			</tr>
-			<tr>
-				<td class="alternate"><?php echo _e('Minimum level of WordPress-user, who is allowed to see the statistics.', 'feedstats'); ?></td>
-				<td class="alternate"><input name="fs_user_level" value="<?php echo get_option("fs_user_level"); ?>" type="text" /></td>
+			<tr valign="top">
+				<th><?php echo _e('Sesssion Timeout', 'feedstats'); ?></th>
+				<td><input name="fs_session_timeout" value="<?php echo get_option("fs_session_timeout"); ?>" type="text" /><br /><?php echo _e('Time of a stay/visit (1hour values 3600seconds is common but might be changed)','feedstats'); ?></td>
 			</tr>
-			<tr>
-				<td><?php echo _e('Time of a stay/visit (1hour values 3600seconds is common but might be changed)','feedstats'); ?></td>
-				<td><input name="fs_session_timeout" value="<?php echo get_option("fs_session_timeout"); ?>" type="text" /></td>
+			<tr valign="top">
+				<th><?php echo _e('Visit Online', 'feedstats'); ?></th>
+				<td><input name="fs_visits_online" value="<?php echo get_option("fs_visits_online"); ?>" type="text" /><br /><?php echo _e('Visitors onlinetime (5minutes value 300s is a recommendation)', 'feedstats'); ?></td>
 			</tr>
-			<tr>
-				<td class="alternate"><?php echo _e('Visitors onlinetime (5minutes value 300s is a recommendation)', 'feedstats'); ?></td>
-				<td class="alternate"><input name="fs_visits_online" value="<?php echo get_option("fs_visits_online"); ?>" type="text" /></td>
+			<tr valign="top">
+				<th><?php echo _e('Not tracked', 'feedstats'); ?></th>
+				<td><input name="fs_ifs_not_tracked" value="<?php echo get_option("fs_ifs_not_tracked"); ?>"  type="text" /><br /><?php echo _e('IP, that is supposed not to be saved, ex.: your own IP', 'feedstats'); echo '<small> ' . $_SERVER['REMOTE_ADDR'] . '</small>' ;?></td>
 			</tr>
-			<tr>
-				<td><?php echo _e('IP, that is supposed not to be saved, ex.: your own IP', 'feedstats'); echo '<small> ' . $_SERVER['REMOTE_ADDR'] . '</small>' ;?></td>
-				<td><input name="fs_ifs_not_tracked" value="<?php echo get_option("fs_ifs_not_tracked"); ?>"  type="text" /></td>
-			</tr>
-			<tr>
-				<td class="alternate"><?php echo _e('Statistics can be shown on the dashboard ?', 'feedstats'); ?></td>
-				<td class="alternate"><input name="fs_ifs_dashboardinfo" value='1' <?php if(get_option('fs_ifs_dashboardinfo')=='1') { echo "checked='checked'";  } ?> type="checkbox" /></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td>
-					<?php FeedStats_nonce_field('$FeedStats_nonce', $FeedStats_nonce); ?>
-					<input type="hidden" name="FeedStats_key" value="<?php echo $FeedStats_key ?>" />
-					<input type="hidden" name="action" value="insert" />
-					<input type="submit" name="fs_ifs_save" value="<?php _e('Update Options'); ?> &raquo;" />
-				</td>
+			<tr valign="top">
+				<th><?php echo _e('Dashboardinfo', 'feedstats'); ?></th>
+				<td><input name="fs_ifs_dashboardinfo" value='1' <?php if(get_option('fs_ifs_dashboardinfo')=='1') { echo "checked='checked'";  } ?> type="checkbox" /><br /><?php echo _e('Statistics can be shown on the dashboard ?', 'feedstats'); ?></td>
 			</tr>
 		</table>
-		</form>
-	</fieldset>
-	
-	<fieldset class="options">
-		<legend><?php _e('Delete Options', 'feedstats'); ?></legend>
-		<p><?php _e('The follow button delete all tables and options for the FeedStats plugin. Please use it, <strong>before</strong> deactivate the plugin.<br /><strong>Attention: </strong>You <strong>cannot</strong> undo any changes made by this plugin.', 'feedstats'); ?></p>
-		<form name="form2" method="post" action="<?php echo $location; ?>">
-			<?php FeedStats_nonce_field('$FeedStats_nonce', $FeedStats_nonce); ?>
-			<input type="hidden" name="FeedStats_key" value="<?php echo $FeedStats_key ?>" />
+		<p class="submit">
+			<input type="hidden" name="action" value="insert" />
+			<input type="submit" name="fs_ifs_save" value="<?php _e('Update Options'); ?> &raquo;" />
+		</p>
+	</form>
+
+	<h3><?php _e('Delete Options', 'feedstats'); ?></h3>
+	<p><?php _e('The follow button delete all tables and options for the FeedStats plugin. Please use it, <strong>before</strong> deactivate the plugin.<br /><strong>Attention: </strong>You <strong>cannot</strong> undo any changes made by this plugin.', 'feedstats'); ?></p>
+	<form name="form2" method="post" action="<?php echo $location; ?>">
+		<?php FeedStats_nonce_field($FeedStats_nonce); ?>
+		<p class="submit">
 			<input type="hidden" name="action" value="deactivate" />
 			<input type="submit" name="fs_ifs_deactivate" value="<?php _e('Delete Options'); ?> &raquo;" />
-		</form>
-	</fieldset>
-	
-	<hr/>
-	<small><?php echo _e('Plugin created by <a href="http://www.anieto2k.com">Andr&eacute;s Nieto</a>, in cooperation/base with plugin <a href="http://www.deltablog.com/">PopStats</a>. German and english adjustments, little extensions and new coding by <a href="http://bueltge.de">Frank Bueltge</a>. Thx to <a href="http://blog.tomk32.de">Thomas R. Koll</a> for many improvements for a better code and performance. Possible updates available at : <a href="http://www.anieto2k.com/mis-plugins/">aNieto2k</a> or <a href="http://bueltge.de/wp-feedstats-de-plugin/171/">bueltge.de</a>.', 'feedstats'); ?></small>
+		</p>
+	</form>
+
+	<h3><?php _e('Information on the plugin', 'copyrightfeed') ?></h3>
+	<p><?php echo _e('Plugin created by <a href="http://www.anieto2k.com">Andr&eacute;s Nieto</a>, in cooperation/base with plugin <a href="http://www.deltablog.com/">PopStats</a>. German and english adjustments, little extensions and new coding by <a href="http://bueltge.de">Frank Bueltge</a>. Thx to <a href="http://blog.tomk32.de">Thomas R. Koll</a> for many improvements for a better code and performance.', 'feedstats'); ?></p>
+	<p><?php _e('Further information: Visit the <a href="http://bueltge.de/wp-feedstats-de-plugin/171/">plugin homepage</a> for further information or to grab the latest version of this plugin.', 'copyrightfeed'); ?><br />&copy; Copyright 2007 - <?php echo date("Y"); ?> <a href="http://bueltge.de">Frank B&uuml;ltge</a> | <?php _e('You want to thank me? Visit my <a href=\'http://bueltge.de/wunschliste\'>wishlist</a>.', 'copyrightfeed'); ?></p>
 </div>
 
 <?php } //End Options-Page ?>
