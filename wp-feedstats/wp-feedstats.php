@@ -3,7 +3,7 @@
 Plugin Name: FeedStats
 Plugin URI: http://bueltge.de/wp-feedstats-de-plugin/171/
 Description: Simple statistictool for feeds.
-Version: 3.5
+Version: 3.5.1
 Author: <a href="http://www.anieto2k.com">Andres Nieto Porras</a> and <a href="http://bueltge.de">Frank Bueltge</a>
 */
 
@@ -348,11 +348,11 @@ function FeedStats_displayStats() {
 		<h2>FeedStats</h2>
 		<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="feedstast view">
 			<tr valign="top">
-				<td colspan="3" align="right" valign="top" style="height:160px;">
+				<td colspan="3" align="center" valign="top" style="height:160px;">
 	
-					<table align="center" cellpadding="1" cellspacing="0" style="height: 140px; border: 1px solid #CCC;" summary="feedstast view two">
+					<table align="center" style="height: 140px; border: 1px solid #CCC;" summary="feedstast view two">
 						<tr valign="top">
-							<th colspan="<?php echo count($visits); ?>" align="center"><?php echo FeedStats_tr('Visits'); ?></th>
+							<th colspan="<?php echo count($visits); ?>" align="center"><?php echo FeedStats_tr(__('Visits', 'feedstats')); ?></th>
 						</tr>
 						<tr>
 							<?php ksort($visits); foreach ($visits as $day=>$num) { ?>
@@ -511,7 +511,7 @@ function fs_getfeeds() {
 	$max_visits_time = htmlspecialchars($max_visits_time, ENT_QUOTES);
 	?>
 	<div id="feeds_readers">
-		<h3><?php echo FeedStats_tr('FeedReaders'); ?></h3>
+		<h3><?php echo FeedStats_tr(__('FeedReaders', 'feedstats')); ?></h3>
 		<ul>
 			<li><?php echo _e('Total', 'feedstats'), ": ", attribute_escape($total_visits); ?><small><?php echo __(' (Last ', 'feedstats') . $num_days . __(' Days)', 'feedstats'); ?></small></li>
 			<li><?php echo _e('Maximum', 'feedstats'), ": ", attribute_escape($max_visits); ?> <small>(<?php echo $max_visits_time; ?>)</small></li>
@@ -731,9 +731,9 @@ function fb_admin_feedstats_option_page() {
 		</p>
 	</form>
 
-	<h3><?php _e('Information on the plugin', 'copyrightfeed') ?></h3>
+	<h3><?php _e('Information on the plugin', 'feedstats') ?></h3>
 	<p><?php echo _e('Plugin created by <a href="http://www.anieto2k.com">Andr&eacute;s Nieto</a>, in cooperation/base with plugin <a href="http://www.deltablog.com/">PopStats</a>. German and english adjustments, little extensions and new coding by <a href="http://bueltge.de">Frank Bueltge</a>. Thx to <a href="http://blog.tomk32.de">Thomas R. Koll</a> for many improvements for a better code and performance.', 'feedstats'); ?></p>
-	<p><?php _e('Further information: Visit the <a href="http://bueltge.de/wp-feedstats-de-plugin/171/">plugin homepage</a> for further information or to grab the latest version of this plugin.', 'copyrightfeed'); ?><br />&copy; Copyright 2007 - <?php echo date("Y"); ?> <a href="http://bueltge.de">Frank B&uuml;ltge</a> | <?php _e('You want to thank me? Visit my <a href=\'http://bueltge.de/wunschliste\'>wishlist</a>.', 'copyrightfeed'); ?></p>
+	<p><?php _e('Further information: Visit the <a href="http://bueltge.de/wp-feedstats-de-plugin/171/">plugin homepage</a> for further information or to grab the latest version of this plugin.', 'feedstats'); ?><br />&copy; Copyright 2007 - <?php echo date("Y"); ?> <a href="http://bueltge.de">Frank B&uuml;ltge</a> | <?php _e('You want to thank me? Visit my <a href=\'http://bueltge.de/wunschliste\'>wishlist</a>.', 'feedstats'); ?></p>
 </div>
 
 <?php } //End Options-Page ?>

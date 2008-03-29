@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FeedStats\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-28 16:50+0100\n"
-"PO-Revision-Date: 2008-03-28 16:52+0100\n"
+"POT-Creation-Date: 2008-03-29 16:41+0100\n"
+"PO-Revision-Date: 2008-03-29 16:41+0100\n"
 "Last-Translator: Frank Bueltge <frank@bueltge.de>\n"
 "Language-Team: Frank Bueltge\n"
 "MIME-Version: 1.0\n"
@@ -16,6 +16,12 @@ msgstr ""
 #: wp-feedstats.php:102
 msgid "Error in file: "
 msgstr "Fehler in Datei: "
+
+#: wp-feedstats.php:355
+#: wp-feedstats.php:390
+#: wp-feedstats.php:450
+msgid "Visits"
+msgstr "Besucher"
 
 #: wp-feedstats.php:368
 #: wp-feedstats.php:455
@@ -34,11 +40,6 @@ msgstr "Maximum"
 #: wp-feedstats.php:389
 msgid "Day"
 msgstr "Tag"
-
-#: wp-feedstats.php:390
-#: wp-feedstats.php:450
-msgid "Visits"
-msgstr "Besuche"
 
 #: wp-feedstats.php:400
 msgid "Today"
@@ -91,6 +92,10 @@ msgstr "Du willst die Daten löschen und die Statistik zurück setzen. OK für l
 msgid "Konfiguration FeedStats"
 msgstr "Einstellungen Feedstats"
 
+#: wp-feedstats.php:514
+msgid "FeedReaders"
+msgstr "Feedleser"
+
 #: wp-feedstats.php:589
 msgid "FeedStats"
 msgstr "FeedStats"
@@ -106,7 +111,7 @@ msgstr "Du hast nicht gen&uuml;gend Berechtigungen zum Ausf&uuml;hren dieser Fun
 
 #: wp-feedstats.php:679
 msgid "The options have been deleted!"
-msgstr "Die EInstellungen wurden gel&ouml;scht!"
+msgstr "Die Einstellungen wurden gel&ouml;scht!"
 
 #: wp-feedstats.php:687
 #: wp-feedstats.php:688
@@ -184,7 +189,7 @@ msgstr "Plugin erstellt durch <a href=\"http://www.anieto2k.com\">Andr&eacute;s 
 
 #: wp-feedstats.php:736
 msgid "Further information: Visit the <a href=\"http://bueltge.de/wp-feedstats-de-plugin/171/\">plugin homepage</a> for further information or to grab the latest version of this plugin."
-msgstr "Weitere Informationen: Beusche die <a href=\"http://bueltge.de/wp-feed-plugin/204\">Plugin Webseite</a> f&uuml;r weitere Informationen oder lade die aktuelle Version."
+msgstr "Weitere Informationen: Besuche die <a href=\"http://bueltge.de/wp-feed-plugin/204\">Plugin Webseite</a> f&uuml;r weitere Informationen oder lade die aktuelle Version."
 
 #: wp-feedstats.php:736
 msgid "You want to thank me? Visit my <a href='http://bueltge.de/wunschliste'>wishlist</a>."
