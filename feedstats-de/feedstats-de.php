@@ -70,7 +70,7 @@ if(function_exists('load_plugin_textdomain')) {
 	load_plugin_textdomain('feedstats', 'wp-content/plugins/feedstats-de');
 }
 
-$location = get_option('siteurl') . '/wp-admin/options-general.php?page=feedstats-de/wp-feedstats.php'; // Form Action URI
+$location = get_option('siteurl') . '/wp-admin/options-general.php?page=feedstats-de/feedstats-de.php'; // Form Action URI
 
 // Installation functions
 function fs_generateDB() {
@@ -475,7 +475,7 @@ function FeedStats_displayStats() {
 		</table>
 	
 		<h3><?php echo _e('Reset Statistic', 'feedstats'); ?></h3>
-		<p><a href="index.php?page=feedstats-de/wp-feedstats.php&amp;fs_action=reset" onclick="return confirm('<?php echo _e('You are about to delete all data and reset stats. OK to delete, Cancel to stop', 'feedstats'); ?>');">&raquo;&raquo; <?php echo _e('Reset Statistic', 'feedstats'); ?> &laquo;&laquo;</a></p>
+		<p><a href="index.php?page=feedstats-de/feedstats-de.php&amp;fs_action=reset" onclick="return confirm('<?php echo _e('You are about to delete all data and reset stats. OK to delete, Cancel to stop', 'feedstats'); ?>');">&raquo;&raquo; <?php echo _e('Reset Statistic', 'feedstats'); ?> &laquo;&laquo;</a></p>
 	</div>
 
 <?php
@@ -553,7 +553,7 @@ function FeedStats_Admin_Header() {
 		font-size: 10px;
 		padding: 1px 15px 15px 3px;
 		color: #fff;
-		background: url('.get_settings('home').'/wp-content/plugins/feedstats-de/wp-feedstats.gif) no-repeat 0 1px;
+		background: url('.get_settings('home').'/wp-content/plugins/feedstats-de/feedstats-de.gif) no-repeat 0 1px;
 		margin: 0;
 	}';
 	$fs_feed_button_style.= '</style>';
@@ -586,7 +586,7 @@ function FeedStats_Admin_Footer() {
 	//$max_visits_time = date('j. F Y',$wpdb->get_var("SELECT max_visits_time FROM " . $wpdb->prefix . 'fs_data'));
 	$max_visits_time = htmlspecialchars(strftime('%d. %B %Y',$wpdb->get_var("SELECT max_visits_time FROM " . $wpdb->prefix . 'fs_data')), ENT_QUOTES);
 	
-	$content = '<h3>' . __('FeedStats', 'feedstats') . ' <a href="admin.php?page=feedstats-de/wp-feedstats.php">&raquo;</a></h3>';
+	$content = '<h3>' . __('FeedStats', 'feedstats') . ' <a href="admin.php?page=feedstats-de/feedstats-de.php">&raquo;</a></h3>';
 	$content .= '<ul><li>' . __('Total', 'feedstats') . ': ' . attribute_escape($total_visits) . __(' (Last ', 'feedstats') . $num_days . __(' Days)', 'feedstats') . '</li>';
 	$content.= '<li>' . __('Maximum', 'feedstats') . ': ' . attribute_escape($max_visits) . ' (' . attribute_escape($max_visits_time) . ')</li>';
 	$content.= '<li>' . __('Average', 'feedstats') . ': ' . attribute_escape($average_visits) . '</li>';
