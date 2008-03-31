@@ -616,7 +616,7 @@ if ( function_exists('add_action') ) {
 	add_action('the_content_rss', 'FeedStats_track');
 	add_action('admin_menu', 'FeedStats_addAdminMenu');
 	
-	if (strpos($_SERVER['REQUEST_URI'], 'page=wp-feedstats/feedstats-de') !== false) {
+	if (strpos($_SERVER['REQUEST_URI'], 'page=feedstats-de/feedstats-de') !== false) {
 		add_action('admin_head', 'FeedStats_Admin_Header');
 	}
 	
