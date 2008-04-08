@@ -36,8 +36,9 @@ The version >3.4 has a new style, activate for WordPress 2.5. You can found the 
 See on [the official website](http://bueltge.de/wp-feedstats-de-plugin/171/ "FeedStats").
 
 == Screenshots ==
-1. Statistic-area (Example) for 10 Days
+1. Statistic-area in WordPress 2.5
 1. configure-area
+1. Statistic-area in WP 2.3 (Example) for 10 Days
 
 == Other Notes ==
 Use the follow function for write the statistic on your blog.
