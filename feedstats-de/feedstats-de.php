@@ -3,7 +3,7 @@
 Plugin Name: FeedStats
 Plugin URI: http://bueltge.de/wp-feedstats-de-plugin/171/
 Description: Simple statistictool for feeds.
-Version: 3.6
+Version: 3.6.1
 Author: <a href="http://www.anieto2k.com">Andres Nieto Porras</a> and <a href="http://bueltge.de">Frank Bueltge</a>
 */
 
@@ -67,7 +67,7 @@ Example for style-css in traditional Chinese (zh_TW) translation:
 */
 
 if(function_exists('load_plugin_textdomain')) {
-	load_plugin_textdomain('feedstats', 'wp-content/plugins/feedstats-de');
+	load_plugin_textdomain('feedstats', str_replace( ABSPATH, '', dirname(__FILE__) ) );
 }
 
 $location = get_option('siteurl') . '/wp-admin/options-general.php?page=feedstats-de/feedstats-de.php'; // Form Action URI
