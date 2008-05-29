@@ -66,7 +66,6 @@ _Example:_
 	margin-bottom: 2px;
 }`
 
-for style-css in traditional Chinese (zh_TW) translation:
 
 `#feeds_button {
 	width: 74px;
@@ -79,8 +78,7 @@ for style-css in traditional Chinese (zh_TW) translation:
 	margin-bottom: 2px;
 }`
 
-
-for style-css in italien (it) translation:
+for style-css in traditional Chinese (zh_TW) translation
 
 `#feeds_button {
 	width: 74px;
@@ -89,16 +87,18 @@ for style-css in italien (it) translation:
 	font-size: 10px;
 	padding: 1px 15px 15px 3px;
 	color: #fff;
-	background: url(wp-content/plugins/feedstats-de/feedstats-de-it.gif) no-repeat;
+	background: url(wp-content/plugins/feedstats-de/feedstats-de-it_IT.gif) no-repeat;
 	margin-bottom: 2px;
 }`
+
+for style-css in italien (it) translation:
 
 = Acknowledgements =
 FeedReaderButton (gif) by [Christoph Schr&ouml;der](http://www.nasendackel.de "Christoph Schr&ouml;der")
 
 FeedReaderButton (gif - traditional Chinese (zh_TW)) and traditional Chinese translation by [Neil Lin](http://www.wmfield.idv.tw/485 "Neil Lin")
 
-FeedReaderButton (gif - italien (it)) and italien translation by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
+FeedReaderButton (gif - italien (it_IT)) and italien translation by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
 
 Turkish translation by [Baris Unver](http://beyn.org "Baris Unver")
 
