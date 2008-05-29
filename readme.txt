@@ -65,6 +65,7 @@ _Example:_
 	background: url(wp-content/plugins/feedstats-de/feedstats-de.gif) no-repeat;
 	margin-bottom: 2px;
 }`
+For use the default-icon
 
 
 `#feeds_button {
@@ -91,7 +92,7 @@ for style-css in traditional Chinese (zh_TW) translation
 	margin-bottom: 2px;
 }`
 
-for style-css in italien (it) translation:
+for style-css in italien (it_IT) translation
 
 = Acknowledgements =
 FeedReaderButton (gif) by [Christoph Schr&ouml;der](http://www.nasendackel.de "Christoph Schr&ouml;der")
