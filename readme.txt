@@ -3,7 +3,7 @@ Contributors: Bueltge
 Donate link: http://bueltge.de/wunschliste/
 Tags: feed, statistics, stats, rss
 Requires at least: 1.5
-Tested up to: 2.5
+Tested up to: 2.6
 Stable tag: 3.3
 
 Simple statistictool for feeds.
@@ -62,7 +62,7 @@ _Example:_
 	font-size: 10px;
 	padding: 1px 15px 15px 3px;
 	color: #fff;
-	background: url(wp-content/plugins/wp-feedstats/wp-feedstats.gif) no-repeat;
+	background: url(wp-content/plugins/feedstats-de/feedstats-de.gif) no-repeat;
 	margin-bottom: 2px;
 }`
 
@@ -75,7 +75,21 @@ for style-css in traditional Chinese (zh_TW) translation:
 	font-size: 10px;
 	padding: 1px 15px 15px 3px;
 	color: #fff;
-	background: url(wp-content/plugins/wp-feedstats/wp-feedstats-zh_TW.gif) no-repeat;
+	background: url(wp-content/plugins/feedstats-de/feedstats-de-zh_TW.gif) no-repeat;
+	margin-bottom: 2px;
+}`
+
+
+for style-css in italien (it) translation:
+
+`#feeds_button {
+	width: 74px;
+	height: 14px;
+	text-align: left;
+	font-size: 10px;
+	padding: 1px 15px 15px 3px;
+	color: #fff;
+	background: url(wp-content/plugins/feedstats-de/feedstats-de-it.gif) no-repeat;
 	margin-bottom: 2px;
 }`
 
@@ -84,11 +98,14 @@ FeedReaderButton (gif) by [Christoph Schr&ouml;der](http://www.nasendackel.de "C
 
 FeedReaderButton (gif - traditional Chinese (zh_TW)) and traditional Chinese translation by [Neil Lin](http://www.wmfield.idv.tw/485 "Neil Lin")
 
+FeedReaderButton (gif - italien (it)) and italien translation by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
+
 Turkish translation by [Baris Unver](http://beyn.org "Baris Unver")
 
 French translation by [burningHat](http://blog.burninghat.net/ "burningHat")
 
 Spanich translation by [fportero](http://www.tengotiempo.com "fportero")
+
 
 = Licence =
 Good news, this plugin is free for everyone! Since it's released under the GPL, you can use it free of charge on your personal or commercial blog. But if you enjoy this plugin, you can thank me and leave a [small donation](http://bueltge.de/wunschliste/ "Wishliste and Donate") for the time I've spent writing and supporting this plugin. And I really don't want to know how many hours of my life this plugin has already eaten ;)
