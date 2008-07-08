@@ -77,9 +77,9 @@ function fs_textdomain() {
 
 	if (function_exists('load_plugin_textdomain')) {
 		if ( !defined('WP_PLUGIN_DIR') ) {
-			load_plugin_textdomain('feedstats', str_replace( ABSPATH, '', dirname(__FILE__) ) );
+			load_plugin_textdomain('feedstats', str_replace( ABSPATH, '', dirname(__FILE__) ) . '/languages');
 		} else {
-			load_plugin_textdomain('feedstats', false, dirname(plugin_basename(__FILE__)) );
+			load_plugin_textdomain('feedstats', false, dirname( plugin_basename(__FILE__) ) . '/languages');
 		}
 	}
 }
