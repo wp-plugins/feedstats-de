@@ -29,7 +29,7 @@ The version >3.4 has a new style, activate for WordPress 2.5. You can found the 
 
 == Installation ==
 1. Unpack the download-package
-1. Upload all files to the `/wp-content/plugins/` directory, without folder
+1. Upload all files to the `/wp-content/plugins/` directory, with folder `feedstats-de`
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. Got to 'Options' menu and configure the plugin
 

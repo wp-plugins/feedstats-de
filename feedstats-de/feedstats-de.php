@@ -3,7 +3,7 @@
 Plugin Name: FeedStats
 Plugin URI: http://bueltge.de/wp-feedstats-de-plugin/171/
 Description: Simple statistictool for feeds.
-Version: 3.6.1
+Version: 3.6.2
 Author: <a href="http://www.anieto2k.com">Andres Nieto Porras</a> and <a href="http://bueltge.de">Frank Bueltge</a>
 */
 
@@ -66,9 +66,64 @@ Example for style-css in traditional Chinese (zh_TW) translation:
 	background: url(wp-content/plugins/feedstats-de/feedstats-de-zh_TW.gif) no-repeat;
 */
 
-if(function_exists('load_plugin_textdomain')) {
-	load_plugin_textdomain('feedstats', str_replace( ABSPATH, '', dirname(__FILE__) ) );
+// Pre-2.6 compatibility
+if ( !defined('WP_CONTENT_URL') )
+	define( 'WP_CONTENT_URL', get_option('siteurl') . '/wp-content');
+if ( !defined('WP_CONTENT_DIR') )
+	define( 'WP_CONTENT_DIR', ABSPATH . 'wp-content' );
+
+
+function fs_textdomain() {
+
+	if (function_exists('load_plugin_textdomain')) {
+		if ( !defined('WP_PLUGIN_DIR') ) {
+			load_plugin_textdomain('feedstats', str_replace( ABSPATH, '', dirname(__FILE__) ) );
+		} else {
+			load_plugin_textdomain('feedstats', false, dirname(plugin_basename(__FILE__)) );
+		}
+	}
 }
+
+
+/**
+ * Add action link(s) to plugins page
+ * Thanks Dion Hulse -- http://dd32.id.au/wordpress-plugins/?configure-link
+ */
+function fs_filter_plugin_actions($links, $file){
+	static $this_plugin;
+
+	if( !$this_plugin ) $this_plugin = plugin_basename(__FILE__);
+
+	if( $file == $this_plugin ) {
+		$settings_link = '<a href="options-general.php?page=feedstats-de/feedstats-de.php">' . __('Settings') . '</a>';
+		$links = array_merge( array($settings_link), $links); // before other links
+//	$links[] = $settings_link; // ... or after other links
+	}
+	return $links;
+}
+
+
+/**
+ * settings in plugin-admin-page
+ */
+function fs_add_settings_page() {
+	if( current_user_can('switch_themes') ) {
+		add_options_page(__('Konfiguration FeedStats', 'feedstats'), 'FeedStats', 9, __FILE__, 'fb_admin_feedstats_option_page');
+		add_filter('plugin_action_links', 'fs_filter_plugin_actions', 10, 2);
+	}
+}
+
+
+/**
+ * credit in wp-footer
+ */
+function fs_admin_footer() {
+	if ( basename($_SERVER['REQUEST_URI']) == 'feedstats-de.php') {
+		$plugin_data = get_plugin_data( __FILE__ );
+		printf('%1$s ' . __('plugin') . ' | ' . __('Version') . ' <a href="http://bueltge.de/wp-feedstats-de-plugin/171/#historie" title="' . __('Historie', 'adminimize') . '">%2$s</a> | ' . __('Author') . ' %3$s<br />', $plugin_data['Title'], $plugin_data['Version'], $plugin_data['Author']);
+	}
+}
+
 
 $location = get_option('siteurl') . '/wp-admin/options-general.php?page=feedstats-de/feedstats-de.php'; // Form Action URI
 
@@ -483,7 +538,7 @@ function FeedStats_displayStats() {
 
 function FeedStats_addAdminMenu() {
 	add_submenu_page('index.php', 'FeedStats', 'FeedStats', get_option('fs_user_level'), __FILE__, 'FeedStats_displayStats');
-	add_options_page(__('Konfiguration FeedStats', 'feedstats'), 'FeedStats', 9, __FILE__, 'fb_admin_feedstats_option_page');
+	//add_options_page(__('Konfiguration FeedStats', 'feedstats'), 'FeedStats', 9, __FILE__, 'fb_admin_feedstats_option_page');
 }
 
 function fs_getfeeds() {
@@ -612,9 +667,12 @@ if ( function_exists('register_activation_hook') ) {
 
 
 if ( function_exists('add_action') ) {
+	add_action('init', 'fs_textdomain');
 	add_action('the_title_rss', 'FeedStats_track');
 	add_action('the_content_rss', 'FeedStats_track');
 	add_action('admin_menu', 'FeedStats_addAdminMenu');
+	add_action('admin_menu', 'fs_add_settings_page');
+	add_action('in_admin_footer', 'fs_admin_footer');
 	
 	if (strpos($_SERVER['REQUEST_URI'], 'page=feedstats-de/feedstats-de') !== false) {
 		add_action('admin_head', 'FeedStats_Admin_Header');
