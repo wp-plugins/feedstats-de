@@ -43,7 +43,7 @@ See on [the official website](http://bueltge.de/wp-feedstats-de-plugin/171/ "Fee
 == Other Notes ==
 Use the follow function for write the statistic on your blog.
 
-`<php fs_getfeeds(); ?>`
+`<php feedstats_getfeeds(); ?>`
 
 _Example:_
 
