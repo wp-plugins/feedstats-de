@@ -47,13 +47,13 @@ Use the follow function for write the statistic on your blog.
 
 _Example:_
 
-`<?php if (function_exists('fs_getfeeds')) : fs_getfeeds(); endif; ?>`
+`<?php if (function_exists('feedstats_getfeeds')) : feedstats_getfeeds(); endif; ?>`
 
-You can also use an Button with your average feedreaders. Use function `fs_getfeeds_button()` and format with CSS.
+You can also use an Button with your average feedreaders. Use function `feedstats_getfeeds_button()` and format with CSS.
 
 _Example:_
 
-`<div id="feeds_button"><?php fs_getfeeds_button(); ?></div>`
+`<div id="feeds_button"><?php feedstats_getfeeds_button(); ?></div>`
 
 `#feeds_button {
 	width: 74px;
@@ -62,7 +62,7 @@ _Example:_
 	font-size: 10px;
 	padding: 1px 15px 15px 3px;
 	color: #fff;
-	background: url(wp-content/plugins/feedstats-de/feedstats-de.gif) no-repeat;
+	background: url(wp-content/plugins/feedstats-de/images/feedstats-de.gif) no-repeat;
 	margin-bottom: 2px;
 }`
 For use the default-icon
@@ -75,7 +75,7 @@ For use the default-icon
 	font-size: 10px;
 	padding: 1px 15px 15px 3px;
 	color: #fff;
-	background: url(wp-content/plugins/feedstats-de/feedstats-de-zh_TW.gif) no-repeat;
+	background: url(wp-content/plugins/feedstats-de/images/feedstats-de-zh_TW.gif) no-repeat;
 	margin-bottom: 2px;
 }`
 
@@ -88,7 +88,7 @@ for style-css in traditional Chinese (zh_TW) translation
 	font-size: 10px;
 	padding: 1px 15px 15px 3px;
 	color: #fff;
-	background: url(wp-content/plugins/feedstats-de/feedstats-de-it_IT.gif) no-repeat;
+	background: url(wp-content/plugins/feedstats-de/images/feedstats-de-it_IT.gif) no-repeat;
 	margin-bottom: 2px;
 }`
 
