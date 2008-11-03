@@ -3,9 +3,9 @@
 Plugin Name: FeedStats
 Plugin URI: http://bueltge.de/wp-feedstats-de-plugin/171/
 Description: Simple statistictool for feeds.
-Version: 3.6.4
+Version: 3.6.5
 Author: <a href="http://www.anieto2k.com">Andres Nieto Porras</a> and <a href="http://bueltge.de">Frank B&uuml;ltge</a>
-Last Change: 02.11.2008 23:24:32
+Last Change: 03.11.2008 23:29:18
 */
 
 define('FEEDSTATS_DAY', 60*60*24);
@@ -611,6 +611,48 @@ function feedstats_display_stats() {
 	</div>
 
 <?php
+}
+
+
+function feedstats_getfeeds() {
+	global $wpdb;
+	
+	$total_visits = $wpdb->get_var("SELECT count(*) FROM " . $wpdb->prefix . 'fs_visits');
+	$total_visits = htmlspecialchars($total_visits, ENT_QUOTES);
+
+	$time       = time();
+	$time_begin = feedstats_get_midnight($wpdb->get_var("SELECT time_install FROM " . $wpdb->prefix . 'fs_data'));
+	$num_days   = ceil(($time-$time_begin)/FEEDSTATS_DAY);
+	$num_days   = htmlspecialchars($num_days, ENT_QUOTES);
+	
+	if ($num_days>get_option('fs_days')) {
+		$num_days = get_option('fs_days') + 1;
+	}
+		
+	$average_visits  = ($num_days) ? round($total_visits/($num_days)) : '0';
+	$average_visits  = htmlspecialchars($average_visits, ENT_QUOTES);
+	
+	$max_visits      = $wpdb->get_var("SELECT max_visits FROM " . $wpdb->prefix . 'fs_data');
+	$max_visits      = htmlspecialchars($max_visits, ENT_QUOTES);
+	
+	$max_visits_time = date(get_option('date_format'), $wpdb->get_var("SELECT max_visits_time FROM " . $wpdb->prefix . 'fs_data'));
+	$max_visits_time = htmlspecialchars($max_visits_time, ENT_QUOTES);
+	?>
+	<div id="feeds_readers">
+		<h3><?php _e('FeedReaders', 'feedstats'); ?></h3>
+		<ul>
+			<li><?php _e('Total', 'feedstats') . _e(': ') . _e( attribute_escape($total_visits) ); ?><small><?php _e(' (Last ', 'feedstats') . _e($num_days) . _e(' Days)', 'feedstats'); ?></small></li>
+			<li><?php _e('Maximum', 'feedstats') . _e(': ') . _e( attribute_escape($max_visits) ); ?> <small>(<?php echo $max_visits_time; ?>)</small></li>
+			<li><?php _e('Average', 'feedstats') . _e(': ') . _e( attribute_escape($average_visits) ); ?></li>
+		</ul>
+	</div>
+	<?php
+}
+
+
+// for older functions
+function fs_getfeeds() {
+	feedstats_getfeeds();
 }
 
 
