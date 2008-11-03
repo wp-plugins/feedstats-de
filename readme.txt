@@ -3,8 +3,8 @@ Contributors: Bueltge
 Donate link: http://bueltge.de/wunschliste/
 Tags: feed, statistics, stats, rss
 Requires at least: 1.5
-Tested up to: 2.6
-Stable tag: 3.3
+Tested up to: 2.7
+Stable tag: 1.3
 
 Simple statistictool for feeds.
 
