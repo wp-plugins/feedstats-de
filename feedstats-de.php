@@ -930,7 +930,6 @@ function feedstats_admin_option_page() {
 				<h3><?php _e('Add Index', 'feedstats'); ?></h3>
 				<div class="inside">
 					<p><?php _e('The follow button add index to the table of thsi plugin for a better performance. Do you have install the plugin new at version 3.6.4? Then is this not necessary.', 'feedstats'); ?></p>
-					<br class="clear" />
 					<p><a class="button" href="options-general.php?page=feedstats-de/feedstats-de.php&amp;fs_action=add_index" onclick="return confirm('<?php _e('You are about to add index to tables. OK to start, Cancel to stop', 'feedstats'); ?>');"><?php _e('Add Index', 'feedstats'); ?> &raquo;</a></p>
 				</div>
 			</div>
