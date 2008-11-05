@@ -3,9 +3,9 @@
 Plugin Name: FeedStats
 Plugin URI: http://bueltge.de/wp-feedstats-de-plugin/171/
 Description: Simple statistictool for feeds.
-Version: 3.6.5
+Version: 3.6.6
 Author: <a href="http://www.anieto2k.com">Andres Nieto Porras</a> and <a href="http://bueltge.de">Frank B&uuml;ltge</a>
-Last Change: 03.11.2008 23:29:18
+Last Change: 05.11.2008 23:27:24
 */
 
 define('FEEDSTATS_DAY', 60*60*24);
@@ -740,8 +740,17 @@ function feedstats_add_dashboard() {
 	$content .= '<li>' . __('Maximum', 'feedstats') . __(': ') . attribute_escape($max_visits) . ' (' . attribute_escape($max_visits_time) . ')</li>';
 	$content .= '<li>' . __('Average', 'feedstats') . __(': ') . attribute_escape($average_visits) . '</li>';
 	$content .= '</ul>';
-		
+	
 	print ($content);
+}
+
+
+/**
+ * add dashboard widget
+ * >= WordPress 2.7
+ */
+function feedstats_add_dashboard_new() {
+	wp_add_dashboard_widget( 'feedstats_dashboard_widget', __('FeedStats', 'feedstats') . ' <a href="index.php?page=feedstats-de/feedstats-de.php">&raquo;</a>', 'feedstats_add_dashboard' );
 }
 
 
