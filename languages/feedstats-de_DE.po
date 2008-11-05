@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: FeedStats\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-11-03 23:30+0100\n"
-"PO-Revision-Date: 2008-11-03 23:30+0100\n"
+"PO-Revision-Date: 2008-11-05 23:37+0100\n"
 "Last-Translator: Frank Bueltge <frank@bueltge.de>\n"
 "Language-Team: Frank Bueltge\n"
 "MIME-Version: 1.0\n"
@@ -260,7 +260,7 @@ msgstr "Plugin erstellt durch <a href=\"http://www.anieto2k.com\">Andr&eacute;s 
 
 #: feedstats-de.php:951
 msgid "Further information: Visit the <a href=\"http://bueltge.de/wp-feedstats-de-plugin/171/\">plugin homepage</a> for further information or to grab the latest version of this plugin."
-msgstr "Weitere Informationen: Besuche die <a href=\"http://bueltge.de/wp-feed-plugin/204\">Plugin Webseite</a> f&uuml;r weitere Informationen oder lade die aktuelle Version."
+msgstr "Weitere Informationen: Besuche die <a href=\"http://bueltge.de/wp-feedstats-de-plugin/171/\">Plugin Webseite</a> f&uuml;r weitere Informationen oder lade die aktuelle Version."
 
 #: feedstats-de.php:951
 msgid "You want to thank me? Visit my <a href='http://bueltge.de/wunschliste'>wishlist</a>."
