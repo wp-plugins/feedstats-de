@@ -3,9 +3,9 @@
 Plugin Name: FeedStats
 Plugin URI: http://bueltge.de/wp-feedstats-de-plugin/171/
 Description: Simple statistictool for feeds.
-Version: 3.6.6
+Version: 3.6.7
 Author: <a href="http://www.anieto2k.com">Andres Nieto Porras</a> and <a href="http://bueltge.de">Frank B&uuml;ltge</a>
-Last Change: 05.11.2008 23:27:24
+Last Change: 06.11.2008 07:51:27
 */
 
 define('FEEDSTATS_DAY', 60*60*24);
@@ -213,7 +213,9 @@ function feedstats_genereta_tables() {
 	$fs_data_index_tg = "CREATE INDEX time_begin USING BTREE ON " . $wpdb->prefix . "fs_visits(time_begin);";
 	$fs_data_index_tl = "CREATE INDEX time_last USING BTREE ON " . $wpdb->prefix . "fs_visits(time_last);";
 	
-	if (file_exists(ABSPATH . '/wp-admin/includes/upgrade.php')) {
+	if (file_exists(ABSPATH . '/wp-admin/upgrade-functions.php')) {
+		@require_once (ABSPATH . '/wp-admin/upgrade-functions.php');
+	} elseif (file_exists(ABSPATH . '/wp-admin/includes/upgrade.php')) {
 		@require_once (ABSPATH . '/wp-admin/includes/upgrade.php');
 	} elseif (file_exists(ABSPATH . WPINC . '/upgrade-functions.php')) {
 		@require_once (ABSPATH . WPINC . '/upgrade-functions.php');
