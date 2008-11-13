@@ -5,7 +5,7 @@ Plugin URI: http://bueltge.de/wp-feedstats-de-plugin/171/
 Description: Simple statistictool for feeds.
 Version: 3.6.7
 Author: <a href="http://www.anieto2k.com">Andres Nieto Porras</a> and <a href="http://bueltge.de">Frank B&uuml;ltge</a>
-Last Change: 06.11.2008 07:51:27
+Last Change: 06.11.2008 23:23:09
 */
 
 define('FEEDSTATS_DAY', 60*60*24);
@@ -167,6 +167,8 @@ function feedstats_add_settings_page() {
 		$menutitle .= __('FeedStats', 'feedstats');
 		if ( version_compare( $wp_version, '2.6.999', '>' ) ) {
 			$menutitle_span = ' <span id="awaiting-mod" class="count-' . get_feedstats_getfeeds_button() . '"><span class="comment-count">' . get_feedstats_getfeeds_button() . '</span></span>';
+		} else {
+			$menutitle_span = '';
 		}
 		
 		add_options_page(__('Konfiguration FeedStats', 'feedstats'), $menutitle, 9, __FILE__, 'feedstats_admin_option_page');
