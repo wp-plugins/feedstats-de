@@ -2,17 +2,17 @@
 /**
  * @package FeedStats
  * @author Frank B&uuml;ltge
- * @version 3.6.8
+ * @version 3.6.9
  */
  
 /*
 Plugin Name: FeedStats
 Plugin URI: http://bueltge.de/wp-feedstats-de-plugin/171/
 Description: Simple statistictool for feeds.
-Version: 3.6.8
+Version: 3.6.9
 Author: Andres Nieto Porras, Frank B&uuml;ltge
 Author URI: http://bueltge.de/
-Last Change: 30.11.2008 12:34:59
+Last Change: 01.12.2008 14:38:59
 */
 
 define('FEEDSTATS_DAY', 60*60*24);
@@ -115,6 +115,25 @@ function feedstats_filter_plugin_actions($links, $file){
 	return $links;
 }
 
+
+/**
+ * @version WP 2.7
+ * Add action link(s) to plugins page
+ *
+ * @package Secure WordPress
+ *
+ * @param $links
+ * @return $links
+ */
+function feedstats_filter_plugin_actions_new($links) {
+
+	$settings_link = '<a href="options-general.php?page=feedstats-de/feedstats-de.php">' . __('Settings') . '</a>';
+	array_unshift( $links, $settings_link );
+	
+	return $links;
+}
+
+
 /**
  * Images/ Icons in base64-encoding
  * @use function feedstats_get_resource_url() for display
@@ -207,7 +226,7 @@ function feedstats_add_settings_page() {
 			add_contextual_help( $hook, __('<a href="http://wordpress.org/extend/plugins/feedstats-de/">Documentation</a>', 'feedstats') );
 
 			$plugin = plugin_basename(__FILE__); 
-			add_filter( 'plugin_action_links_' . $plugin, 'feedstats_filter_plugin_actions' );
+			add_filter( 'plugin_action_links_' . $plugin, 'feedstats_filter_plugin_actions_new' );
 		} else {
 			add_options_page(__('Settings FeedStats', 'feedstats'), __('FeedStats', 'feedstats'), 9, __FILE__, 'feedstats_admin_option_page');
 			add_submenu_page('index.php', __('FeedStats', 'feedstats'), __('FeedStats', 'feedstats'), get_option('fs_user_level'), __FILE__, 'feedstats_display_stats');
