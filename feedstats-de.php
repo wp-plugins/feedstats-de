@@ -2,17 +2,17 @@
 /**
  * @package FeedStats
  * @author Frank B&uuml;ltge
- * @version 3.6.9
+ * @version 3.7
  */
  
 /*
 Plugin Name: FeedStats
 Plugin URI: http://bueltge.de/wp-feedstats-de-plugin/171/
 Description: Simple statistictool for feeds.
-Version: 3.6.9
+Version: 3.7
 Author: Andres Nieto Porras, Frank B&uuml;ltge
 Author URI: http://bueltge.de/
-Last Change: 01.12.2008 14:38:59
+Last Change: 07.12.2008 11:49:39
 */
 
 define('FEEDSTATS_DAY', 60*60*24);
@@ -228,8 +228,8 @@ function feedstats_add_settings_page() {
 			$plugin = plugin_basename(__FILE__); 
 			add_filter( 'plugin_action_links_' . $plugin, 'feedstats_filter_plugin_actions_new' );
 		} else {
-			add_options_page(__('Settings FeedStats', 'feedstats'), __('FeedStats', 'feedstats'), 9, __FILE__, 'feedstats_admin_option_page');
 			add_submenu_page('index.php', __('FeedStats', 'feedstats'), __('FeedStats', 'feedstats'), get_option('fs_user_level'), __FILE__, 'feedstats_display_stats');
+			add_options_page(__('Settings FeedStats', 'feedstats'), __('FeedStats', 'feedstats'), 9, __FILE__, 'feedstats_admin_option_page');
 			
 			add_filter('plugin_action_links', 'feedstats_filter_plugin_actions', 10, 2);
 		}
@@ -686,7 +686,7 @@ function feedstats_display_stats() {
 		<br class="clear" />
 		
 		<h3><?php _e('Reset Statistic', 'feedstats'); ?></h3>
-		<p><a class="button" href="index.php?page=feedstats-de/feedstats-de.php&amp;fs_action=reset" onclick="return confirm('<?php _e('You are about to delete all data and reset stats. OK to delete, Cancel to stop', 'feedstats'); ?>');"><?php _e('Reset Statistic', 'feedstats'); ?> &raquo;</a></p>
+		<p><a class="button button-primary" href="index.php?page=feedstats-de/feedstats-de.php&amp;fs_action=reset" onclick="return confirm('<?php _e('You are about to delete all data and reset stats. OK to delete, Cancel to stop', 'feedstats'); ?>');"><?php _e('Reset Statistic', 'feedstats'); ?> &raquo;</a></p>
 	</div>
 
 <?php
@@ -1007,7 +1007,7 @@ function feedstats_admin_option_page() {
 						</table>
 						<p class="submit">
 							<input type="hidden" name="action" value="insert" />
-							<input type="submit" name="fs_ifs_save" value="<?php _e('Update Options'); ?> &raquo;" />
+							<input class="button-primary" type="submit" name="fs_ifs_save" value="<?php _e('Update Options'); ?> &raquo;" />
 						</p>
 					</form>
 				</div>
@@ -1033,7 +1033,7 @@ function feedstats_admin_option_page() {
 						<?php feedstats_nonce_field($FeedStats_nonce); ?>
 						<p id="submitbutton">
 							<input type="hidden" name="action" value="deactivate" />
-							<input class="button" type="submit" name="feedstats_ifs_deactivate" value="<?php _e('Delete Options'); ?> &raquo;" />
+							<input class="button button-primary" type="submit" name="feedstats_ifs_deactivate" value="<?php _e('Delete Options'); ?> &raquo;" />
 						</p>
 					</form>
 				</div>
@@ -1053,7 +1053,7 @@ function feedstats_admin_option_page() {
 
 		<script type="text/javascript">
 		<!--
-		<?php if ( version_compare( substr($wp_version, 0, 3), '2.7', '<' ) ) { ?>
+		<?php if ( version_compare( $wp_version, '2.6.999', '<' ) ) { ?>
 		jQuery('.postbox h3').prepend('<a class="togbox">+</a> ');
 		<?php } ?>
 		jQuery('.postbox h3').click( function() { jQuery(jQuery(this).parent().get(0)).toggleClass('closed'); } );
