@@ -2,296 +2,295 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FeedStats\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-30 12:32+0100\n"
-"PO-Revision-Date: 2008-11-30 12:32+0100\n"
+"POT-Creation-Date: 2008-12-17 11:48+0100\n"
+"PO-Revision-Date: 2008-12-17 11:48+0100\n"
 "Last-Translator: Frank Bueltge <frank@bueltge.de>\n"
 "Language-Team: Frank Bueltge\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: _e;__\n"
-"X-Poedit-Basepath: D:\\Eigene\\WP-Plugins\\FeedStats_de\\trunk\\\n"
+"X-Poedit-Basepath: D:\\WP-Plugins\\feedstats-de\\trunk\\\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: feedstats-de.php:112
-msgid "Settings"
-msgstr "Einstellungen"
-
-#: feedstats-de.php:201
-#: feedstats-de.php:204
-#: feedstats-de.php:212
-#: feedstats-de.php:213
-#: feedstats-de.php:795
-#: feedstats-de.php:812
-#: feedstats-de.php:871
+#: feedstats-de-settings.php:8
+#: feedstats-de.php:220
+#: feedstats-de.php:223
+#: feedstats-de.php:229
+#: feedstats-de.php:230
+#: feedstats-de.php:813
+#: feedstats-de.php:830
 msgid "FeedStats"
 msgstr "FeedStats"
 
-#: feedstats-de.php:205
-#: feedstats-de.php:207
-msgid "<a href=\"http://wordpress.org/extend/plugins/feedstats-de/\">Documentation</a>"
-msgstr "<a href=\"http://bueltge.de/wp-feedstats-de-plugin/171/\">Dokumentation</a>"
-
-#: feedstats-de.php:206
-#: feedstats-de.php:212
-msgid "Settings FeedStats"
-msgstr "Einstellungen FeedStats"
-
-#: feedstats-de.php:228
-msgid "plugin"
-msgstr "plugin"
-
-#: feedstats-de.php:228
-msgid "Version"
-msgstr "Version"
-
-#: feedstats-de.php:228
-msgid "History"
-msgstr "Historie"
-
-#: feedstats-de.php:228
-#: feedstats-de.php:962
-#: feedstats-de.php:963
-msgid "Author"
-msgstr "Autor"
-
-#: feedstats-de.php:268
-msgid "Error in file: "
-msgstr "Fehler in Datei: "
-
-#: feedstats-de.php:523
-#: feedstats-de.php:579
-#: feedstats-de.php:638
-msgid "Visits"
-msgstr "Besucher"
-
-#: feedstats-de.php:539
-msgid "No datas"
-msgstr "Keine Daten"
-
-#: feedstats-de.php:550
-#: feedstats-de.php:643
-#: feedstats-de.php:704
-#: feedstats-de.php:799
-msgid "Average"
-msgstr "Durchschnitt"
-
-#: feedstats-de.php:551
-#: feedstats-de.php:647
-#: feedstats-de.php:703
-#: feedstats-de.php:798
-msgid "Maximum"
-msgstr "Maximum"
-
-#: feedstats-de.php:578
-msgid "Day"
-msgstr "Tag"
-
-#: feedstats-de.php:589
-msgid "Today"
-msgstr "heute"
-
-#: feedstats-de.php:591
-msgid "First Day"
-msgstr "erster Tag"
-
-#: feedstats-de.php:611
-msgid "Last %N% Referer"
-msgstr "letzten %N% Referer"
-
-#: feedstats-de.php:637
-msgid "Statistic"
-msgstr "Statistik"
-
-#: feedstats-de.php:651
-#: feedstats-de.php:702
-#: feedstats-de.php:797
-msgid "Total"
-msgstr "Gesamt"
-
-#: feedstats-de.php:651
-#: feedstats-de.php:702
-#: feedstats-de.php:797
-msgid " (Last "
-msgstr " (Letzten "
-
-#: feedstats-de.php:651
-#: feedstats-de.php:702
-#: feedstats-de.php:797
-msgid " Days)"
-msgstr " Tage)"
-
-#: feedstats-de.php:655
-msgid "Maximum online"
-msgstr "Maximum online"
-
-#: feedstats-de.php:667
-#: feedstats-de.php:668
-msgid "Reset Statistic"
-msgstr "Statistik zurücksetzen"
-
-#: feedstats-de.php:668
-msgid "You are about to delete all data and reset stats. OK to delete, Cancel to stop"
-msgstr "Du willst die Daten löschen und die Statistik zurück setzen. OK für löschen, Cancel für Abbrechen."
-
-#: feedstats-de.php:700
-msgid "FeedReaders"
-msgstr "Feedleser"
-
-#: feedstats-de.php:702
-#: feedstats-de.php:703
-#: feedstats-de.php:704
-#: feedstats-de.php:797
-#: feedstats-de.php:798
-#: feedstats-de.php:799
-msgid ": "
-msgstr ": "
-
-#: feedstats-de.php:795
-#: feedstats-de.php:812
-msgid "to settings of FeedStats"
-msgstr "zu den Einstellungen von FeedStats"
-
-#: feedstats-de.php:801
-msgid "View all"
-msgstr "Alle ansehen"
-
-#: feedstats-de.php:878
+#: feedstats-de-settings.php:15
 msgid "Allready update the tables!"
 msgstr "Erfolgreiches Update der Tabellen!"
 
-#: feedstats-de.php:880
-#: feedstats-de.php:908
-#: feedstats-de.php:930
+#: feedstats-de-settings.php:17
+#: feedstats-de-settings.php:45
+#: feedstats-de-settings.php:67
 msgid "You do not have sufficient permissions to edit plugins for this blog."
 msgstr "Du hast nicht gen&uuml;gend Berechtigungen zum Ausf&uuml;hren dieser Funktion."
 
-#: feedstats-de.php:906
+#: feedstats-de-settings.php:43
 msgid "The options have been saved!"
 msgstr "Die Einstellungen wurden gespeichert!"
 
-#: feedstats-de.php:928
+#: feedstats-de-settings.php:65
 msgid "The options have been deleted!"
 msgstr "Die Einstellungen wurden gel&ouml;scht!"
 
-#: feedstats-de.php:939
+#: feedstats-de-settings.php:76
 msgid "FeedStats settings"
 msgstr "FeedStats Einstellungen"
 
-#: feedstats-de.php:946
+#: feedstats-de-settings.php:83
 msgid "Days"
 msgstr "Tage"
 
-#: feedstats-de.php:947
+#: feedstats-de-settings.php:84
 msgid "Amount of days that is supposed to be saved in the statistics."
 msgstr "Anzahl der Tage die in der Statistik gespeichert werden sollen."
 
-#: feedstats-de.php:951
+#: feedstats-de-settings.php:88
 msgid "Days View"
 msgstr "Tage Statistik"
 
-#: feedstats-de.php:952
+#: feedstats-de-settings.php:89
 msgid "Amount of days that is supposed to be viewed in the statistics."
 msgstr "Anzahl der Tage die in der Statistik angezeigt werden sollen."
 
-#: feedstats-de.php:956
+#: feedstats-de-settings.php:93
 msgid "User Level"
 msgstr "User Level"
 
-#: feedstats-de.php:960
+#: feedstats-de-settings.php:97
 msgid "Subscriber"
 msgstr "Registrierter Leser"
 
-#: feedstats-de.php:961
+#: feedstats-de-settings.php:98
 msgid "Contributor"
 msgstr "Mitarbeiter"
 
-#: feedstats-de.php:964
+#: feedstats-de-settings.php:99
+#: feedstats-de.php:244
+msgid "Author"
+msgstr "Autor"
+
+#: feedstats-de-settings.php:100
 msgid "Editor"
 msgstr "Herausgeber"
 
-#: feedstats-de.php:965
-#: feedstats-de.php:966
+#: feedstats-de-settings.php:101
 msgid "Admin"
 msgstr "Administrator"
 
-#: feedstats-de.php:968
+#: feedstats-de-settings.php:103
 msgid "Minimum level of WordPress-user, who is allowed to see the statistics."
 msgstr "Level das ein WordPress-Benutzer mindestens haben muss um die Statistiken einsehen zu können."
 
-#: feedstats-de.php:971
+#: feedstats-de-settings.php:106
 msgid "Sesssion Timeout"
 msgstr "Session Timeout"
 
-#: feedstats-de.php:972
+#: feedstats-de-settings.php:107
 msgid "Time of a stay/visit (1hour values 3600seconds is common but might be changed)"
 msgstr "Zeit, die ein Besuch dauert (1 Stunde sind 3600 Sekunden; Standardwert der geändert werden kann)."
 
-#: feedstats-de.php:975
+#: feedstats-de-settings.php:110
 msgid "Visit Online"
 msgstr "Besucher Online"
 
-#: feedstats-de.php:976
+#: feedstats-de-settings.php:111
 msgid "Visitors onlinetime (5minutes value 300s is a recommendation)"
 msgstr "Onlinezeit eines Besuchers (5 Minuten sind 300 Sekunden; empfohlener Wert)"
 
-#: feedstats-de.php:979
+#: feedstats-de-settings.php:114
 msgid "Not tracked"
 msgstr "Nicht zählen"
 
-#: feedstats-de.php:980
+#: feedstats-de-settings.php:115
 msgid "IP, that is supposed not to be saved, ex.: your own IP"
 msgstr "IP, die nicht gespeichert werden soll; Bsp.: die eigene IP"
 
-#: feedstats-de.php:983
+#: feedstats-de-settings.php:118
 msgid "Dashboardinfo"
 msgstr "Dashboardinfo"
 
-#: feedstats-de.php:984
+#: feedstats-de-settings.php:119
 msgid "Statistics can be shown on the dashboard ?"
 msgstr "Statistiken können im Tellerrand angezeigt werden?"
 
-#: feedstats-de.php:989
+#: feedstats-de-settings.php:124
 msgid "Update Options"
 msgstr "Einstellungen aktualisieren"
 
-#: feedstats-de.php:998
-#: feedstats-de.php:1001
+#: feedstats-de-settings.php:133
+#: feedstats-de-settings.php:136
 msgid "Add Index"
 msgstr "Index hinzufügen"
 
-#: feedstats-de.php:1000
+#: feedstats-de-settings.php:135
 msgid "The follow button add index to the table of thsi plugin for a better performance. Do you have install the plugin new at version 3.6.4? Then is this not necessary."
 msgstr "Der folgende Button fügt Index zur Tabelle hinzu und erlaubt eine bessere Performance. Du hast das Plugin erste seit Version 3.6.3 im Einsatz? Dann musst du das nicht tun, es ist im Standard aktiv."
 
-#: feedstats-de.php:1001
+#: feedstats-de-settings.php:136
 msgid "You are about to add index to tables. OK to start, Cancel to stop"
 msgstr "Willst du Index zur Tabelle hinzufügen? OK für starten, Cancel für stop."
 
-#: feedstats-de.php:1008
-#: feedstats-de.php:1015
+#: feedstats-de-settings.php:143
+#: feedstats-de-settings.php:150
 msgid "Delete Options"
 msgstr "Datenbankdaten l&ouml;schen"
 
-#: feedstats-de.php:1010
+#: feedstats-de-settings.php:145
 msgid "The follow button delete all tables and options for the FeedStats plugin. <strong>Attention: </strong>You <strong>cannot</strong> undo any changes made by this plugin."
 msgstr "Der folgende Button l&ouml;scht alle Tabellen und Einstellungen f&uuml;r das FeedStats Plugin. <strong>Achtung: </strong>Du kannst die Aktion <strong>nicht</strong> r&uuml;ckg&auml;ngig machen!"
 
-#: feedstats-de.php:1024
+#: feedstats-de-settings.php:159
 msgid "Information on the plugin"
 msgstr "Information zum Plugin"
 
-#: feedstats-de.php:1026
+#: feedstats-de-settings.php:161
 msgid "Plugin created by <a href=\"http://www.anieto2k.com\">Andr&eacute;s Nieto</a>, in cooperation/base with plugin <a href=\"http://www.deltablog.com/\">PopStats</a>. German and english adjustments, little extensions and new coding by <a href=\"http://bueltge.de\">Frank Bueltge</a>. Thx to <a href=\"http://blog.tomk32.de\">Thomas R. Koll</a> for many improvements for a better code and performance."
 msgstr "Plugin erstellt durch <a href=\"http://www.anieto2k.com\">Andr&eacute;s Nieto</a>, in Zusammenarbeit/Basis mit dem Plugin <a href=\"http://www.deltablog.com/\">PopStats</a>. Deutsche und englische Sprache, eine Reihe Erweiterungen und neuer Syntax durch <a href=\"http://bueltge.de\">Frank Bueltge</a>. Danke an <a href=\"http://blog.tomk32.de\">Thomas R. Koll</a> für eine Reihe von Ideen und Tipps für einen sauberen Code und bessere Performance."
 
-#: feedstats-de.php:1027
+#: feedstats-de-settings.php:162
 msgid "Further information: Visit the <a href=\"http://bueltge.de/wp-feedstats-de-plugin/171/\">plugin homepage</a> for further information or to grab the latest version of this plugin."
 msgstr "Weitere Informationen: Besuche die <a href=\"http://bueltge.de/wp-feedstats-de-plugin/171/\">Plugin Webseite</a> f&uuml;r weitere Informationen oder lade die aktuelle Version."
 
-#: feedstats-de.php:1027
+#: feedstats-de-settings.php:162
 msgid "You want to thank me? Visit my <a href='http://bueltge.de/wunschliste'>wishlist</a>."
 msgstr "Du willst Danke sagen, dann besuche meine <a href='http://bueltge.de/wunschliste'>Wunschliste</a>."
+
+#: feedstats-de.php:112
+#: feedstats-de.php:130
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: feedstats-de.php:224
+#: feedstats-de.php:226
+msgid "<a href=\"http://wordpress.org/extend/plugins/feedstats-de/\">Documentation</a>"
+msgstr "<a href=\"http://bueltge.de/wp-feedstats-de-plugin/171/\">Dokumentation</a>"
+
+#: feedstats-de.php:225
+#: feedstats-de.php:230
+msgid "Settings FeedStats"
+msgstr "Einstellungen FeedStats"
+
+#: feedstats-de.php:244
+msgid "plugin"
+msgstr "plugin"
+
+#: feedstats-de.php:244
+msgid "Version"
+msgstr "Version"
+
+#: feedstats-de.php:244
+msgid "History"
+msgstr "Historie"
+
+#: feedstats-de.php:284
+msgid "Error in file: "
+msgstr "Fehler in Datei: "
+
+#: feedstats-de.php:541
+#: feedstats-de.php:597
+#: feedstats-de.php:656
+msgid "Visits"
+msgstr "Besucher"
+
+#: feedstats-de.php:557
+msgid "No datas"
+msgstr "Keine Daten"
+
+#: feedstats-de.php:568
+#: feedstats-de.php:661
+#: feedstats-de.php:722
+#: feedstats-de.php:817
+msgid "Average"
+msgstr "Durchschnitt"
+
+#: feedstats-de.php:569
+#: feedstats-de.php:665
+#: feedstats-de.php:721
+#: feedstats-de.php:816
+msgid "Maximum"
+msgstr "Maximum"
+
+#: feedstats-de.php:596
+msgid "Day"
+msgstr "Tag"
+
+#: feedstats-de.php:607
+msgid "Today"
+msgstr "heute"
+
+#: feedstats-de.php:609
+msgid "First Day"
+msgstr "erster Tag"
+
+#: feedstats-de.php:629
+msgid "Last %N% Referer"
+msgstr "letzten %N% Referer"
+
+#: feedstats-de.php:655
+msgid "Statistic"
+msgstr "Statistik"
+
+#: feedstats-de.php:669
+#: feedstats-de.php:720
+#: feedstats-de.php:815
+msgid "Total"
+msgstr "Gesamt"
+
+#: feedstats-de.php:669
+#: feedstats-de.php:720
+#: feedstats-de.php:815
+msgid " (Last "
+msgstr " (Letzten "
+
+#: feedstats-de.php:669
+#: feedstats-de.php:720
+#: feedstats-de.php:815
+msgid " Days)"
+msgstr " Tage)"
+
+#: feedstats-de.php:673
+msgid "Maximum online"
+msgstr "Maximum online"
+
+#: feedstats-de.php:685
+#: feedstats-de.php:686
+msgid "Reset Statistic"
+msgstr "Statistik zurücksetzen"
+
+#: feedstats-de.php:686
+msgid "You are about to delete all data and reset stats. OK to delete, Cancel to stop"
+msgstr "Du willst die Daten löschen und die Statistik zurück setzen. OK für löschen, Cancel für Abbrechen."
+
+#: feedstats-de.php:718
+msgid "FeedReaders"
+msgstr "Feedleser"
+
+#: feedstats-de.php:720
+#: feedstats-de.php:721
+#: feedstats-de.php:722
+#: feedstats-de.php:815
+#: feedstats-de.php:816
+#: feedstats-de.php:817
+msgid ": "
+msgstr ": "
+
+#: feedstats-de.php:813
+#: feedstats-de.php:830
+msgid "to settings of FeedStats"
+msgstr "zu den Einstellungen von FeedStats"
+
+#: feedstats-de.php:819
+msgid "View all"
+msgstr "Alle ansehen"
 
 #~ msgid "Konfiguration FeedStats"
 #~ msgstr "Einstellungen Feedstats"

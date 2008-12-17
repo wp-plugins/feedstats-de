@@ -2,17 +2,17 @@
 /**
  * @package FeedStats
  * @author Frank B&uuml;ltge
- * @version 3.7
+ * @version 3.7.1
  */
  
 /*
 Plugin Name: FeedStats
 Plugin URI: http://bueltge.de/wp-feedstats-de-plugin/171/
 Description: Simple statistictool for feeds.
-Version: 3.7
+Version: 3.7.1
 Author: Andres Nieto Porras, Frank B&uuml;ltge
 Author URI: http://bueltge.de/
-Last Change: 07.12.2008 11:49:39
+Last Change: 17.12.2008 01:44:19
 */
 
 define('FEEDSTATS_DAY', 60*60*24);
@@ -89,7 +89,7 @@ if ( !defined('WP_CONTENT_DIR') )
  */
 function feedstats_textdomain() {
 
-	if (function_exists('load_plugin_textdomain')) {
+	if ( function_exists('load_plugin_textdomain') ) {
 		if ( !defined('WP_PLUGIN_DIR') ) {
 			load_plugin_textdomain('feedstats', str_replace( ABSPATH, '', dirname(__FILE__) ) . '/languages');
 		} else {
@@ -109,7 +109,7 @@ function feedstats_filter_plugin_actions($links, $file){
 	if ( !$this_plugin ) $this_plugin = plugin_basename(__FILE__);
 
 	if ( $file == $this_plugin ) {
-		$settings_link = '<a href="options-general.php?page=feedstats-de/feedstats-de.php">' . __('Settings') . '</a>';
+		$settings_link = '<a href="options-general.php?page=feedstats-de-settings.php">' . __('Settings') . '</a>';
 		$links = array_merge( array($settings_link), $links); // before other links
 	}
 	return $links;
@@ -127,7 +127,7 @@ function feedstats_filter_plugin_actions($links, $file){
  */
 function feedstats_filter_plugin_actions_new($links) {
 
-	$settings_link = '<a href="options-general.php?page=feedstats-de/feedstats-de.php">' . __('Settings') . '</a>';
+	$settings_link = '<a href="options-general.php?page=feedstats-de-settings.php">' . __('Settings') . '</a>';
 	array_unshift( $links, $settings_link );
 	
 	return $links;
@@ -212,29 +212,26 @@ function feedstats_get_resource_url($resourceID) {
 function feedstats_add_settings_page() {
 	global $wp_version;
 	
-	if ( function_exists('add_options_page') && current_user_can('switch_themes') ) {
+	$plugin = plugin_basename(__FILE__);
+	
+	if ( version_compare( $wp_version, '2.6.999', '>' ) && function_exists('add_contextual_help') ) {
+		$menutitle  = '';
+		$menutitle .= '<img src="' . feedstats_get_resource_url('feedstats.gif') . '" alt="" />' . ' ';
+		$menutitle .= __('FeedStats', 'feedstats');
+		$menutitle_count = ' <span id="awaiting-mod" class="count-' . get_feedstats_getfeeds_button() . '"><span class="comment-count">' . get_feedstats_getfeeds_button() . '</span></span>';
 		
-		if ( version_compare( $wp_version, '2.6.999', '>' ) && function_exists('add_contextual_help') ) {
-			$menutitle  = '';
-			$menutitle .= '<img src="' . feedstats_get_resource_url('feedstats.gif') . '" alt="" />' . ' ';
-			$menutitle .= __('FeedStats', 'feedstats');
-			$menutitle_count = ' <span id="awaiting-mod" class="count-' . get_feedstats_getfeeds_button() . '"><span class="comment-count">' . get_feedstats_getfeeds_button() . '</span></span>';
-			
-			$hook = add_submenu_page('index.php', __('FeedStats', 'feedstats'), $menutitle . $menutitle_count, get_option('fs_user_level'), __FILE__, 'feedstats_display_stats');
-			add_contextual_help( $hook, __('<a href="http://wordpress.org/extend/plugins/feedstats-de/">Documentation</a>', 'feedstats') );
-			$hook = add_options_page(__('Settings FeedStats', 'feedstats'), $menutitle, 9, __FILE__, 'feedstats_admin_option_page');
-			add_contextual_help( $hook, __('<a href="http://wordpress.org/extend/plugins/feedstats-de/">Documentation</a>', 'feedstats') );
-
-			$plugin = plugin_basename(__FILE__); 
-			add_filter( 'plugin_action_links_' . $plugin, 'feedstats_filter_plugin_actions_new' );
-		} else {
-			add_submenu_page('index.php', __('FeedStats', 'feedstats'), __('FeedStats', 'feedstats'), get_option('fs_user_level'), __FILE__, 'feedstats_display_stats');
-			add_options_page(__('Settings FeedStats', 'feedstats'), __('FeedStats', 'feedstats'), 9, __FILE__, 'feedstats_admin_option_page');
-			
-			add_filter('plugin_action_links', 'feedstats_filter_plugin_actions', 10, 2);
-		}
+		$hook = add_submenu_page('index.php', __('FeedStats', 'feedstats'), $menutitle . $menutitle_count, get_option('fs_user_level'), $plugin, 'feedstats_display_stats');
+		add_contextual_help( $hook, __('<a href="http://wordpress.org/extend/plugins/feedstats-de/">Documentation</a>', 'feedstats') );
+		$hook = add_options_page(__('Settings FeedStats', 'feedstats'), $menutitle, 9, 'feedstats-de-settings.php', 'feedstats_admin_option_page');
+		add_contextual_help( $hook, __('<a href="http://wordpress.org/extend/plugins/feedstats-de/">Documentation</a>', 'feedstats') );
+		add_filter( 'plugin_action_links_' . $plugin, 'feedstats_filter_plugin_actions_new' );
+	} else {
+		add_submenu_page('index.php', __('FeedStats', 'feedstats'), __('FeedStats', 'feedstats'), get_option('fs_user_level'), $plugin, 'feedstats_display_stats');
+		add_options_page(__('Settings FeedStats', 'feedstats'), __('FeedStats', 'feedstats'), 9, 'feedstats-de-settings.php', 'feedstats_admin_option_page');
 		
+		add_filter('plugin_action_links', 'feedstats_filter_plugin_actions', 10, 2);
 	}
+	
 }
 
 
@@ -242,7 +239,7 @@ function feedstats_add_settings_page() {
  * credit in wp-footer
  */
 function feedstats_admin_footer() {
-	if ( basename($_SERVER['REQUEST_URI']) == 'feedstats-de.php') {
+	if ( basename($_SERVER['REQUEST_URI']) == 'feedstats-de.php' || basename($_SERVER['REQUEST_URI']) == 'admin.php?page=feedstats-de-settings.php' ) {
 		$plugin_data = get_plugin_data( __FILE__ );
 		printf('%1$s ' . __('plugin') . ' | ' . __('Version') . ' <a href="http://bueltge.de/wp-feedstats-de-plugin/171/#historie" title="' . __('History', 'adminimize') . '">%2$s</a> | ' . __('Author') . ' %3$s<br />', $plugin_data['Title'], $plugin_data['Version'], $plugin_data['Author']);
 	}
@@ -813,13 +810,13 @@ function feedstats_add_dashboard() {
 	$max_visits_time = htmlspecialchars(strftime('%d. %B %Y',$wpdb->get_var("SELECT max_visits_time FROM " . $wpdb->prefix . 'fs_data')), ENT_QUOTES);
 	
 	if ( version_compare( $wp_version, '2.6.999', '<' ) ) {
-		$content  = '<h3>' . __('FeedStats', 'feedstats') . ' <a href="admin.php?page=feedstats-de/feedstats-de.php" title="' . __('to settings of FeedStats', 'feedstats') . '">&raquo;</a></h3>';
+		$content  = '<h3>' . __('FeedStats', 'feedstats') . ' <a href="admin.php?page=feedstats-de/feedstats-de-settings.php" title="' . __('to settings of FeedStats', 'feedstats') . '">&raquo;</a></h3>';
 	}
 	$content .= '<ul><li>' . __('Total', 'feedstats') . __(': ') . attribute_escape($total_visits) . __(' (Last ', 'feedstats') . $num_days . __(' Days)', 'feedstats') . '</li>';
 	$content .= '<li>' . __('Maximum', 'feedstats') . __(': ') . attribute_escape($max_visits) . ' (' . attribute_escape($max_visits_time) . ')</li>';
 	$content .= '<li>' . __('Average', 'feedstats') . __(': ') . attribute_escape($average_visits) . '</li>';
 	$content .= '</ul>';
-	$content .= '<p class="textright"><a href="index.php?page=feedstats-de/feedstats-de.php" class="button">' . __('View all', 'feedstats') . '</a></p>';
+	$content .= '<p class="textright"><a href="index.php?page=feedstats-de.php" class="button">' . __('View all', 'feedstats') . '</a></p>';
 	
 	print ($content);
 }
@@ -830,7 +827,7 @@ function feedstats_add_dashboard() {
  * >= WordPress 2.7
  */
 function feedstats_add_dashboard_new() {
-	wp_add_dashboard_widget( 'feedstats_dashboard_widget', __('FeedStats', 'feedstats') . ' <a href="admin.php?page=feedstats-de/feedstats-de.php" title="' . __('to settings of FeedStats', 'feedstats') . '">&raquo;</a>', 'feedstats_add_dashboard' );
+	wp_add_dashboard_widget( 'feedstats_dashboard_widget', __('FeedStats', 'feedstats') . ' <a href="admin.php?page=feedstats-de-settings.php" title="' . __('to settings of FeedStats', 'feedstats') . '">&raquo;</a>', 'feedstats_add_dashboard' );
 }
 
 
@@ -882,187 +879,5 @@ if ( !function_exists('wp_nonce_field') ) {
 	$FeedStats_nonce = 'FeedStats-update-key';
 }
 
-
-// Option Page
-function feedstats_admin_option_page() {
-	global $wpdb, $wp_version;
-
+require_once('feedstats-de-settings.php');
 ?>
-<div class="wrap">
-	<h2><img src="<?php echo feedstats_get_resource_url('feedstats32.gif'); ?>" alt="" width="32" height="32" /> <?php _e('FeedStats', 'feedstats'); ?></h2>
-<?php
-	if ( ($_GET['fs_action'] == 'add_index') ) {
-		
-		if ( function_exists('current_user_can') && current_user_can('edit_plugins') ) {
-			feedstats_genereta_tables();
-		
-			echo '<div class="updated fade"><p>' . __('Allready update the tables!', 'feedstats') . '</p></div>';
-		} else {
-			wp_die('<p>'.__('You do not have sufficient permissions to edit plugins for this blog.').'</p>');
-		}
-	}
-
-	if ( ($_POST['action'] == 'insert') && $_POST['fs_ifs_save'] ) {
-	
-		if ( function_exists('current_user_can') && current_user_can('edit_plugins') ) {
-			check_admin_referer($FeedStats_nonce);
-
-			// for a smaller database
-			function feedstats_get_update($option) {
-				if ( ($_POST[$option] == '0') || $_POST[$option] == '') {
-					delete_option($option);
-				} else {
-					update_option($option , $_POST[$option]);
-				}
-			}
-			
-			feedstats_get_update('fs_view_days');	
-			feedstats_get_update('fs_days');
-			feedstats_get_update('fs_user_level');
-			feedstats_get_update('fs_session_timeout');
-			feedstats_get_update('fs_visits_online');
-			feedstats_get_update('fs_ifs_not_tracked');
-			feedstats_get_update('fs_ifs_dashboardinfo');
-			
-			echo '<div class="updated fade"><p>' . __('The options have been saved!', 'feedstats') . '</p></div>';
-		} else {
-			wp_die('<p>'.__('You do not have sufficient permissions to edit plugins for this blog.').'</p>');
-		}
-	}
-	
-	if ( ($_POST['action'] == 'deactivate') && $_POST['feedstats_ifs_deactivate'] ) {
-
-		if ( function_exists('current_user_can') && current_user_can('edit_plugins') ) {
-			check_admin_referer($FeedStats_nonce);
-			
-			$wpdb->query ("DROP TABLE {$wpdb->prefix}fs_data");
-			$wpdb->query ("DROP TABLE {$wpdb->prefix}fs_visits");
-			
-			delete_option('fs_days');
-			delete_option('fs_view_days');
-			delete_option('fs_user_level');
-			delete_option('fs_session_timeout');
-			delete_option('fs_visits_online');
-			delete_option('fs_ifs_not_tracked');
-			delete_option('fs_ifs_dashboardinfo');
-
-			echo '<div class="updated"><p>' . __('The options have been deleted!', 'feedstats') . '</p></div>';
-		} else {
-			wp_die('<p>' . __('You do not have sufficient permissions to edit plugins for this blog.') . '</p>');
-		}
-	}
-?>
-
-	<br class="clear" />
-	
-		<div id="poststuff">
-			<div class="postbox" >
-				<h3><?php _e('FeedStats settings', 'feedstats'); ?></h3>
-				<div class="inside">
-					<form name="form1" method="post" action="<?php echo $location; ?>">
-						<?php feedstats_nonce_field($FeedStats_nonce); ?>
-						
-						<table summary="feedstats options" class="form-table">
-							<tr valign="top">
-								<th><?php _e('Days', 'feedstats'); ?></th>
-								<td><input name="fs_days" value="<?php echo get_option('fs_days'); ?>" type="text" /><br /><?php _e('Amount of days that is supposed to be saved in the statistics.', 'feedstats'); ?></td>
-							</tr>
-
-							<tr valign="top">
-								<th scope="row"><?php _e('Days View', 'feedstats'); ?></th>
-								<td><input name="fs_view_days" value="<?php echo get_option('fs_view_days'); ?>" type="text" /><br /><?php _e('Amount of days that is supposed to be viewed in the statistics.', 'feedstats'); ?></td>
-							</tr>
-
-							<tr valign="top">
-								<th scope="row"><?php _e('User Level', 'feedstats'); ?></th>
-								<td>
-									<?php $fs_user_level = get_option('fs_user_level'); ?>
-									<select name="fs_user_level">
-										<option value="0"<?php if ($fs_user_level == '0') { echo ' selected="selected"'; } ?>>0 <?php _e('Subscriber', 'feedstats'); ?></option>
-										<option value="1"<?php if ($fs_user_level == '1') { echo ' selected="selected"'; } ?>>1 <?php _e('Contributor', 'feedstats'); ?></option>
-										<option value="2"<?php if ($fs_user_level == '2') { echo ' selected="selected"'; } ?>>2 <?php _e('Author', 'feedstats'); ?></option>
-										<option value="3"<?php if ($fs_user_level == '3') { echo ' selected="selected"'; } ?>>3 <?php _e('Author', 'feedstats'); ?></option>
-										<option value="5"<?php if ($fs_user_level == '5') { echo ' selected="selected"'; } ?>>5 <?php _e('Editor', 'feedstats'); ?></option>
-										<option value="8"<?php if ($fs_user_level == '8') { echo ' selected="selected"'; } ?>>8 <?php _e('Admin', 'feedstats'); ?></option>
-										<option value="9"<?php if ($fs_user_level == '9') { echo ' selected="selected"'; } ?>>9 <?php _e('Admin', 'feedstats'); ?></option>
-									</select>
-									<br /><?php _e('Minimum level of WordPress-user, who is allowed to see the statistics.', 'feedstats'); ?></td>
-							</tr>
-							<tr valign="top">
-								<th scope="row"><?php _e('Sesssion Timeout', 'feedstats'); ?></th>
-								<td><input name="fs_session_timeout" value="<?php echo get_option('fs_session_timeout'); ?>" type="text" /><br /><?php _e('Time of a stay/visit (1hour values 3600seconds is common but might be changed)','feedstats'); ?></td>
-							</tr>
-							<tr valign="top">
-								<th scope="row"><?php _e('Visit Online', 'feedstats'); ?></th>
-								<td><input name="fs_visits_online" value="<?php echo get_option('fs_visits_online'); ?>" type="text" /><br /><?php _e('Visitors onlinetime (5minutes value 300s is a recommendation)', 'feedstats'); ?></td>
-							</tr>
-							<tr valign="top">
-								<th scope="row"><?php _e('Not tracked', 'feedstats'); ?></th>
-								<td><input name="fs_ifs_not_tracked" value="<?php echo get_option('fs_ifs_not_tracked'); ?>"  type="text" /><br /><?php _e('IP, that is supposed not to be saved, ex.: your own IP', 'feedstats'); echo '<small> ' . $_SERVER['REMOTE_ADDR'] . '</small>' ;?></td>
-							</tr>
-							<tr valign="top">
-								<th scope="row"><?php _e('Dashboardinfo', 'feedstats'); ?></th>
-								<td><input name="fs_ifs_dashboardinfo" value='1' <?php if (get_option('fs_ifs_dashboardinfo')=='1') { echo "checked='checked'";  } ?> type="checkbox" /><br /><?php _e('Statistics can be shown on the dashboard ?', 'feedstats'); ?></td>
-							</tr>
-						</table>
-						<p class="submit">
-							<input type="hidden" name="action" value="insert" />
-							<input class="button-primary" type="submit" name="fs_ifs_save" value="<?php _e('Update Options'); ?> &raquo;" />
-						</p>
-					</form>
-				</div>
-			</div>
-		</div>
-		
-		<div id="poststuff">
-			<div class="postbox closed" >
-				<h3><?php _e('Add Index', 'feedstats'); ?></h3>
-				<div class="inside">
-					<p><?php _e('The follow button add index to the table of thsi plugin for a better performance. Do you have install the plugin new at version 3.6.4? Then is this not necessary.', 'feedstats'); ?></p>
-					<p><a class="button" href="options-general.php?page=feedstats-de/feedstats-de.php&amp;fs_action=add_index" onclick="return confirm('<?php _e('You are about to add index to tables. OK to start, Cancel to stop', 'feedstats'); ?>');"><?php _e('Add Index', 'feedstats'); ?> &raquo;</a></p>
-				</div>
-			</div>
-		</div>
-		
-		<div id="poststuff">
-			<div class="postbox closed" >
-				<h3><?php _e('Delete Options', 'feedstats'); ?></h3>
-				<div class="inside">
-					<p><?php _e('The follow button delete all tables and options for the FeedStats plugin. <strong>Attention: </strong>You <strong>cannot</strong> undo any changes made by this plugin.', 'feedstats'); ?></p>
-					<form name="form2" method="post" action="<?php echo $location; ?>">
-						<?php feedstats_nonce_field($FeedStats_nonce); ?>
-						<p id="submitbutton">
-							<input type="hidden" name="action" value="deactivate" />
-							<input class="button button-primary" type="submit" name="feedstats_ifs_deactivate" value="<?php _e('Delete Options'); ?> &raquo;" />
-						</p>
-					</form>
-				</div>
-			</div>
-		</div>
-		
-		<div id="poststuff">
-			<div class="postbox closed" >
-				<h3><?php _e('Information on the plugin', 'feedstats') ?></h3>
-				<div class="inside">
-					<p><?php _e('Plugin created by <a href="http://www.anieto2k.com">Andr&eacute;s Nieto</a>, in cooperation/base with plugin <a href="http://www.deltablog.com/">PopStats</a>. German and english adjustments, little extensions and new coding by <a href="http://bueltge.de">Frank Bueltge</a>. Thx to <a href="http://blog.tomk32.de">Thomas R. Koll</a> for many improvements for a better code and performance.', 'feedstats'); ?></p>
-					<p><?php _e('Further information: Visit the <a href="http://bueltge.de/wp-feedstats-de-plugin/171/">plugin homepage</a> for further information or to grab the latest version of this plugin.', 'feedstats'); ?><br />&copy; Copyright 2007 - <?php echo date("Y"); ?> <a href="http://bueltge.de">Frank B&uuml;ltge</a> | <?php _e('You want to thank me? Visit my <a href=\'http://bueltge.de/wunschliste\'>wishlist</a>.', 'feedstats'); ?></p>
-					<!-- <?php echo get_num_queries(); ?> queries. <?php timer_stop(1); ?> seconds. -->
-				</div>
-			</div>
-		</div>
-
-		<script type="text/javascript">
-		<!--
-		<?php if ( version_compare( $wp_version, '2.6.999', '<' ) ) { ?>
-		jQuery('.postbox h3').prepend('<a class="togbox">+</a> ');
-		<?php } ?>
-		jQuery('.postbox h3').click( function() { jQuery(jQuery(this).parent().get(0)).toggleClass('closed'); } );
-		jQuery('.postbox.close-me').each(function(){
-			jQuery(this).addClass("closed");
-		});
-		//-->
-		</script>
-		
-	</div>
-
-<?php } //End Options-Page ?>
