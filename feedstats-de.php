@@ -816,7 +816,7 @@ function feedstats_add_dashboard() {
 	$content .= '<li>' . __('Maximum', 'feedstats') . __(': ') . attribute_escape($max_visits) . ' (' . attribute_escape($max_visits_time) . ')</li>';
 	$content .= '<li>' . __('Average', 'feedstats') . __(': ') . attribute_escape($average_visits) . '</li>';
 	$content .= '</ul>';
-	$content .= '<p class="textright"><a href="index.php?page=feedstats-de.php" class="button">' . __('View all', 'feedstats') . '</a></p>';
+	$content .= '<p class="textright"><a href="index.php?page=feedstats-de/feedstats-de.php" class="button">' . __('View all', 'feedstats') . '</a></p>';
 	
 	print ($content);
 }
