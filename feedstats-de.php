@@ -2,17 +2,17 @@
 /**
  * @package FeedStats
  * @author Frank B&uuml;ltge
- * @version 3.7.1
+ * @version 3.7.2
  */
  
 /*
 Plugin Name: FeedStats
 Plugin URI: http://bueltge.de/wp-feedstats-de-plugin/171/
 Description: Simple statistictool for feeds.
-Version: 3.7.1
+Version: 3.7.2
 Author: Andres Nieto Porras, Frank B&uuml;ltge
 Author URI: http://bueltge.de/
-Last Change: 17.12.2008 01:44:19
+Last Change: 07.01.2009 13:16:43
 */
 
 define('FEEDSTATS_DAY', 60*60*24);
@@ -368,32 +368,75 @@ function feedstats_get_midnight($time) {
 	return date('U', mktime(0, 0, 0, 1, date('z', $time)+1, date('y',$time)));
 }
 
+
+// is feed url (is_feed())
+function feedstats_feed_url() {
+	switch ( basename($_SERVER['PHP_SELF']) ) {
+		case 'wp-rdf.php':
+		case 'wp-rss.php':
+		case 'wp-rss2.php':
+		case 'wp-atom.php':
+		case 'wp-commentsrss2.php':
+		case 'feed':
+		case 'rss2':
+		case 'atom':
+			return true;
+		break;
+	}
+	
+	if ( is_feed() )
+		return true;
+	
+	if ( isset($_GET['feed']) )
+		return true;
+
+	if ( preg_match("/^\/(feed|rss2?|atom|rdf)/Uis", $_SERVER['REQUEST_URI']) )
+		return true;
+	
+	if ( preg_match("/\/(feed|rss2?|atom|rdf)\/?$/Uis", $_SERVER['REQUEST_URI']) )
+		return true;
+	
+	return false;
+}
+
+
 // Main/System functions
 function feedstats_track($title = '', $more_link_text = '', $stripteaser = '', $more_file = '', $cut = '', $encode_html = '') {
-	if ( !is_feed() ) {
-		return;
-	}
 	
 	global $wpdb, $_SERVER;
 
 	$time = time();
 	$url  = $_SERVER['REQUEST_URI'];
-
-
-	if ($url == get_bloginfo('rdf_url')) {
-		$url = 'RDF';
-	} else if ($url == get_bloginfo('rss_url')) {
-		$url = 'RSS';
-	} else if ($url == get_bloginfo('rss2_url')) {
-		$url = 'RSS2';
-	} else if ($url == get_bloginfo('atom_url')) {
-		$url = 'ATOM';
-	} else if ($url == get_bloginfo('comments_rss2_url')) {
-		$url = 'COMMENT RSS';
-	} else if ($url == get_bloginfo('comments_atom_url')) {
-		$url = 'COMMENT ATOM';
+	
+	if ( !feedstats_feed_url() ) {
+		return $title;
+		return $more_link_text;
+		return $stripteaser;
+		return $more_file;
+		return $cut;
+		return $encode_html;
 	}
-
+	
+	if ( $url == get_bloginfo('rdf_url') ) {
+		$url = 'RDF';
+	} else if ( $url == get_bloginfo('rss_url') ) {
+		$url = 'RSS';
+	} else if ( $url == get_bloginfo('rss2_url') ) {
+		$url = 'RSS2';
+	} else if ( $url == get_bloginfo('atom_url') ) {
+		$url = 'ATOM';
+	} else if ( $url == get_bloginfo('comments_rss2_url') ) {
+		$url = 'COMMENT RSS';
+	} else if ( $url == get_bloginfo('comments_atom_url') ) {
+		$url = 'COMMENT ATOM';
+	} else if ( preg_match("/^\/(feed|rss2?|atom|rdf)/Uis", $url) ) {
+		$url = $_SERVER['REQUEST_URI'];
+	} else if ( preg_match("/\/(feed|rss2?|atom|rdf)\/?$/Uis", $url) ) {
+		$url = $_SERVER['REQUEST_URI'];
+	} else if ( isset($_GET["feed"]) ) {
+		$url = $_SERVER['REQUEST_URI'];
+	}
+	
 	$time_delete = feedstats_get_midnight( $time-(FEEDSTATS_DAY*get_option('fs_days')) );	
 	$wpdb->query("DELETE FROM " . $wpdb->prefix . "fs_visits WHERE time_begin < ".$time_delete);
 	
@@ -410,7 +453,7 @@ function feedstats_track($title = '', $more_link_text = '', $stripteaser = '', $
 	
 	if ($wpdb->is_admin || strstr($_SERVER['PHP_SELF'], 'wp-admin/')) {
 		$sessions = $wpdb->get_var("SELECT count(*) FROM " . $wpdb->prefix . "fs_visits WHERE ip='" . feedstats_get_ip() . "' AND time_last > " . $time_insert_visit);
-		if ($sessions>0) {
+		if ($sessions > 0) {
 			$wpdb->query("UPDATE " . $wpdb->prefix . "fs_visits SET time_last=" . $time . ",url='" . $url . "' WHERE ip='" . feedstats_get_ip() . "' AND time_last > " . $time_insert_visit);
 		}
 		return;
@@ -418,7 +461,7 @@ function feedstats_track($title = '', $more_link_text = '', $stripteaser = '', $
 	
 	$ip_time_query = $wpdb->get_var("SELECT count(*) FROM " . $wpdb->prefix . "fs_visits WHERE ip='".feedstats_get_ip()."' AND time_last > " . $time_insert_visit);
 	
-	if ($ip_time_query==0) {
+	if ($ip_time_query == 0) {
 		$wpdb->query("INSERT INTO " . $wpdb->prefix . "fs_visits (ip, url, time_begin, time_last) VALUES ('" . feedstats_get_ip() . "','" . $url . "'," . $time . "," . $time . ")");
 	} else {
 		$wpdb->query("UPDATE " . $wpdb->prefix . "fs_visits SET time_last=" . $time . ",url='" . $url . "' WHERE ip='" . feedstats_get_ip() . "' AND time_last > " . $time_insert_visit);
@@ -451,7 +494,7 @@ function feedstats_track($title = '', $more_link_text = '', $stripteaser = '', $
 
 function feedstats_display_stats() {
 	global $wpdb;
-
+	
 	if ($_GET['fs_action'] == 'reset')
 		feedstats_reset_db();
 		
@@ -638,7 +681,7 @@ function feedstats_display_stats() {
 									$class = ($class=='form-invalid') ? '' : 'form-invalid';
 							?>
 							<tr class="<?php echo $class; ?>"> 
-								<td><?php echo htmlspecialchars($r['cont']); ?></td>
+								<th><?php echo htmlspecialchars($r['cont']); ?></th>
 								<td><?php echo htmlspecialchars((strlen($r['title'])>50) ? substr_replace($r['title'],"...",50) : $r['title']); ?></td>
 							</tr>
 							<?php } //end foreach

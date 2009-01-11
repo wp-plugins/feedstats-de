@@ -2,14 +2,14 @@
 // Option Page
 function feedstats_admin_option_page() {
 	global $wpdb, $wp_version;
-
 ?>
 <div class="wrap">
 	<h2><img src="<?php echo feedstats_get_resource_url('feedstats32.gif'); ?>" alt="" width="32" height="32" /> <?php _e('FeedStats', 'feedstats'); ?></h2>
 <?php
-	if ( ($_GET['fs_action'] == 'add_index') ) {
+	if ( ($_POST['action'] == 'add_index') && $_POST['feedstats_add_index'] ) {
 		
 		if ( function_exists('current_user_can') && current_user_can('edit_plugins') ) {
+			check_admin_referer($FeedStats_nonce);
 			feedstats_genereta_tables();
 		
 			echo '<div class="updated fade"><p>' . __('Allready update the tables!', 'feedstats') . '</p></div>';
@@ -62,7 +62,7 @@ function feedstats_admin_option_page() {
 			delete_option('fs_ifs_not_tracked');
 			delete_option('fs_ifs_dashboardinfo');
 
-			echo '<div class="updated"><p>' . __('The options have been deleted!', 'feedstats') . '</p></div>';
+			echo '<div class="updated fade"><p>' . __('The options have been deleted!', 'feedstats') . '</p></div>';
 		} else {
 			wp_die('<p>' . __('You do not have sufficient permissions to edit plugins for this blog.') . '</p>');
 		}
@@ -71,7 +71,7 @@ function feedstats_admin_option_page() {
 
 	<br class="clear" />
 	
-		<div id="poststuff">
+		<div id="poststuff" class="ui-sortable">
 			<div class="postbox" >
 				<h3><?php _e('FeedStats settings', 'feedstats'); ?></h3>
 				<div class="inside">
@@ -128,33 +128,39 @@ function feedstats_admin_option_page() {
 			</div>
 		</div>
 		
-		<div id="poststuff">
+		<div id="poststuff" class="ui-sortable">
 			<div class="postbox closed" >
 				<h3><?php _e('Add Index', 'feedstats'); ?></h3>
 				<div class="inside">
 					<p><?php _e('The follow button add index to the table of thsi plugin for a better performance. Do you have install the plugin new at version 3.6.4? Then is this not necessary.', 'feedstats'); ?></p>
-					<p><a class="button" href="options-general.php?page=feedstats-de/feedstats-de.php&amp;fs_action=add_index" onclick="return confirm('<?php _e('You are about to add index to tables. OK to start, Cancel to stop', 'feedstats'); ?>');"><?php _e('Add Index', 'feedstats'); ?> &raquo;</a></p>
-				</div>
-			</div>
-		</div>
-		
-		<div id="poststuff">
-			<div class="postbox closed" >
-				<h3><?php _e('Delete Options', 'feedstats'); ?></h3>
-				<div class="inside">
-					<p><?php _e('The follow button delete all tables and options for the FeedStats plugin. <strong>Attention: </strong>You <strong>cannot</strong> undo any changes made by this plugin.', 'feedstats'); ?></p>
 					<form name="form2" method="post" action="<?php echo $location; ?>">
 						<?php feedstats_nonce_field($FeedStats_nonce); ?>
-						<p id="submitbutton">
-							<input type="hidden" name="action" value="deactivate" />
-							<input class="button button-primary" type="submit" name="feedstats_ifs_deactivate" value="<?php _e('Delete Options'); ?> &raquo;" />
+						<p class="submit">
+							<input type="hidden" name="action" value="add_index" />
+							<input class="button" type="submit" name="feedstats_add_index" value="<?php _e('Add Index', 'feedstats'); ?> &raquo;" />
 						</p>
 					</form>
 				</div>
 			</div>
 		</div>
 		
-		<div id="poststuff">
+		<div id="poststuff" class="ui-sortable">
+			<div class="postbox closed" >
+				<h3><?php _e('Delete Options', 'feedstats'); ?></h3>
+				<div class="inside">
+					<p><?php _e('The follow button delete all tables and options for the FeedStats plugin. <strong>Attention: </strong>You <strong>cannot</strong> undo any changes made by this plugin.', 'feedstats'); ?></p>
+					<form name="form2" method="post" action="<?php echo $location; ?>">
+						<?php feedstats_nonce_field($FeedStats_nonce); ?>
+						<p class="submit">
+							<input type="hidden" name="action" value="deactivate" />
+							<input class="button" type="submit" name="feedstats_ifs_deactivate" value="<?php _e('Delete Options', 'feedstats'); ?> &raquo;" />
+						</p>
+					</form>
+				</div>
+			</div>
+		</div>
+		
+		<div id="poststuff" class="ui-sortable">
 			<div class="postbox closed" >
 				<h3><?php _e('Information on the plugin', 'feedstats') ?></h3>
 				<div class="inside">
