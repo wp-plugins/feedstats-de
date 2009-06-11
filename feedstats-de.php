@@ -1,7 +1,7 @@
 <?php
 /**
  * @package FeedStats
- * @author Frank B&uuml;ltge
+ * @author Andres Nieto Porras, Frank B&uuml;ltge
  * @version 3.7.2
  */
  
