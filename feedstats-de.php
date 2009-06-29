@@ -1,7 +1,7 @@
 <?php
 /**
  * @package FeedStats
- * @author Andres Nieto Porras, Frank B&uuml;ltge
+ * @author Frank B&uuml;ltge
  * @version 3.7.2
  */
  
@@ -12,7 +12,7 @@ Description: Simple statistictool for feeds.
 Version: 3.7.2
 Author: Andres Nieto Porras, Frank B&uuml;ltge
 Author URI: http://bueltge.de/
-Last Change: 07.01.2009 13:16:43
+Last Change: 29.06.2009 10:47:30
 */
 
 define('FEEDSTATS_DAY', 60*60*24);
@@ -893,11 +893,11 @@ if ( function_exists('add_action') ) {
 	add_action('init', 'feedstats_textdomain');
 	add_action('the_title_rss', 'feedstats_track');
 	add_action('the_content_rss', 'feedstats_track');
-	add_action('admin_menu', 'feedstats_add_settings_page');
-	add_action('in_admin_footer', 'feedstats_admin_footer');
-	
-	if (strpos($_SERVER['REQUEST_URI'], 'page=feedstats-de/feedstats-de') !== false) {
-		add_action('admin_head', 'feedstats_admin_header');
+	if ( is_admin() ) {
+		add_action('admin_menu', 'feedstats_add_settings_page');
+		add_action('in_admin_footer', 'feedstats_admin_footer');
+		if (strpos($_SERVER['REQUEST_URI'], 'page=feedstats-de/feedstats-de') !== false)
+			add_action('admin_head', 'feedstats_admin_header');
 	}
 	
 	$admin = dirname($_SERVER['SCRIPT_FILENAME']);
