@@ -27,6 +27,15 @@ Please visit [the official website](http://bueltge.de/wp-feedstats-de-plugin/171
 = Information =
 The version >3.4 has a new style, activate for WordPress 2.5. You can found the version 3.4 in the [SVN](http://svn.wp-plugins.org/feedstats-de/tags/ "SVN").
 
+= Localizations =
+* FeedReaderButton (gif) by [Christoph Schr&ouml;der](http://www.nasendackel.de "Christoph Schr&ouml;der")
+* FeedReaderButton (gif - traditional Chinese (zh_TW)) and traditional Chinese translation by [Neil Lin](http://www.wmfield.idv.tw/485 "Neil Lin")
+* FeedReaderButton (gif - italien (it_IT)) and italien translation by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
+* Turkish translation by [Baris Unver](http://beyn.org "Baris Unver")
+* French translation by [burningHat](http://blog.burninghat.net/ "burningHat")
+* Spanich translation by [fportero](http://www.tengotiempo.com "fportero")
+* Thanks to [Fat Cow](http://www.fatcow.com/ "Fat Cow") for the belarussian language files.
+
 == Installation ==
 1. Unpack the download-package
 1. Upload all files to the `/wp-content/plugins/` directory, with folder `feedstats-de`
@@ -96,17 +105,13 @@ for style-css in traditional Chinese (zh_TW) translation
 for style-css in italien (it_IT) translation
 
 = Acknowledgements =
-FeedReaderButton (gif) by [Christoph Schr&ouml;der](http://www.nasendackel.de "Christoph Schr&ouml;der")
-
-FeedReaderButton (gif - traditional Chinese (zh_TW)) and traditional Chinese translation by [Neil Lin](http://www.wmfield.idv.tw/485 "Neil Lin")
-
-FeedReaderButton (gif - italien (it_IT)) and italien translation by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
-
-Turkish translation by [Baris Unver](http://beyn.org "Baris Unver")
-
-French translation by [burningHat](http://blog.burninghat.net/ "burningHat")
-
-Spanich translation by [fportero](http://www.tengotiempo.com "fportero")
+* FeedReaderButton (gif) by [Christoph Schr&ouml;der](http://www.nasendackel.de "Christoph Schr&ouml;der")
+* FeedReaderButton (gif - traditional Chinese (zh_TW)) and traditional Chinese translation by [Neil Lin](http://www.wmfield.idv.tw/485 "Neil Lin")
+* FeedReaderButton (gif - italien (it_IT)) and italien translation by [Gianni Diurno](http://gidibao.net/ "Gianni Diurno")
+* Turkish translation by [Baris Unver](http://beyn.org "Baris Unver")
+* French translation by [burningHat](http://blog.burninghat.net/ "burningHat")
+* Spanich translation by [fportero](http://www.tengotiempo.com "fportero")
+* Thanks to [Fat Cow](http://www.fatcow.com/ "Fat Cow") for the belarussian language files.
 
 
 = Licence =
