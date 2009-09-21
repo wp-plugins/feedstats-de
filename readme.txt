@@ -35,6 +35,7 @@ The version >3.4 has a new style, activate for WordPress 2.5. You can found the 
 * French translation by [burningHat](http://blog.burninghat.net/ "burningHat")
 * Spanich translation by [fportero](http://www.tengotiempo.com "fportero")
 * Thanks to [Fat Cow](http://www.fatcow.com/ "Fat Cow") for the belarussian language files.
+* Ukrainian translation by [WordPress Ukraine](http://wpp.pp.ua/)
 
 == Installation ==
 1. Unpack the download-package
@@ -112,6 +113,7 @@ for style-css in italien (it_IT) translation
 * French translation by [burningHat](http://blog.burninghat.net/ "burningHat")
 * Spanich translation by [fportero](http://www.tengotiempo.com "fportero")
 * Thanks to [Fat Cow](http://www.fatcow.com/ "Fat Cow") for the belarussian language files.
+* Ukrainian translation by [WordPress Ukraine](http://wpp.pp.ua/)
 
 
 = Licence =
