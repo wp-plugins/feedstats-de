@@ -1,0 +1,280 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: FeesStats Uk\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-11-03 23:30+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Юрко Червоний <info@skinik.name>\n"
+"Language-Team: Pavonine <info@skinik.name>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11) ? 0 : ((n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20)) ? 1 : 2);\n"
+"X-Poedit-Language: Ukrainian\n"
+"X-Poedit-Country: UKRAINE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: feedstats-de.php:102
+msgid "Settings"
+msgstr "Налаштунки"
+
+#: feedstats-de.php:167
+#: feedstats-de.php:737
+#: feedstats-de.php:802
+msgid "FeedStats"
+msgstr "FeedStats"
+
+#: feedstats-de.php:172
+msgid "Konfiguration FeedStats"
+msgstr "Конфігурація FeedStats"
+
+#: feedstats-de.php:185
+msgid "plugin"
+msgstr "плаґін"
+
+#: feedstats-de.php:185
+msgid "Version"
+msgstr "Версія"
+
+#: feedstats-de.php:185
+msgid "History"
+msgstr "Історія"
+
+#: feedstats-de.php:185
+#: feedstats-de.php:885
+#: feedstats-de.php:886
+msgid "Author"
+msgstr "Автор"
+
+#: feedstats-de.php:223
+msgid "Error in file: "
+msgstr "Помилка у файлі: "
+
+#: feedstats-de.php:478
+#: feedstats-de.php:521
+#: feedstats-de.php:580
+msgid "Visits"
+msgstr "Visits"
+
+#: feedstats-de.php:490
+msgid "No datas"
+msgstr "Без інформації"
+
+#: feedstats-de.php:496
+#: feedstats-de.php:585
+#: feedstats-de.php:646
+#: feedstats-de.php:741
+msgid "Average"
+msgstr "Середнє"
+
+#: feedstats-de.php:497
+#: feedstats-de.php:589
+#: feedstats-de.php:645
+#: feedstats-de.php:740
+msgid "Maximum"
+msgstr "Максимум"
+
+#: feedstats-de.php:520
+msgid "Day"
+msgstr "День"
+
+#: feedstats-de.php:531
+msgid "Today"
+msgstr "Сьогодні"
+
+#: feedstats-de.php:533
+msgid "First Day"
+msgstr "Перший день"
+
+#: feedstats-de.php:553
+msgid "Last %N% Referer"
+msgstr "Останній %N% реферал"
+
+#: feedstats-de.php:579
+msgid "Statistic"
+msgstr "Статистика"
+
+#: feedstats-de.php:593
+#: feedstats-de.php:644
+#: feedstats-de.php:739
+msgid "Total"
+msgstr "Підсумок"
+
+#: feedstats-de.php:593
+#: feedstats-de.php:644
+#: feedstats-de.php:739
+msgid " (Last "
+msgstr " (Останнє"
+
+#: feedstats-de.php:593
+#: feedstats-de.php:644
+#: feedstats-de.php:739
+msgid " Days)"
+msgstr " Днів)"
+
+#: feedstats-de.php:597
+msgid "Maximum online"
+msgstr "Максимум онлайн"
+
+#: feedstats-de.php:609
+#: feedstats-de.php:610
+msgid "Reset Statistic"
+msgstr "Скинути статистику"
+
+#: feedstats-de.php:610
+msgid "You are about to delete all data and reset stats. OK to delete, Cancel to stop"
+msgstr "Ви збираєтесь видалити всі дані та скинути статистику. \"ОК\", щоб видалити, \"Скасувати\", щоб повернутися назад."
+
+#: feedstats-de.php:642
+msgid "FeedReaders"
+msgstr "Читачів"
+
+#: feedstats-de.php:644
+#: feedstats-de.php:645
+#: feedstats-de.php:646
+#: feedstats-de.php:739
+#: feedstats-de.php:740
+#: feedstats-de.php:741
+msgid ": "
+msgstr ": "
+
+#: feedstats-de.php:809
+msgid "Allready update the tables!"
+msgstr "Вже оновлено усі таблиці!"
+
+#: feedstats-de.php:811
+#: feedstats-de.php:838
+#: feedstats-de.php:859
+msgid "You do not have sufficient permissions to edit plugins for this blog."
+msgstr "У вас немає повноважень для редагування плаґінів цього сайту."
+
+#: feedstats-de.php:836
+msgid "The options have been saved!"
+msgstr "Налаштунки збережено!"
+
+#: feedstats-de.php:857
+msgid "The options have been deleted!"
+msgstr "Налаштунки видалено!"
+
+#: feedstats-de.php:868
+msgid "FeedStats settings"
+msgstr "Налаштунки FeedStats"
+
+#: feedstats-de.php:875
+msgid "Days"
+msgstr "Дні"
+
+#: feedstats-de.php:876
+msgid "Amount of days that is supposed to be saved in the statistics."
+msgstr "Кількість днів, які, як передбачається, буде збережено в статистику."
+
+#: feedstats-de.php:879
+msgid "User Level"
+msgstr "Рівень доступу"
+
+#: feedstats-de.php:883
+msgid "Subscriber"
+msgstr "Читач"
+
+#: feedstats-de.php:884
+msgid "Contributor"
+msgstr "Вкладник"
+
+#: feedstats-de.php:887
+msgid "Editor"
+msgstr "Редактор"
+
+#: feedstats-de.php:888
+#: feedstats-de.php:889
+msgid "Admin"
+msgstr "Адміністратор"
+
+#: feedstats-de.php:891
+msgid "Minimum level of WordPress-user, who is allowed to see the statistics."
+msgstr "Найвищий рівень доступу користувачів, які можуть переглядати статистику."
+
+#: feedstats-de.php:894
+msgid "Sesssion Timeout"
+msgstr "Тривалість сесії"
+
+#: feedstats-de.php:895
+msgid "Time of a stay/visit (1hour values 3600seconds is common but might be changed)"
+msgstr "Час перебування / відвідування (1година включає 3600 секунд, це стандартної, але може бути змінено)"
+
+#: feedstats-de.php:898
+msgid "Visit Online"
+msgstr "Візити онлайн"
+
+#: feedstats-de.php:899
+msgid "Visitors onlinetime (5minutes value 300s is a recommendation)"
+msgstr "Кількість відвідувачів онлайн за певний проміжок часу (Рекомендовано 5хв.(300 секунд))"
+
+#: feedstats-de.php:902
+msgid "Not tracked"
+msgstr "Не відслідковувати"
+
+#: feedstats-de.php:903
+msgid "IP, that is supposed not to be saved, ex.: your own IP"
+msgstr "ІР, які, як передбачається, не буде збережено, наприклад: Власний IP"
+
+#: feedstats-de.php:906
+msgid "Dashboardinfo"
+msgstr "Майстерня"
+
+#: feedstats-de.php:907
+msgid "Statistics can be shown on the dashboard ?"
+msgstr "Показувати статистику у майстерні?"
+
+#: feedstats-de.php:912
+msgid "Update Options"
+msgstr "Оновити налаштунки"
+
+#: feedstats-de.php:921
+#: feedstats-de.php:925
+msgid "Add Index"
+msgstr "Додати покажчик"
+
+#: feedstats-de.php:923
+msgid "The follow button add index to the table of thsi plugin for a better performance. Do you have install the plugin new at version 3.6.4? Then is this not necessary."
+msgstr "Натискання кнопки додає покажчик у таблицю цього плаґіну для поліпшення продуктивності. Якщо у Вас встановлено плаґін нової версії 3.6.4? Тоді це не обов'язково."
+
+#: feedstats-de.php:925
+msgid "You are about to add index to tables. OK to start, Cancel to stop"
+msgstr "Ви збираєтеся додати індекс таблиці. \"ОК\", щоб почати, \"Скасувати\", щоб зупинити"
+
+#: feedstats-de.php:932
+#: feedstats-de.php:939
+msgid "Delete Options"
+msgstr "Видалити налаштунки"
+
+#: feedstats-de.php:934
+msgid "The follow button delete all tables and options for the FeedStats plugin. <strong>Attention: </strong>You <strong>cannot</strong> undo any changes made by this plugin."
+msgstr "Натискання даної кнопки видалить дані та налаштунки плаґіну FeedStats . <strong> УВАГА: </strong> Ця дія  <strong> НЕзворотня</strong>."
+
+#: feedstats-de.php:948
+msgid "Information on the plugin"
+msgstr "Інформація про плаґін"
+
+#: feedstats-de.php:950
+msgid "Plugin created by <a href=\"http://www.anieto2k.com\">Andr&eacute;s Nieto</a>, in cooperation/base with plugin <a href=\"http://www.deltablog.com/\">PopStats</a>. German and english adjustments, little extensions and new coding by <a href=\"http://bueltge.de\">Frank Bueltge</a>. Thx to <a href=\"http://blog.tomk32.de\">Thomas R. Koll</a> for many improvements for a better code and performance."
+msgstr "Плаґін створено <a href=\"http://www.anieto2k.com\">Andr&eacute;s Nieto</a>, на основі плаґіну <a href=\"http://www.deltablog.com/\">PopStats</a>. German and english adjustments, little extensions and new coding by <a href=\"http://bueltge.de\">Frank Bueltge</a>. Thx to <a href=\"http://blog.tomk32.de\">Thomas R. Koll</a> for many improvements for a better code and performance."
+
+#: feedstats-de.php:951
+msgid "Further information: Visit the <a href=\"http://bueltge.de/wp-feedstats-de-plugin/171/\">plugin homepage</a> for further information or to grab the latest version of this plugin."
+msgstr "Weitere Informationen: Besuche die <a href=\"http://bueltge.de/wp-feedstats-de-plugin/171/\">Plugin Webseite</a> f&uuml;r weitere Informationen oder lade die aktuelle Version."
+
+#: feedstats-de.php:951
+msgid "You want to thank me? Visit my <a href='http://bueltge.de/wunschliste'>wishlist</a>."
+msgstr "Ви бажаєте віддячити мені? Перегляньте мій <a href='http://bueltge.de/wunschliste'>wishlist</a>."
+
+#~ msgid "You have not enough rights."
+#~ msgstr "У Вас недостатньо прав доступу."
+#~ msgid " on line: "
+#~ msgstr "онлайн: "
+#~ msgid ""
+#~ ".<br />The WordPress file \"upgrade-functions.php\" or \"upgrade.php\" "
+#~ "could not be included."
+#~ msgstr ""
+#~ ".<br />Файл WordPress \"upgrade-functions.php\" або \"upgrade.php\" не "
+#~ "можуть бути включені."
+
