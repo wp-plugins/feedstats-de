@@ -1,0 +1,284 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: FeedStats in italiano\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-11-03 23:30+0100\n"
+"PO-Revision-Date: 2008-12-17 15:18+0100\n"
+"Last-Translator: Gianni Diurno (aka gidibao) <gidibao@gmail.com>\n"
+"Language-Team: Gianni Diurno | http://gidibao.net/ <gidibao@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Italian\n"
+"X-Poedit-Country: ITALY\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: feedstats-de.php:102
+msgid "Settings"
+msgstr "Impostazioni"
+
+#: feedstats-de.php:167
+#: feedstats-de.php:737
+#: feedstats-de.php:802
+msgid "FeedStats"
+msgstr "FeedStats"
+
+#: feedstats-de.php:172
+msgid "Konfiguration FeedStats"
+msgstr "Configurazione di Feedstats"
+
+#: feedstats-de.php:185
+msgid "plugin"
+msgstr "plugin"
+
+#: feedstats-de.php:185
+msgid "Version"
+msgstr "Versione"
+
+#: feedstats-de.php:185
+msgid "History"
+msgstr "Storia"
+
+#: feedstats-de.php:185
+#: feedstats-de.php:885
+#: feedstats-de.php:886
+msgid "Author"
+msgstr "Autore"
+
+#: feedstats-de.php:223
+msgid "Error in file: "
+msgstr "Si é verificato un errore nel file: "
+
+#: feedstats-de.php:478
+#: feedstats-de.php:521
+#: feedstats-de.php:580
+msgid "Visits"
+msgstr "Visite"
+
+#: feedstats-de.php:490
+msgid "No datas"
+msgstr "Nessuna data"
+
+#: feedstats-de.php:496
+#: feedstats-de.php:585
+#: feedstats-de.php:646
+#: feedstats-de.php:741
+msgid "Average"
+msgstr "Media"
+
+#: feedstats-de.php:497
+#: feedstats-de.php:589
+#: feedstats-de.php:645
+#: feedstats-de.php:740
+msgid "Maximum"
+msgstr "Massimo"
+
+#: feedstats-de.php:520
+msgid "Day"
+msgstr "Giorno"
+
+#: feedstats-de.php:531
+msgid "Today"
+msgstr "Oggi"
+
+#: feedstats-de.php:533
+msgid "First Day"
+msgstr "Il primo giorno"
+
+#: feedstats-de.php:553
+msgid "Last %N% Referer"
+msgstr "L'ultimo %N% referente"
+
+#: feedstats-de.php:579
+msgid "Statistic"
+msgstr "Statistica"
+
+#: feedstats-de.php:593
+#: feedstats-de.php:644
+#: feedstats-de.php:739
+msgid "Total"
+msgstr "Totale"
+
+#: feedstats-de.php:593
+#: feedstats-de.php:644
+#: feedstats-de.php:739
+msgid " (Last "
+msgstr " (Ultimi "
+
+#: feedstats-de.php:593
+#: feedstats-de.php:644
+#: feedstats-de.php:739
+msgid " Days)"
+msgstr " giorni)"
+
+#: feedstats-de.php:597
+msgid "Maximum online"
+msgstr "Massimo in linea"
+
+#: feedstats-de.php:609
+#: feedstats-de.php:610
+msgid "Reset Statistic"
+msgstr "Ripristina le statistiche"
+
+#: feedstats-de.php:610
+msgid "You are about to delete all data and reset stats. OK to delete, Cancel to stop"
+msgstr "Stai per cancellare tutti i dati poichè desideri ripristinare le statistiche. OK per procedere, Cancel per fermarti."
+
+#: feedstats-de.php:642
+msgid "FeedReaders"
+msgstr "FeedReaders"
+
+#: feedstats-de.php:644
+#: feedstats-de.php:645
+#: feedstats-de.php:646
+#: feedstats-de.php:739
+#: feedstats-de.php:740
+#: feedstats-de.php:741
+msgid ": "
+msgstr ": "
+
+#: feedstats-de.php:809
+msgid "Allready update the tables!"
+msgstr "Le tabelle sono già state aggiornate!"
+
+#: feedstats-de.php:811
+#: feedstats-de.php:838
+#: feedstats-de.php:859
+msgid "You do not have sufficient permissions to edit plugins for this blog."
+msgstr "Non hai i permessi necessari per poter modificare i plugin di questo blog."
+
+#: feedstats-de.php:836
+msgid "The options have been saved!"
+msgstr "Le opzioni sono state salvate!"
+
+#: feedstats-de.php:857
+msgid "The options have been deleted!"
+msgstr "Le opzioni sono state cancellate!"
+
+#: feedstats-de.php:868
+msgid "FeedStats settings"
+msgstr "Impostazioni di FeedStats"
+
+#: feedstats-de.php:875
+msgid "Days"
+msgstr "Giorni"
+
+#: feedstats-de.php:876
+msgid "Amount of days that is supposed to be saved in the statistics."
+msgstr "Il numero campione dei giorni che desideri sia utilizzato per le statistiche."
+
+#: feedstats-de.php:879
+msgid "User Level"
+msgstr "Livello utente"
+
+#: feedstats-de.php:883
+msgid "Subscriber"
+msgstr "Sottoscrittore"
+
+#: feedstats-de.php:884
+msgid "Contributor"
+msgstr "Contribuente"
+
+#: feedstats-de.php:887
+msgid "Editor"
+msgstr "Editore"
+
+#: feedstats-de.php:888
+#: feedstats-de.php:889
+msgid "Admin"
+msgstr "Amministratore"
+
+#: feedstats-de.php:891
+msgid "Minimum level of WordPress-user, who is allowed to see the statistics."
+msgstr "Livello minimo dell'utente di WordPress per potere accedere alla visione delle statistiche."
+
+#: feedstats-de.php:894
+msgid "Sesssion Timeout"
+msgstr "Sessione scaduta"
+
+#: feedstats-de.php:895
+msgid "Time of a stay/visit (1hour values 3600seconds is common but might be changed)"
+msgstr "Tempo di permanenza/visita (1 ora corrisponde a 3600 secondi, può essere modificato)"
+
+#: feedstats-de.php:898
+msgid "Visit Online"
+msgstr "Visite in linea"
+
+#: feedstats-de.php:899
+msgid "Visitors onlinetime (5minutes value 300s is a recommendation)"
+msgstr "Tempo delle visite in linea (5 minuti corrispondono a 300 secondi, valore raccomandato)"
+
+#: feedstats-de.php:902
+msgid "Not tracked"
+msgstr "Non seguire"
+
+#: feedstats-de.php:903
+msgid "IP, that is supposed not to be saved, ex.: your own IP"
+msgstr "IP che si presume non debba essere considerato ai fini della statistica, ad es.: il tuo IP"
+
+#: feedstats-de.php:906
+msgid "Dashboardinfo"
+msgstr "InfoBacheca"
+
+#: feedstats-de.php:907
+msgid "Statistics can be shown on the dashboard ?"
+msgstr "Desideri che le statistiche siano mostrate nella Bacheca?"
+
+#: feedstats-de.php:912
+msgid "Update Options"
+msgstr "Aggiorna le opzioni"
+
+#: feedstats-de.php:921
+#: feedstats-de.php:925
+msgid "Add Index"
+msgstr "Aggiungi indice"
+
+#: feedstats-de.php:923
+msgid "The follow button add index to the table of thsi plugin for a better performance. Do you have install the plugin new at version 3.6.4? Then is this not necessary."
+msgstr "Il seguente pulsante aggiungerà un indice alla tabella del database affinché possano essere migliorate le prestazioni del plugin. Devi installare la nuova versione 3.6.4 del plugin? L'operazione di aggiunta dell'indice non é necessaria."
+
+#: feedstats-de.php:925
+msgid "You are about to add index to tables. OK to start, Cancel to stop"
+msgstr "Stai per aggiungere un indice alle tabelle del database. OK per procedere, Cancel per fermarti."
+
+#: feedstats-de.php:932
+#: feedstats-de.php:939
+msgid "Delete Options"
+msgstr "Cancella le opzioni"
+
+#: feedstats-de.php:934
+msgid "The follow button delete all tables and options for the FeedStats plugin. <strong>Attention: </strong>You <strong>cannot</strong> undo any changes made by this plugin."
+msgstr "Il pulsate qui sotto permette di cancellare tutte le tabelle e le opzioni del plugin FeedStats. <strong>Attenzione: </strong>Non <strong>sarà possibile</strong> ripristinare i valori precedenti del plugin una volta cancellati."
+
+#: feedstats-de.php:948
+msgid "Information on the plugin"
+msgstr "Informazioni sul plugin"
+
+#: feedstats-de.php:950
+msgid "Plugin created by <a href=\"http://www.anieto2k.com\">Andr&eacute;s Nieto</a>, in cooperation/base with plugin <a href=\"http://www.deltablog.com/\">PopStats</a>. German and english adjustments, little extensions and new coding by <a href=\"http://bueltge.de\">Frank Bueltge</a>. Thx to <a href=\"http://blog.tomk32.de\">Thomas R. Koll</a> for many improvements for a better code and performance."
+msgstr "Questo plugin é stato realizzato da <a href=\"http://www.anieto2k.com\">Andr&eacute;s Nieto</a> sulla struttura del plugin <a href=\"http://www.deltablog.com/\">PopStats</a>. La versione in lingua inglese e tedesca, l'aggiunta di estensioni e la nuova codifica sono di <a href=\"http://bueltge.de\">Frank Bueltge</a>. Grazie a <a href=\"http://blog.tomk32.de\">Thomas R. Koll</a> per la serie di migliorie apportate al codice ed alla qualità complessiva delle prestazioni."
+
+#: feedstats-de.php:951
+msgid "Further information: Visit the <a href=\"http://bueltge.de/wp-feedstats-de-plugin/171/\">plugin homepage</a> for further information or to grab the latest version of this plugin."
+msgstr "Per ulteriori informazioni, visitare la <a href=\"http://bueltge.de/wp-feedstats-de-plugin/171/\">homepage del plugin</a>."
+
+#: feedstats-de.php:951
+msgid "You want to thank me? Visit my <a href='http://bueltge.de/wunschliste'>wishlist</a>."
+msgstr "Desideri ringraziarmi? Visita la mia <a href='http://bueltge.de/wunschliste'>wishlist</a>."
+
+msgid "You have not enough rights."
+msgstr "Non hai i permessi necessari."
+
+#~ msgid " on line: "
+#~ msgstr "in linea: "
+#~ msgid ""
+#~ ".<br />The WordPress file \"upgrade-functions.php\" or \"upgrade.php\" "
+#~ "could not be included."
+#~ msgstr ""
+#~ ".<br />Il file \"upgrade-functions.php\" o \"upgrade.php\" di WordPress "
+#~ "non può essere incuso."
+#~ msgid "Description"
+#~ msgstr "Beschreibung"
+#~ msgid "Value"
+#~ msgstr "Wert"
+
