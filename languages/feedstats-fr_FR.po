@@ -1,0 +1,142 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: FeedStats\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2007-10-22 18:15+0100\n"
+"Last-Translator: burninghat <burninghat@hotmail.com>\n"
+"Language-Team: burningHat\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: SWITZERLAND\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: wp-feedstats.php:99
+msgid "Error in file: "
+msgstr "Erreur dans le fichier:"
+
+#: wp-feedstats.php:344
+msgid "Day"
+msgstr "Jour"
+
+#: wp-feedstats.php:345
+#: wp-feedstats.php:421
+msgid "Visits"
+msgstr "Visites"
+
+#: wp-feedstats.php:353
+msgid "Today"
+msgstr "Aujourd'hui"
+
+#: wp-feedstats.php:355
+msgid "First Day"
+msgstr "Premier jour"
+
+#: wp-feedstats.php:383
+#: wp-feedstats.php:424
+#: wp-feedstats.php:484
+#: wp-feedstats.php:557
+msgid "Average"
+msgstr "Moyenne"
+
+#: wp-feedstats.php:384
+#: wp-feedstats.php:428
+#: wp-feedstats.php:483
+#: wp-feedstats.php:556
+msgid "Maximum"
+msgstr "Maximum"
+
+#: wp-feedstats.php:400
+msgid "Last %N% Referer"
+msgstr "Dernier %N% référant"
+
+#: wp-feedstats.php:420
+msgid "Statistic"
+msgstr "Statistique"
+
+#: wp-feedstats.php:432
+#: wp-feedstats.php:482
+#: wp-feedstats.php:555
+msgid "Total"
+msgstr "Total"
+
+#: wp-feedstats.php:432
+msgid "Last %N% Days"
+msgstr "Derniers %N% jours"
+
+#: wp-feedstats.php:436
+msgid "Maximum online"
+msgstr "Maximum en ligne"
+
+#: wp-feedstats.php:444
+msgid "You are about to delete all data and reset stats. OK to delete, Cancel to stop"
+msgstr "Vous êtes sur le point de supprimer toutes les données et réinitialiser les statistiques. OK pour supprimer, Annuler pour arrêter"
+
+#: wp-feedstats.php:444
+msgid "Reset Statistic"
+msgstr "Réinitialiser les statistiques"
+
+#: wp-feedstats.php:554
+msgid "FeedStats"
+msgstr "FeedStats"
+
+#: wp-feedstats.php:555
+msgid " (Last "
+msgstr " (Dernier"
+
+#: wp-feedstats.php:555
+msgid " Days)"
+msgstr " Jours)"
+
+#: wp-feedstats.php:599
+msgid "FeedStats settings"
+msgstr "Paramètres de FeedStats"
+
+#: wp-feedstats.php:606
+msgid "Description"
+msgstr "Description"
+
+#: wp-feedstats.php:606
+msgid "Version"
+msgstr "Version"
+
+#: wp-feedstats.php:607
+msgid "Value"
+msgstr "Valeur"
+
+#: wp-feedstats.php:610
+msgid "Amount of days that is supposed to be saved in the statistics."
+msgstr "Nombre de jours qui sont supposés être enregistrés dans les statistiques."
+
+#: wp-feedstats.php:614
+msgid "Minimum level of WordPress-user, who is allowed to see the statistics."
+msgstr "Niveau de droits d'utilisateurs WordPress minimum authorisé à voir les statistiques"
+
+#: wp-feedstats.php:618
+msgid "Time of a stay/visit (1hour values 3600seconds is common but might be changed)"
+msgstr "Durée d'une visite (par défaut 1 heure - 3600 secondes - mais peut être modifiée)"
+
+#: wp-feedstats.php:622
+msgid "Visitors onlinetime (5minutes value 300s is a recommendation)"
+msgstr "Durée d'une session \"visiteur\" (5 minutes - 300sec - est recommandée)"
+
+#: wp-feedstats.php:626
+msgid "IP, that is supposed not to be saved, ex.: your own IP"
+msgstr "IP, qui est supposée ne pas être enregistrée, ex.: votre propre IP"
+
+#: wp-feedstats.php:630
+msgid "Statistics can be shown on the dashboard ?"
+msgstr "Les statistiques sont visibles dans le tableau de bord ?"
+
+#: wp-feedstats.php:635
+msgid "Update Options"
+msgstr "Mettre à jour les options"
+
+#: wp-feedstats.php:641
+msgid "Plugin created by <a href=\"http://www.anieto2k.com\">Andr&eacute;s Nieto</a>, in cooperation/base with plugin <a href=\"http://www.deltablog.com/\">PopStats</a>. German and english adjustments, little extensions and new coding by <a href=\"http://bueltge.de\">Frank Bueltge</a>. Thx to <a href=\"http://blog.tomk32.de\">Thomas R. Koll</a> for many improvements for a better code and performance. Possible updates available at : <a href=\"http://www.anieto2k.com/mis-plugins/\">aNieto2k</a> or <a href=\"http://bueltge.de/wp-feedstats-de-plugin/171/\">bueltge.de</a>."
+msgstr "Plugin créé par <a href=\"http://www.anieto2k.com\">Andr&eacute;s Nieto</a>, en coopération/base avec le plugin <a href=\"http://www.deltablog.com/\">PopStats</a>. corrections German et english, petites extensions et nouveau code par <a href=\"http://bueltge.de\">Frank Bueltge</a>. Merci à <a href=\"http://blog.tomk32.de\">Thomas R. Koll</a> pour de nombreuses améliorations et optimisations du code. Mises à jour disponibles sur <a href=\"http://www.anieto2k.com/mis-plugins/\">aNieto2k</a> ou <a href=\"http://bueltge.de/wp-feedstats-de-plugin/171/\">bueltge.de</a>."
+
