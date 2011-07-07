@@ -3,8 +3,8 @@ Contributors: Bueltge
 Donate link: http://bueltge.de/wunschliste/
 Tags: feed, statistics, stats, rss
 Requires at least: 1.5
-Tested up to: 2.8
-Stable tag: 3.7.2
+Tested up to: 3.2
+Stable tag: 3.7.3
 
 Simple statistictool for feeds.
 
@@ -136,3 +136,9 @@ Please visit [the official website](http://bueltge.de/wp-feedstats-de-plugin/171
 = I love this plugin! How can I show the developer how much I appreciate his work? =
 
 Please visit [the official website](http://bueltge.de/wp-feedstats-de-plugin/171/ "FeedStats") and let him know your care or see the [wishlist](http://bueltge.de/wunschliste/ "Wishlist") of the author.
+
+== Changelog ==
+= v3.7.3 (07/07/2011) =
+* change capabilities opject form int to string
+* kill php warnings and notice
+

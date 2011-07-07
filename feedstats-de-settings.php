@@ -6,10 +6,10 @@ function feedstats_admin_option_page() {
 <div class="wrap">
 	<h2><img src="<?php echo feedstats_get_resource_url('feedstats32.gif'); ?>" alt="" width="32" height="32" /> <?php _e('FeedStats', 'feedstats'); ?></h2>
 <?php
-	if ( ($_POST['action'] == 'add_index') && $_POST['feedstats_add_index'] ) {
+	if ( isset($_POST['action']) && ($_POST['action'] == 'add_index') && $_POST['feedstats_add_index'] ) {
 		
 		if ( function_exists('current_user_can') && current_user_can('edit_plugins') ) {
-			check_admin_referer($FeedStats_nonce);
+			check_admin_referer('FeedStats_nonce');
 			feedstats_genereta_tables();
 		
 			echo '<div class="updated fade"><p>' . __('Allready update the tables!', 'feedstats') . '</p></div>';
@@ -18,13 +18,15 @@ function feedstats_admin_option_page() {
 		}
 	}
 
-	if ( ($_POST['action'] == 'insert') && $_POST['fs_ifs_save'] ) {
+	if ( isset($_POST['action']) && ($_POST['action'] == 'insert') && $_POST['fs_ifs_save'] ) {
 	
 		if ( function_exists('current_user_can') && current_user_can('edit_plugins') ) {
-			check_admin_referer($FeedStats_nonce);
+			check_admin_referer('FeedStats_nonce');
 
 			// for a smaller database
 			function feedstats_get_update($option) {
+				if ( ! isset($_POST[$option]) )
+					return;
 				if ( ($_POST[$option] == '0') || $_POST[$option] == '') {
 					delete_option($option);
 				} else {
@@ -46,10 +48,10 @@ function feedstats_admin_option_page() {
 		}
 	}
 	
-	if ( ($_POST['action'] == 'deactivate') && $_POST['feedstats_ifs_deactivate'] ) {
+	if ( isset($_POST['action']) && ($_POST['action'] == 'deactivate') && $_POST['feedstats_ifs_deactivate'] ) {
 
 		if ( function_exists('current_user_can') && current_user_can('edit_plugins') ) {
-			check_admin_referer($FeedStats_nonce);
+			check_admin_referer('FeedStats_nonce');
 			
 			$wpdb->query ("DROP TABLE {$wpdb->prefix}fs_data");
 			$wpdb->query ("DROP TABLE {$wpdb->prefix}fs_visits");
@@ -75,8 +77,8 @@ function feedstats_admin_option_page() {
 			<div class="postbox" >
 				<h3><?php _e('FeedStats settings', 'feedstats'); ?></h3>
 				<div class="inside">
-					<form name="form1" method="post" action="<?php echo $location; ?>">
-						<?php feedstats_nonce_field($FeedStats_nonce); ?>
+					<form name="form1" method="post" action="<?php if ( isset($location) ) echo $location; ?>">
+						<?php if ( feedstats_nonce_field('FeedStats_nonce') ); ?>
 						
 						<table summary="feedstats options" class="form-table">
 							<tr valign="top">
@@ -133,8 +135,8 @@ function feedstats_admin_option_page() {
 				<h3><?php _e('Add Index', 'feedstats'); ?></h3>
 				<div class="inside">
 					<p><?php _e('The follow button add index to the table of thsi plugin for a better performance. Do you have install the plugin new at version 3.6.4? Then is this not necessary.', 'feedstats'); ?></p>
-					<form name="form2" method="post" action="<?php echo $location; ?>">
-						<?php feedstats_nonce_field($FeedStats_nonce); ?>
+					<form name="form2" method="post" action="<?php if ( isset($location) ) echo $location; ?>">
+						<?php feedstats_nonce_field('FeedStats_nonce'); ?>
 						<p class="submit">
 							<input type="hidden" name="action" value="add_index" />
 							<input class="button" type="submit" name="feedstats_add_index" value="<?php _e('Add Index', 'feedstats'); ?> &raquo;" />
@@ -149,8 +151,8 @@ function feedstats_admin_option_page() {
 				<h3><?php _e('Delete Options', 'feedstats'); ?></h3>
 				<div class="inside">
 					<p><?php _e('The follow button delete all tables and options for the FeedStats plugin. <strong>Attention: </strong>You <strong>cannot</strong> undo any changes made by this plugin.', 'feedstats'); ?></p>
-					<form name="form2" method="post" action="<?php echo $location; ?>">
-						<?php feedstats_nonce_field($FeedStats_nonce); ?>
+					<form name="form2" method="post" action="<?php if ( isset($location) ) echo $location; ?>">
+						<?php feedstats_nonce_field('FeedStats_nonce'); ?>
 						<p class="submit">
 							<input type="hidden" name="action" value="deactivate" />
 							<input class="button" type="submit" name="feedstats_ifs_deactivate" value="<?php _e('Delete Options', 'feedstats'); ?> &raquo;" />

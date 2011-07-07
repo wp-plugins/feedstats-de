@@ -2,17 +2,16 @@
 /**
  * @package FeedStats
  * @author Frank B&uuml;ltge
- * @version 3.7.2
  */
  
 /*
 Plugin Name: FeedStats
 Plugin URI: http://bueltge.de/wp-feedstats-de-plugin/171/
 Description: Simple statistictool for feeds.
-Version: 3.7.2
+Version: 3.7.3
 Author: Andres Nieto Porras, Frank B&uuml;ltge
 Author URI: http://bueltge.de/
-Last Change: 29.06.2009 10:47:30
+Last Change: 07/07/2011
 */
 
 define('FEEDSTATS_DAY', 60*60*24);
@@ -218,16 +217,35 @@ function feedstats_add_settings_page() {
 		$menutitle  = '';
 		$menutitle .= '<img src="' . feedstats_get_resource_url('feedstats.gif') . '" alt="" />' . ' ';
 		$menutitle .= __('FeedStats', 'feedstats');
-		$menutitle_count = ' <span id="awaiting-mod" class="count-' . get_feedstats_getfeeds_button() . '"><span class="comment-count">' . get_feedstats_getfeeds_button() . '</span></span>';
+		$menutitle_count = ' <span id="awaiting-mod" class="update-plugins count-' . get_feedstats_getfeeds_button() . '"><span class="comment-count">' . get_feedstats_getfeeds_button() . '</span></span>';
 		
-		$hook = add_submenu_page('index.php', __('FeedStats', 'feedstats'), $menutitle . $menutitle_count, get_option('fs_user_level'), $plugin, 'feedstats_display_stats');
+		$user_level = get_option('fs_user_level');
+		switch ($user_level) {
+			case 0:
+				$user_level = 'read';
+				break;
+			case 1:
+				$user_level = 'edit_posts';
+				break;
+			case 2:
+				$user_level = 'edit_published_posts';
+				break;
+			case 5:
+				$user_level = 'moderate_comments';
+				break;
+			case 9:
+				$user_level = 'manage_options';
+				break;
+		}
+		
+		$hook = add_submenu_page('index.php', __('FeedStats', 'feedstats'), $menutitle . $menutitle_count, $user_level, $plugin, 'feedstats_display_stats');
 		add_contextual_help( $hook, __('<a href="http://wordpress.org/extend/plugins/feedstats-de/">Documentation</a>', 'feedstats') );
-		$hook = add_options_page(__('Settings FeedStats', 'feedstats'), $menutitle, 9, 'feedstats-de-settings.php', 'feedstats_admin_option_page');
+		$hook = add_options_page(__('Settings FeedStats', 'feedstats'), $menutitle, 'manage_options', 'feedstats-de-settings.php', 'feedstats_admin_option_page');
 		add_contextual_help( $hook, __('<a href="http://wordpress.org/extend/plugins/feedstats-de/">Documentation</a>', 'feedstats') );
 		add_filter( 'plugin_action_links_' . $plugin, 'feedstats_filter_plugin_actions_new' );
 	} else {
 		add_submenu_page('index.php', __('FeedStats', 'feedstats'), __('FeedStats', 'feedstats'), get_option('fs_user_level'), $plugin, 'feedstats_display_stats');
-		add_options_page(__('Settings FeedStats', 'feedstats'), __('FeedStats', 'feedstats'), 9, 'feedstats-de-settings.php', 'feedstats_admin_option_page');
+		add_options_page(__('Settings FeedStats', 'feedstats'), __('FeedStats', 'feedstats'), 'manage_options', 'feedstats-de-settings.php', 'feedstats_admin_option_page');
 		
 		add_filter('plugin_action_links', 'feedstats_filter_plugin_actions', 10, 2);
 	}
@@ -495,7 +513,7 @@ function feedstats_track($title = '', $more_link_text = '', $stripteaser = '', $
 function feedstats_display_stats() {
 	global $wpdb;
 	
-	if ($_GET['fs_action'] == 'reset')
+	if ( isset($_GET['fs_action']) && $_GET['fs_action'] == 'reset')
 		feedstats_reset_db();
 		
 	$time = time();
@@ -852,6 +870,7 @@ function feedstats_add_dashboard() {
 	//$max_visits_time = date('j. F Y',$wpdb->get_var("SELECT max_visits_time FROM " . $wpdb->prefix . 'fs_data'));
 	$max_visits_time = htmlspecialchars(strftime('%d. %B %Y',$wpdb->get_var("SELECT max_visits_time FROM " . $wpdb->prefix . 'fs_data')), ENT_QUOTES);
 	
+	$content = '';
 	if ( version_compare( $wp_version, '2.6.999', '<' ) ) {
 		$content  = '<h3>' . __('FeedStats', 'feedstats') . ' <a href="admin.php?page=feedstats-de/feedstats-de-settings.php" title="' . __('to settings of FeedStats', 'feedstats') . '">&raquo;</a></h3>';
 	}
