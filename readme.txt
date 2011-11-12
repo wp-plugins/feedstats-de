@@ -3,7 +3,7 @@ Contributors: Bueltge
 Donate link: http://bueltge.de/wunschliste/
 Tags: feed, statistics, stats, rss
 Requires at least: 1.5
-Tested up to: 3.3-aortic-dissection
+Tested up to: 3.3-beta3
 Stable tag: 3.7.3
 
 Simple statistictool for feeds.
@@ -39,6 +39,7 @@ The version >3.4 has a new style, activate for WordPress 2.5. You can found the 
 * Czech translation by [Lelkoun](http://lelkoun.cz)
 * Polish translation by [Online Casino Bluebook](http://www.onlinecasinobluebook.com)
 * Thanks for bulgarian language files to [Web Geek](http://webhostinggeeks.com/)
+* Russian translation by [DachaDecor](http://dachadecor.ru)
 
 == Installation ==
 1. Unpack the download-package
@@ -120,6 +121,7 @@ for style-css in italien (it_IT) translation
 * Czech translation by[Lelkoun](http://lelkoun.cz)
 * Polish translation by [Online Casino Bluebook](http://www.onlinecasinobluebook.com)
 * Thanks for bulgarian language files to [Web Geek](http://webhostinggeeks.com/)
+* Russian translation by [DachaDecor](http://dachadecor.ru)
 
 
 = Licence =
