@@ -3,7 +3,7 @@ Contributors: Bueltge
 Donate link: http://bueltge.de/wunschliste/
 Tags: feed, statistics, stats, rss
 Requires at least: 1.5
-Tested up to: 3.3-beta3
+Tested up to: 3.3
 Stable tag: 3.7.3
 
 Simple statistictool for feeds.
@@ -40,6 +40,7 @@ The version >3.4 has a new style, activate for WordPress 2.5. You can found the 
 * Polish translation by [Online Casino Bluebook](http://www.onlinecasinobluebook.com)
 * Thanks for bulgarian language files to [Web Geek](http://webhostinggeeks.com/)
 * Russian translation by [DachaDecor](http://dachadecor.ru)
+* Thanks to [Brian Flores](http://www.inmotionhosting.com/) for serbian translation
 
 == Installation ==
 1. Unpack the download-package
