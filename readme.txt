@@ -24,10 +24,6 @@ The Plugin is in english language and have the german and traditional chinese tr
 
 Please visit [the official website](http://bueltge.de/wp-feedstats-de-plugin/171/ "FeedStats") for further details and the latest information on this plugin.
 
-= Information =
-The version >3.4 has a new style, activate for WordPress 2.5. You can found the version 3.4 in the [SVN](http://svn.wp-plugins.org/feedstats-de/tags/ "SVN").
-
-
 == Installation ==
 1. Unpack the download-package
 1. Upload all files to the `/wp-content/plugins/` directory, with folder `feedstats-de`
