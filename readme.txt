@@ -3,7 +3,7 @@ Contributors: Bueltge
 Donate link: http://bueltge.de/wunschliste/
 Tags: feed, statistics, stats, rss
 Requires at least: 1.5
-Tested up to: 3.3
+Tested up to: 3.4-Beta3
 Stable tag: 3.7.3
 
 Simple statistictool for feeds.
@@ -108,6 +108,7 @@ for style-css in italien (it_IT) translation
 * Russian translation by [DachaDecor](http://dachadecor.ru)
 * Thanks to [Brian Flores](http://www.inmotionhosting.com/) for serbian translation
 * Thanks to [Pieter Carette](http://www.siteoptimo.com)
+* Lithuanian translation files by [Vincent G](http://www.host1plus.com)
 
 
 = Licence =
