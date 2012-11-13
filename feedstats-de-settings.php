@@ -4,7 +4,7 @@ function feedstats_admin_option_page() {
 	global $wpdb, $wp_version;
 ?>
 <div class="wrap">
-	<h2><img src="<?php echo feedstats_get_resource_url('feedstats32.gif'); ?>" alt="" width="32" height="32" /> <?php _e('FeedStats', 'feedstats'); ?></h2>
+	<h2><?php _e('FeedStats Options', 'feedstats'); ?></h2>
 <?php
 	if ( isset($_POST['action']) && ($_POST['action'] == 'add_index') && $_POST['feedstats_add_index'] ) {
 		
@@ -25,12 +25,11 @@ function feedstats_admin_option_page() {
 
 			// for a smaller database
 			function feedstats_get_update($option) {
-				if ( ! isset($_POST[$option]) )
-					return;
-				if ( ($_POST[$option] == '0') || $_POST[$option] == '') {
+				
+				if ( ! isset($_POST[$option]) || ($_POST[$option] == '0') || $_POST[$option] == '') {
 					delete_option($option);
 				} else {
-					update_option($option , $_POST[$option]);
+					update_option($option , esc_attr( $_POST[$option] ) );
 				}
 			}
 			
@@ -77,7 +76,7 @@ function feedstats_admin_option_page() {
 			<div class="postbox" >
 				<h3><?php _e('FeedStats settings', 'feedstats'); ?></h3>
 				<div class="inside">
-					<form name="form1" method="post" action="<?php if ( isset($location) ) echo $location; ?>">
+					<form name="form1" method="post" action="">
 						<?php if ( feedstats_nonce_field('FeedStats_nonce') ); ?>
 						
 						<table summary="feedstats options" class="form-table">
@@ -114,11 +113,11 @@ function feedstats_admin_option_page() {
 							</tr>
 							<tr valign="top">
 								<th scope="row"><?php _e('Not tracked', 'feedstats'); ?></th>
-								<td><input name="fs_ifs_not_tracked" value="<?php echo get_option('fs_ifs_not_tracked'); ?>"  type="text" /><br /><?php _e('IP, that is supposed not to be saved, ex.: your own IP', 'feedstats'); echo '<small> ' . $_SERVER['REMOTE_ADDR'] . '</small>' ;?></td>
+								<td><input name="fs_ifs_not_tracked" value="<?php echo get_option('fs_ifs_not_tracked'); ?>" type="text" /><br /><?php _e('IP, that is supposed not to be saved, ex.: your own IP', 'feedstats'); echo '<code> ' . esc_attr( $_SERVER['REMOTE_ADDR'] ) . '</code>'; ?></td>
 							</tr>
 							<tr valign="top">
 								<th scope="row"><?php _e('Dashboardinfo', 'feedstats'); ?></th>
-								<td><input name="fs_ifs_dashboardinfo" value='1' <?php if (get_option('fs_ifs_dashboardinfo')=='1') { echo "checked='checked'";  } ?> type="checkbox" /><br /><?php _e('Statistics can be shown on the dashboard ?', 'feedstats'); ?></td>
+								<td><input name="fs_ifs_dashboardinfo" value='1' <?php if (get_option('fs_ifs_dashboardinfo') === '1') { echo "checked='checked'";  } ?> type="checkbox" /><br /><?php _e('Statistics can be shown on the dashboard ?', 'feedstats'); ?></td>
 							</tr>
 						</table>
 						<p class="submit">
@@ -131,11 +130,11 @@ function feedstats_admin_option_page() {
 		</div>
 		
 		<div id="poststuff" class="ui-sortable">
-			<div class="postbox closed" >
+			<div class="postbox" >
 				<h3><?php _e('Add Index', 'feedstats'); ?></h3>
 				<div class="inside">
 					<p><?php _e('The follow button add index to the table of thsi plugin for a better performance. Do you have install the plugin new at version 3.6.4? Then is this not necessary.', 'feedstats'); ?></p>
-					<form name="form2" method="post" action="<?php if ( isset($location) ) echo $location; ?>">
+					<form name="form2" method="post" action="">
 						<?php feedstats_nonce_field('FeedStats_nonce'); ?>
 						<p class="submit">
 							<input type="hidden" name="action" value="add_index" />
@@ -147,11 +146,11 @@ function feedstats_admin_option_page() {
 		</div>
 		
 		<div id="poststuff" class="ui-sortable">
-			<div class="postbox closed" >
+			<div class="postbox" >
 				<h3><?php _e('Delete Options', 'feedstats'); ?></h3>
 				<div class="inside">
 					<p><?php _e('The follow button delete all tables and options for the FeedStats plugin. <strong>Attention: </strong>You <strong>cannot</strong> undo any changes made by this plugin.', 'feedstats'); ?></p>
-					<form name="form2" method="post" action="<?php if ( isset($location) ) echo $location; ?>">
+					<form name="form2" method="post" action="">
 						<?php feedstats_nonce_field('FeedStats_nonce'); ?>
 						<p class="submit">
 							<input type="hidden" name="action" value="deactivate" />
@@ -163,7 +162,7 @@ function feedstats_admin_option_page() {
 		</div>
 		
 		<div id="poststuff" class="ui-sortable">
-			<div class="postbox closed" >
+			<div class="postbox" >
 				<h3><?php _e('Information on the plugin', 'feedstats') ?></h3>
 				<div class="inside">
 					<p><?php _e('Plugin created by <a href="http://www.anieto2k.com">Andr&eacute;s Nieto</a>, in cooperation/base with plugin <a href="http://www.deltablog.com/">PopStats</a>. German and english adjustments, little extensions and new coding by <a href="http://bueltge.de">Frank Bueltge</a>. Thx to <a href="http://blog.tomk32.de">Thomas R. Koll</a> for many improvements for a better code and performance.', 'feedstats'); ?></p>

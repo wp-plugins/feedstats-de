@@ -1,10 +1,10 @@
 === FeedStats ===
-Contributors: Bueltge, benjaminwittorf
+Contributors: Bueltge, benjaminwittorf, inpsyde
 Donate link: http://bueltge.de/wunschliste/
 Tags: feed, statistics, stats, rss
 Requires at least: 1.5
-Tested up to: 3.4-Beta3
-Stable tag: 3.7.3
+Tested up to: 3.5-Beta2
+Stable tag: 3.8.0
 
 Simple statistictool for feeds.
 
@@ -22,16 +22,15 @@ _You can customize in options:_
 
 The Plugin is in english language and have the german and traditional chinese translation in language-file. For traditional chinese translation give it a another icon for feedreaders in an button.
 
-Please visit [the official website](http://bueltge.de/wp-feedstats-de-plugin/171/ "FeedStats") for further details and the latest information on this plugin.
+**Made by [Inpsyde](http://inpsyde.com) &middot; We love WordPress**
+
+Have a look at the premium plugins in our [market](http://marketpress.com).
 
 == Installation ==
 1. Unpack the download-package
 1. Upload all files to the `/wp-content/plugins/` directory, with folder `feedstats-de`
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. Got to 'Options' menu and configure the plugin
-
-See on [the official website](http://bueltge.de/wp-feedstats-de-plugin/171/ "FeedStats").
-
 
 == Screenshots ==
 1. Statistic-area in WordPress 2.7
@@ -119,7 +118,12 @@ The plugin comes with various translations, please refer to the [WordPress Codex
 
 
 == Changelog ==
+= v3.8.0 =
+* Fix the different sources for newer WordPress version
+* Different changes on source
+* Enhance the IP check
+
 = v3.7.3 (07/07/2011) =
-* change capabilities opject form int to string
+* change capabilities object form int to string
 * kill php warnings and notice
 

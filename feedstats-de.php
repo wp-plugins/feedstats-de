@@ -1,10 +1,5 @@
 <?php
 /**
- * @package FeedStats
- * @author Frank B&uuml;ltge
- */
-
-/**
  * Plugin Name: FeedStats
  * Plugin URI:  http://bueltge.de/wp-feedstats-de-plugin/171/
  * Description: Simple statistictool for feeds.
@@ -14,103 +9,18 @@
  * License:     GPLv3
  */
 
-@todo
-268 + 270
-/var/www/wp-plugins/feedstats/feedstats-de.php:270 - add_contextual_help is deprecated since version 3.3! Use get_current_screen()->add_help_tab() instead.
-
-feedstats_get_resource_url() austauschen, base64 weg.
-
-/**
-License:
-==============================================================================
-Copyright 2011 Frank Bültge  (email : frank@bueltge.de)
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*/
-
 // avoid direct calls to this file, because now WP core and framework has been used.
 if ( ! function_exists( 'add_filter' ) ) {
 	echo "Hi there! I'm just a part of plugin, not much I can do when called directly.";
 	exit;
 }
 
-define('FEEDSTATS_DAY', 60*60*24);
-
-/**
- * ------------------------------------------------------
- *  ACKNOWLEDGEMENTS
- * ------------------------------------------------------
- * Idea and first release by Andres Nieto Porras
- * - http://www.anieto2k.com/
- *
- * Thx to Thomas R. Koll - http://blog.tomk32.de
- * for many improvements for a better code and performance
- *
- * Thx to Frank Bueltge - http://bueltge.de
- * Statistic, multilingualism and improvements
- *
- * Thx to Neil - http://wmfield.idv.tw
- * for traditional Chinese (zh_TW) translation
- *
- * Thx to burningHat - http://blog.burninghat.net
- * for french (fr_FR) translation
- *
- * Thx to Baris Unver - http://beyn.org
- * for turkish (tr_TR) translation
- *
- * FeedReaderButton (gif) by http://www.nasendackel.de
- * FeedReaderButton (gif - traditional Chinese (zh_TW))
- *  by http://www.wmfield.idv.tw/485
- * ------------------------------------------------------
- */
-
-/**
- * ------------------------------------------------------
- *  FEED-READER BUTTON
- * ------------------------------------------------------
- * Function for button with reader:
- * ------------------------------------------------------
- * feedstats_getfeeds_button()
- *
- * Example:
- * ------------------------------------------------------
- * <div id="feeds_button"><?php feedstats_getfeeds_button(); ?></div>
- *
- *
- * Example for style-css:
- * ------------------------------------------------------
- * #feeds_button {
- * 	width: 74px;
- * 	height: 14px;
- * 	text-align: left;
- * 	font-size: 10px;
- * 	padding: 1px 15px 15px 3px;
- * 	color: #fff;
- * 	background: url(wp-content/plugins/feedstats-de/images/feedstats-de.gif) no-repeat;
- * 	margin-bottom: 2px;
- * }
- *
- * Example for style-css in traditional Chinese (zh_TW) translation:
- * ------------------------------------------------------
- * 	background: url(wp-content/plugins/feedstats-de/images/feedstats-de-zh_TW.gif) no-repeat;
- */
+define( 'FEEDSTATS_DAY', 60*60*24 );
 
 // Pre-2.6 compatibility
-if ( !defined('WP_CONTENT_URL') )
+if ( ! defined('WP_CONTENT_URL') )
 	define( 'WP_CONTENT_URL', get_option('siteurl') . '/wp-content');
-if ( !defined('WP_CONTENT_DIR') )
+if ( ! defined('WP_CONTENT_DIR') )
 	define( 'WP_CONTENT_DIR', ABSPATH . 'wp-content' );
 
 
@@ -124,7 +34,7 @@ function feedstats_textdomain() {
 		if ( ! defined('WP_PLUGIN_DIR') ) {
 			load_plugin_textdomain('feedstats', str_replace( ABSPATH, '', dirname(__FILE__) ) . '/languages');
 		} else {
-			load_plugin_textdomain('feedstats', false, dirname( plugin_basename(__FILE__) ) . '/languages');
+			load_plugin_textdomain('feedstats', FALSE, dirname( plugin_basename(__FILE__) ) . '/languages');
 		}
 	}
 }
@@ -134,15 +44,13 @@ function feedstats_textdomain() {
  * Add action link(s) to plugins page
  * Thanks Dion Hulse -- http://dd32.id.au/wordpress-plugins/?configure-link
  */
-function feedstats_filter_plugin_actions($links, $file){
-	static $this_plugin;
-
-	if ( !$this_plugin ) $this_plugin = plugin_basename(__FILE__);
-
-	if ( $file == $this_plugin ) {
+function feedstats_filter_plugin_actions( $links, $file ) {
+	
+	if ( $file == plugin_basename( __FILE__ ) ) {
 		$settings_link = '<a href="options-general.php?page=feedstats-de-settings.php">' . __('Settings') . '</a>';
 		$links = array_merge( array($settings_link), $links); // before other links
 	}
+	
 	return $links;
 }
 
@@ -166,93 +74,17 @@ function feedstats_filter_plugin_actions_new($links) {
 
 
 /**
- * Images/ Icons in base64-encoding
- * @use function feedstats_get_resource_url() for display
- */
-if( isset($_GET['resource']) && !empty($_GET['resource'])) {
-	# base64 encoding performed by base64img.php from http://php.holtsmark.no
-	$resources = array(
-		'feedstats.gif' =>
-		'R0lGODlhCwALAMQAANjY2Ojo6Ht7e97e3oGBgfr6+p2dnY6Ojv'.
-		'X19a2traWlpXR0dKKiouLi4sfHx5aWlpqamoqKioeHh6GhoZ6e'.
-		'npubm/z8/JWVldzc3JKSko+Pj4yMjImJiZSUlJiYmP///yH5BA'.
-		'AAAAAALAAAAAALAAsAAAVpIDZ5kDFNDKMME5QkHXdkmqdA0/cV'.
-		'zrVpG4NBQ0kAPgGIROKpVBqOSsISiBAuBg+mYFEkPo4F8RC5DA'.
-		'oaAEJwoHQagAyP8slIKBdEgAAAcCwQBAoZGRsCHBILEgIdGAwP'.
-		'Dx0HHBESGRghADs='.
-		'',
-		'feedstats32.gif' =>
-		'R0lGODlhIAAgAMQfAIGBgcrKyuLi4qurq9XV1bq6usLCwpWVlX'.
-		'x8fHh4eHR0dHBwcKSkpPX19ZKSkv39/aCgoJ2dnezs7LOzs4SE'.
-		'hImJiYeHh5eXl5GRkYyMjI2NjY+Pj46OjpCQkP///////yH5BA'.
-		'EAAB8ALAAAAAAgACAAAAX/4CcSl3VEUISqaKpCMHxYFyGKD+RM'.
-		'DBtdvmAMwmAMChfGQ2SEYDIaqEbD0Ww4mw5G6+h2D44k7yNIZs'.
-		'5SKgeL7bi5XgfGcegJGJNO9AK7rNlZb3NeWlsdBzx1ZxoBHo4P'.
-		'AgEDhm5bXlsbV5kDBwcQUo2Ooh4NARGCGIZXVVEQB3xooaOiDw'.
-		'EXlR2ZrGgQF7BQsrOiDQO5uVVoFRURr58Zax1EBQQPwg8FulEZ'.
-		'yhYWzHxTalduiBLCAXpn3BQUF83hVVmBWgUNswHqFRbsAO7gax'.
-		'MEEJDkIBCGCwJmTVhHAQCATv84FBj1gAADQQQoQtjX0CEdPms2'.
-		'TDyH4YqGjKIk/1hw6BABhlcMQo4UJuBAFA4JRU1giQDBoSRYNk'.
-		'AoECDnKAkHtjmw56iBhZ4IEnCAmSvTloPBPBDQoG+mhwk9EyTQ'.
-		'ECamsTe5IDB1VGBfBXOOJEQVW6FsrqtVq1xY20BDwwGjOiRQoK'.
-		'BuEkNbIkyIMCUDhGqODDi0sHYA4cJ2tWyQhe+MrAYNEaDUSniB'.
-		'YQZyos1ioMzBqAs9ATsSUNpCZpGzCuizYBRsggO0FCxYQMHupl'.
-		'kDulEwIMpAVAqjEgwvnuQYh9ECOAKYICqAWASjEEynU6zDGg0D'.
-		'JFXgByCCgfcMBicoQL+AcNMYGBQ4sCaf9pZzDXbZcAQuEAEDAh'.
-		'y4QUkUDAEYYGn3FQiAAwJ8gAcEHSizXkcAhCXWgAUOB0AROPww'.
-		'QQpgYIBMgy11iAAA3jgQwRI3EHAABSewAIQvPPoC0Ssd4GiDCC'.
-		'EAADs='.
-		'');
-
-	if(array_key_exists($_GET['resource'], $resources)) {
-
-		$content = base64_decode($resources[ $_GET['resource'] ]);
-
-		$lastMod = filemtime(__FILE__);
-		$client = ( isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) ? $_SERVER['HTTP_IF_MODIFIED_SINCE'] : false );
-		// Checking if the client is validating his cache and if it is current.
-		if (isset($client) && (strtotime($client) == $lastMod)) {
-			// Client's cache IS current, so we just respond '304 Not Modified'.
-			header('Last-Modified: '.gmdate('D, d M Y H:i:s', $lastMod).' GMT', true, 304);
-			exit;
-		} else {
-			// Image not cached or cache outdated, we respond '200 OK' and output the image.
-			header('Last-Modified: '.gmdate('D, d M Y H:i:s', $lastMod).' GMT', true, 200);
-			header('Content-Length: '.strlen($content));
-			header('Content-Type: image/' . substr(strrchr($_GET['resource'], '.'), 1) );
-			echo $content;
-			exit;
-		}
-	}
-}
-
-
-/**
- * Display Images/ Icons in base64-encoding
- * @return $resourceID
- */
-function feedstats_get_resource_url($resourceID) {
-
-	return trailingslashit( get_bloginfo('url') ) . '?resource=' . $resourceID;
-}
-
-
-/**
  * settings in plugin-admin-page
  */
 function feedstats_add_settings_page() {
 	global $wp_version;
-
-	$plugin = plugin_basename(__FILE__);
-
-	if ( version_compare( $wp_version, '2.6.999', '>' ) && function_exists('add_contextual_help') ) {
-		$menutitle  = '';
-		$menutitle .= '<img src="' . feedstats_get_resource_url('feedstats.gif') . '" alt="" />' . ' ';
-		$menutitle .= __('FeedStats', 'feedstats');
-		$menutitle_count = ' <span id="awaiting-mod" class="update-plugins count-' . get_feedstats_getfeeds_button() . '"><span class="comment-count">' . get_feedstats_getfeeds_button() . '</span></span>';
-
-		$user_level = get_option('fs_user_level');
-		switch ($user_level) {
+	
+	if ( version_compare( $wp_version, '2.6.999', '>' ) ) {
+		$menutitle       = __('FeedStats', 'feedstats');
+		$menutitle_count = ' <span class="awaiting-mod" class="update-plugins count-' . get_feedstats_getfeeds_button() . '"><span class="comment-count">' . get_feedstats_getfeeds_button() . '</span></span>';
+		
+		$user_level = get_option( 'fs_user_level' );
+		switch( $user_level ) {
 			case 0:
 				$user_level = 'read';
 				break;
@@ -270,33 +102,33 @@ function feedstats_add_settings_page() {
 				break;
 		}
 
-		$hook = add_submenu_page('index.php', __('FeedStats', 'feedstats'), $menutitle . $menutitle_count, $user_level, $plugin, 'feedstats_display_stats');
-		add_contextual_help( $hook, __('<a href="http://wordpress.org/extend/plugins/feedstats-de/">Documentation</a>', 'feedstats') );
-		$hook = add_options_page(__('Settings FeedStats', 'feedstats'), $menutitle, 'manage_options', 'feedstats-de-settings.php', 'feedstats_admin_option_page');
-		add_contextual_help( $hook, __('<a href="http://wordpress.org/extend/plugins/feedstats-de/">Documentation</a>', 'feedstats') );
-		add_filter( 'plugin_action_links_' . $plugin, 'feedstats_filter_plugin_actions_new' );
+		$hook = add_submenu_page(
+			'index.php',
+			__('FeedStats', 'feedstats'),
+			$menutitle . $menutitle_count,
+			$user_level,
+			plugin_basename( __FILE__ ),
+			'feedstats_display_stats'
+		);
+		
+		$hook = add_options_page(
+			__('Settings FeedStats', 'feedstats'),
+			$menutitle,
+			'manage_options',
+			'feedstats-de-settings.php',
+			'feedstats_admin_option_page'
+		);
+		
+		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'feedstats_filter_plugin_actions_new' );
 	} else {
+		// for older wordpress installs
 		add_submenu_page('index.php', __('FeedStats', 'feedstats'), __('FeedStats', 'feedstats'), get_option('fs_user_level'), $plugin, 'feedstats_display_stats');
 		add_options_page(__('Settings FeedStats', 'feedstats'), __('FeedStats', 'feedstats'), 'manage_options', 'feedstats-de-settings.php', 'feedstats_admin_option_page');
-
+	
 		add_filter('plugin_action_links', 'feedstats_filter_plugin_actions', 10, 2);
 	}
 
 }
-
-
-/**
- * credit in wp-footer
- */
-function feedstats_admin_footer() {
-	if ( basename($_SERVER['REQUEST_URI']) == 'feedstats-de.php' || basename($_SERVER['REQUEST_URI']) == 'admin.php?page=feedstats-de-settings.php' ) {
-		$plugin_data = get_plugin_data( __FILE__ );
-		printf('%1$s ' . __('plugin') . ' | ' . __('Version') . ' <a href="http://bueltge.de/wp-feedstats-de-plugin/171/#historie" title="' . __('History', 'adminimize') . '">%2$s</a> | ' . __('Author') . ' %3$s<br />', $plugin_data['Title'], $plugin_data['Version'], $plugin_data['Author']);
-	}
-}
-
-
-$location = get_option('siteurl') . '/wp-admin/options-general.php?page=feedstats-de/feedstats-de.php'; // Form Action URI
 
 // Installation functions
 function feedstats_genereta_tables() {
@@ -321,19 +153,19 @@ function feedstats_genereta_tables() {
 	$fs_data_index_ip = "CREATE INDEX refresh USING BTREE ON " . $wpdb->prefix . "fs_visits(ip, time_last);";
 	$fs_data_index_tg = "CREATE INDEX time_begin USING BTREE ON " . $wpdb->prefix . "fs_visits(time_begin);";
 	$fs_data_index_tl = "CREATE INDEX time_last USING BTREE ON " . $wpdb->prefix . "fs_visits(time_last);";
-
-	if (file_exists(ABSPATH . '/wp-admin/upgrade-functions.php')) {
-		@require_once (ABSPATH . '/wp-admin/upgrade-functions.php');
-	} elseif (file_exists(ABSPATH . '/wp-admin/includes/upgrade.php')) {
+	
+	if ( file_exists(ABSPATH . '/wp-admin/includes/upgrade.php') ) {
 		@require_once (ABSPATH . '/wp-admin/includes/upgrade.php');
-	} elseif (file_exists(ABSPATH . WPINC . '/upgrade-functions.php')) {
+	} else if ( file_exists(ABSPATH . '/wp-admin/upgrade-functions.php') ) {
+		@require_once (ABSPATH . '/wp-admin/upgrade-functions.php');
+	} else if ( file_exists(ABSPATH . WPINC . '/upgrade-functions.php') ) {
 		@require_once (ABSPATH . WPINC . '/upgrade-functions.php');
-	} elseif (file_exists(ABSPATH . '/wp-admin/upgrades.php')) {
+	} else if ( file_exists(ABSPATH . '/wp-admin/upgrades.php') ) {
 		@require_once (ABSPATH . '/wp-admin/upgrades.php');
 	} else {
-		die (__('Error in file: ' . __FILE__ . ' on line: ' . __LINE__ . '.<br />The WordPress file "upgrade-functions.php" or "upgrade.php" could not be included.'));
+		die ( __( 'Error in file: ' . __FILE__ . ' on line: ' . __LINE__ . '.<br />The WordPress file "upgrade-functions.php" or "upgrade.php" could not be included.' ) );
 	}
-
+	
 	maybe_create_table($wpdb->prefix . 'fs_data', $fs_data_query);
 	maybe_create_table($wpdb->prefix . 'fs_visits', $fs_visits_query);
 
@@ -385,11 +217,11 @@ function feedstats_version_control() {
 // Global set of functions
 function feedstats_tr($s) {
 	global $feedstats_tr;
-
+	
 	$return = ($feedstats_tr[$s]!='') ? $feedstats_tr[$s] : $s;
-	if (get_bloginfo('charset') == 'UTF-8') {
-		$return = utf8_encode($return);
-	}
+	if ( 'UTF-8' === get_bloginfo('charset') )
+		$return = utf8_encode( $return );
+	
 	return $return;
 }
 
@@ -403,27 +235,33 @@ function feedstats_reset_db() {
 function feedstats_get_ip() {
 	global $_SERVER;
 
-	if (isset($_SERVER['REMOTE_ADDR'])) {
-		return($_SERVER['REMOTE_ADDR']);
-	} else if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+	if ( isset( $_SERVER['REMOTE_ADDR'] ) ) {
+		return $_SERVER['REMOTE_ADDR'];
+	} else if ( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
 		$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-		$ip = explode(", ", $ip);
+		$ip = explode( ", ", $ip );
 		$ip = $ip[0];
-		return($ip);
-	} else if (isset($_SERVER['HTTP_CLIENT_IP'])) {
-		return($_SERVER['HTTP_CLIENT_IP']);
+		
+		return $ip;
+	} else if ( isset( $_SERVER['HTTP_CLIENT_IP'] ) ) {
+		return $_SERVER['HTTP_CLIENT_IP'];
 	} else {
-		return($_SERVER['REMOTE_HOST']);
+		return $_SERVER['REMOTE_HOST'];
 	}
 }
 
 function feedstats_get_midnight($time) {
-	return date('U', mktime(0, 0, 0, 1, date('z', $time)+1, date('y',$time)));
+	
+	return date( 
+		'U',
+		mktime( 0, 0, 0, 1, date('z', $time)+1, date('y',$time) )
+	);
 }
 
 
 // is feed url (is_feed())
 function feedstats_feed_url() {
+	
 	switch ( basename($_SERVER['PHP_SELF']) ) {
 		case 'wp-rdf.php':
 		case 'wp-rss.php':
@@ -433,23 +271,23 @@ function feedstats_feed_url() {
 		case 'feed':
 		case 'rss2':
 		case 'atom':
-			return true;
+			return TRUE;
 		break;
 	}
-
+	
 	if ( is_feed() )
-		return true;
+		return TRUE;
 
 	if ( isset($_GET['feed']) )
-		return true;
+		return TRUE;
 
 	if ( preg_match("/^\/(feed|rss2?|atom|rdf)/Uis", $_SERVER['REQUEST_URI']) )
-		return true;
+		return TRUE;
 
 	if ( preg_match("/\/(feed|rss2?|atom|rdf)\/?$/Uis", $_SERVER['REQUEST_URI']) )
-		return true;
+		return TRUE;
 
-	return false;
+	return FALSE;
 }
 
 
@@ -515,7 +353,7 @@ function feedstats_track($title = '', $more_link_text = '', $stripteaser = '', $
 		$reader_subscribers = $m[1];
 	}
 	else {
-		$reader_subscribers = false;
+		$reader_subscribers = FALSE;
 	}
 
 	if ($reader_subscribers) {
@@ -619,7 +457,7 @@ function feedstats_display_stats() {
 	$max_online_time = date(get_option('date_format'), $wpdb->get_var("SELECT max_online_time FROM " . $wpdb->prefix . 'fs_data'));
 	$max_online_time = htmlspecialchars($max_online_time, ENT_QUOTES);
 
-	$referers_query  = $wpdb->get_results("SELECT DISTINCT url FROM " . $wpdb->prefix . "fs_visits WHERE LEFT(url, '" . strlen(get_settings('home')) . "') != '" . get_settings('home') . "' AND url <> '' ORDER BY url DESC");
+	$referers_query  = $wpdb->get_results("SELECT DISTINCT url FROM " . $wpdb->prefix . "fs_visits WHERE LEFT(url, '" . strlen( get_option('home') ) . "') != '" . get_option('home') . "' AND url <> '' ORDER BY url DESC");
 
 	$referers        = array();
 
@@ -650,7 +488,7 @@ function feedstats_display_stats() {
 	$people_online = count($online);
 ?>
 	<div class="wrap">
-		<h2><img src="<?php echo feedstats_get_resource_url('feedstats32.gif'); ?>" alt="" width="32" height="32" /> FeedStats</h2>
+		<h2>FeedStats</h2>
 		<p id="feeds_button"><?php feedstats_getfeeds_button(); ?></p>
 		<br class="clear" />
 
@@ -805,7 +643,7 @@ function feedstats_display_stats() {
 		<br class="clear" />
 
 		<h3><?php _e('Reset Statistic', 'feedstats'); ?></h3>
-		<p><a class="button button-primary" href="index.php?page=feedstats-de/feedstats-de.php&amp;fs_action=reset" onclick="return confirm('<?php _e('You are about to delete all data and reset stats. OK to delete, Cancel to stop', 'feedstats'); ?>');"><?php _e('Reset Statistic', 'feedstats'); ?> &raquo;</a></p>
+		<p><a class="button button-primary" href="index.php?page=<?php echo plugin_basename( __FILE__ ); ?>&amp;fs_action=reset" onclick="return confirm('<?php _e('You are about to delete all data and reset stats. OK to delete, Cancel to stop', 'feedstats'); ?>');"><?php _e('Reset Statistic', 'feedstats'); ?> &raquo;</a></p>
 	</div>
 
 <?php
@@ -839,9 +677,9 @@ function feedstats_getfeeds() {
 	<div id="feeds_readers">
 		<h3><?php _e('FeedReaders', 'feedstats'); ?></h3>
 		<ul>
-			<li><?php _e('Total', 'feedstats') . _e(': ') . _e( attribute_escape($total_visits) ); ?><small><?php _e(' (Last ', 'feedstats') . _e($num_days) . _e(' Days)', 'feedstats'); ?></small></li>
-			<li><?php _e('Maximum', 'feedstats') . _e(': ') . _e( attribute_escape($max_visits) ); ?> <small>(<?php echo $max_visits_time; ?>)</small></li>
-			<li><?php _e('Average', 'feedstats') . _e(': ') . _e( attribute_escape($average_visits) ); ?></li>
+			<li><?php _e('Total', 'feedstats') . _e(': ') . _e( esc_attr($total_visits) ); ?><small><?php _e(' (Last ', 'feedstats') . _e($num_days) . _e(' Days)', 'feedstats'); ?></small></li>
+			<li><?php _e('Maximum', 'feedstats') . _e(': ') . _e( esc_attr($max_visits) ); ?> <small>(<?php echo $max_visits_time; ?>)</small></li>
+			<li><?php _e('Average', 'feedstats') . _e(': ') . _e( esc_attr($average_visits) ); ?></li>
 		</ul>
 	</div>
 	<?php
@@ -882,26 +720,6 @@ function fs_getfeeds_button() {
 	feedstats_getfeeds_button();
 }
 
-// style im header
-function feedstats_admin_header() {
-	$fs_feed_button_style = '<style type="text/css" media="screen">';
-	$fs_feed_button_style.= '#feeds_button {
-		float: right;
-		width: 74px;
-		height: 14px;
-		text-align: left;
-		font-size: 10px;
-		padding: 1px 15px 15px 3px;
-		color: #fff;
-		background: url(' . WP_CONTENT_URL . '/plugins/feedstats-de/images/feedstats.gif) no-repeat 0 1px;
-		margin: 0;
-	}';
-	$fs_feed_button_style.= '</style>';
-	$fs_feed_button_style.= "\n";
-
-	print ($fs_feed_button_style);
-}
-
 
 // wp-dashboard (Tellerrand) information
 function feedstats_add_dashboard() {
@@ -929,13 +747,13 @@ function feedstats_add_dashboard() {
 
 	$content = '';
 	if ( version_compare( $wp_version, '2.6.999', '<' ) ) {
-		$content  = '<h3>' . __('FeedStats', 'feedstats') . ' <a href="admin.php?page=feedstats-de/feedstats-de-settings.php" title="' . __('to settings of FeedStats', 'feedstats') . '">&raquo;</a></h3>';
+		$content  = '<h3>' . __('FeedStats', 'feedstats') . ' <a href="admin.php?page=' . plugin_basename( __FILE__ ) . '" title="' . __('to settings of FeedStats', 'feedstats') . '">&raquo;</a></h3>';
 	}
-	$content .= '<ul><li>' . __('Total', 'feedstats') . __(': ') . attribute_escape($total_visits) . __(' (Last ', 'feedstats') . $num_days . __(' Days)', 'feedstats') . '</li>';
-	$content .= '<li>' . __('Maximum', 'feedstats') . __(': ') . attribute_escape($max_visits) . ' (' . attribute_escape($max_visits_time) . ')</li>';
-	$content .= '<li>' . __('Average', 'feedstats') . __(': ') . attribute_escape($average_visits) . '</li>';
+	$content .= '<ul><li>' . __('Total', 'feedstats') . __(': ') . esc_attr($total_visits) . __(' (Last ', 'feedstats') . $num_days . __(' Days)', 'feedstats') . '</li>';
+	$content .= '<li>' . __('Maximum', 'feedstats') . __(': ') . esc_attr($max_visits) . ' (' . esc_attr($max_visits_time) . ')</li>';
+	$content .= '<li>' . __('Average', 'feedstats') . __(': ') . esc_attr($average_visits) . '</li>';
 	$content .= '</ul>';
-	$content .= '<p class="textright"><a href="index.php?page=feedstats-de/feedstats-de.php" class="button">' . __('View all', 'feedstats') . '</a></p>';
+	$content .= '<p class="textright"><a href="index.php?page=' . plugin_basename( __FILE__ ) . '" class="button">' . __('View all', 'feedstats') . '</a></p>';
 
 	print ($content);
 }
@@ -953,7 +771,7 @@ function feedstats_add_dashboard_new() {
 // Program flow
 function feedstats_activate() {
 	add_option('fs_view_days', '15');
-	add_option('fs_days', '30');
+	add_option('fs_days', '90');
 	add_option('fs_user_level', '1');
 	add_option('fs_session_timeout', '3600');
 	add_option('fs_visits_online', '300');
@@ -965,32 +783,25 @@ if ( function_exists('register_activation_hook') ) {
 	register_activation_hook(__FILE__, 'feedstats_version_control');
 }
 
-if ( function_exists('add_action') ) {
-	add_action('init', 'feedstats_textdomain');
-	add_action('the_title_rss', 'feedstats_track');
-	add_action('the_content_rss', 'feedstats_track');
-	if ( is_admin() ) {
-		add_action('admin_menu', 'feedstats_add_settings_page');
-		add_action('in_admin_footer', 'feedstats_admin_footer');
-		if (strpos($_SERVER['REQUEST_URI'], 'page=feedstats-de/feedstats-de') !== false)
-			add_action('admin_head', 'feedstats_admin_header');
-	}
-
-	$admin = dirname($_SERVER['SCRIPT_FILENAME']);
-	$admin = substr($admin, strrpos($admin, '/') +1 );
-
-	if ( is_admin() && basename($_SERVER['SCRIPT_FILENAME']) == 'index.php' && get_option('fs_ifs_dashboardinfo') == '1') {
-		if ( version_compare( $wp_version, '2.6.999', '>' ) ) {
-			add_action('wp_dashboard_setup', 'feedstats_add_dashboard_new');
-		} else {
-			add_action('activity_box_end', 'feedstats_add_dashboard');
-		}
+add_action('init', 'feedstats_textdomain');
+add_action('the_title_rss', 'feedstats_track');
+add_action('the_content_rss', 'feedstats_track');
+if ( is_admin() ) {
+	add_action('admin_menu', 'feedstats_add_settings_page');
+}
+$admin = dirname($_SERVER['SCRIPT_FILENAME']);
+$admin = substr($admin, strrpos($admin, '/') +1 );
+if ( is_admin() && basename($_SERVER['SCRIPT_FILENAME']) == 'index.php' && get_option('fs_ifs_dashboardinfo') == '1') {
+	if ( version_compare( $wp_version, '2.6.999', '>' ) ) {
+		add_action('wp_dashboard_setup', 'feedstats_add_dashboard_new');
+	} else {
+		add_action('activity_box_end', 'feedstats_add_dashboard');
 	}
 }
 
 
 // some basic security with nonce
-if ( !function_exists('wp_nonce_field') ) {
+if ( ! function_exists('wp_nonce_field') ) {
 	function feedstats_nonce_field($action = -1) { return; }
 	$FeedStats_nonce = -1;
 } else {
@@ -998,5 +809,5 @@ if ( !function_exists('wp_nonce_field') ) {
 	$FeedStats_nonce = 'FeedStats-update-key';
 }
 
-require_once('feedstats-de-settings.php');
-?>
+// include the seeting page
+require_once( 'feedstats-de-settings.php' );
