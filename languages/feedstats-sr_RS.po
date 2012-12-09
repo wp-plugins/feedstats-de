@@ -1,0 +1,204 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: FeedStats\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-03-28 16:50+0100\n"
+"PO-Revision-Date: 2011-12-05 14:08-0800\n"
+"Last-Translator: Brian Flores <baflores@gmail.com>\n"
+"Language-Team: Frank Bueltge\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-Language: Serbo-Croatian\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: wp-feedstats.php:102
+msgid "Error in file: "
+msgstr "Грешка на фајлу"
+
+#: wp-feedstats.php:368
+#: wp-feedstats.php:455
+#: wp-feedstats.php:518
+#: wp-feedstats.php:592
+msgid "Average"
+msgstr "Просек"
+
+#: wp-feedstats.php:369
+#: wp-feedstats.php:459
+#: wp-feedstats.php:517
+#: wp-feedstats.php:591
+msgid "Maximum"
+msgstr "Максимум"
+
+#: wp-feedstats.php:389
+msgid "Day"
+msgstr "Дан"
+
+#: wp-feedstats.php:390
+#: wp-feedstats.php:450
+msgid "Visits"
+msgstr "Посете"
+
+#: wp-feedstats.php:400
+msgid "Today"
+msgstr "Данас"
+
+#: wp-feedstats.php:402
+msgid "First Day"
+msgstr "Први дан"
+
+#: wp-feedstats.php:423
+msgid "Last %N% Referer"
+msgstr "Последњи %n% referer"
+
+#: wp-feedstats.php:449
+msgid "Statistic"
+msgstr "Статистика"
+
+#: wp-feedstats.php:463
+#: wp-feedstats.php:516
+#: wp-feedstats.php:590
+msgid "Total"
+msgstr "Укупно"
+
+#: wp-feedstats.php:463
+#: wp-feedstats.php:516
+#: wp-feedstats.php:590
+msgid " (Last "
+msgstr "(Последњи"
+
+#: wp-feedstats.php:463
+#: wp-feedstats.php:516
+#: wp-feedstats.php:590
+msgid " Days)"
+msgstr "Дани)"
+
+#: wp-feedstats.php:467
+msgid "Maximum online"
+msgstr "Максимално онлајн"
+
+#: wp-feedstats.php:477
+#: wp-feedstats.php:478
+msgid "Reset Statistic"
+msgstr "Ресетуј статистику"
+
+#: wp-feedstats.php:478
+msgid "You are about to delete all data and reset stats. OK to delete, Cancel to stop"
+msgstr "Спремате се да избришете све податке и ресетујете статус. Притисните OК за брисање, Cancel  да зауставите "
+
+#: wp-feedstats.php:486
+msgid "Konfiguration FeedStats"
+msgstr "Конфигурација FeedStats"
+
+#: wp-feedstats.php:589
+msgid "FeedStats"
+msgstr "FeedStats"
+
+#: wp-feedstats.php:658
+msgid "The options have been saved!"
+msgstr "Опције су сачуване!"
+
+#: wp-feedstats.php:660
+#: wp-feedstats.php:681
+msgid "You do not have sufficient permissions to edit plugins for this blog."
+msgstr "Немате довољне дозволе да измените плагинс за овај блог,"
+
+#: wp-feedstats.php:679
+msgid "The options have been deleted!"
+msgstr "Опције су избрисане!"
+
+#: wp-feedstats.php:687
+#: wp-feedstats.php:688
+msgid "FeedStats settings"
+msgstr "FeedStats подешавања"
+
+#: wp-feedstats.php:694
+msgid "Days"
+msgstr "Дани "
+
+#: wp-feedstats.php:695
+msgid "Amount of days that is supposed to be saved in the statistics."
+msgstr "Број дана колико ће бити сачувано у статистици."
+
+#: wp-feedstats.php:698
+msgid "User Level"
+msgstr "Кориснички ниво"
+
+#: wp-feedstats.php:699
+msgid "Minimum level of WordPress-user, who is allowed to see the statistics."
+msgstr "Минимални ниво Вордпрес корисника коме је дозвољено да види статистику"
+
+#: wp-feedstats.php:702
+msgid "Sesssion Timeout"
+msgstr "Време је истекло"
+
+#: wp-feedstats.php:703
+msgid "Time of a stay/visit (1hour values 3600seconds is common but might be changed)"
+msgstr "Време посете ( 1 сат вредности 3600 секунди је уобичајено ал може бити промењено)"
+
+#: wp-feedstats.php:706
+msgid "Visit Online"
+msgstr "Посети oнлајн"
+
+#: wp-feedstats.php:707
+msgid "Visitors onlinetime (5minutes value 300s is a recommendation)"
+msgstr "Време oнлајн посете (5 минута вредности 300 секунди је препорука)"
+
+#: wp-feedstats.php:710
+msgid "Not tracked"
+msgstr "Није праћено"
+
+#: wp-feedstats.php:711
+msgid "IP, that is supposed not to be saved, ex.: your own IP"
+msgstr "IP, не би требао бити сачуван, пример: сопствени IP"
+
+#: wp-feedstats.php:714
+msgid "Dashboardinfo"
+msgstr "Дешборд информације"
+
+#: wp-feedstats.php:715
+msgid "Statistics can be shown on the dashboard ?"
+msgstr "Статистика може бити приказана на дешборду"
+
+#: wp-feedstats.php:720
+msgid "Update Options"
+msgstr "Ажурирај опције"
+
+#: wp-feedstats.php:724
+#: wp-feedstats.php:730
+msgid "Delete Options"
+msgstr "Избриши опције"
+
+#: wp-feedstats.php:725
+msgid "The follow button delete all tables and options for the FeedStats plugin. Please use it, <strong>before</strong> deactivate the plugin.<br /><strong>Attention: </strong>You <strong>cannot</strong> undo any changes made by this plugin."
+msgstr "Да би избрисали све табеле и опције за  FeedStats плагин, молим користите их пре деактивирања плагина. Пажња: Не можеш опозвати никакве промене направљене овим плагином."
+
+#: wp-feedstats.php:734
+msgid "Information on the plugin"
+msgstr "Информације о плагину"
+
+#: wp-feedstats.php:735
+msgid "Plugin created by <a href=\"http://www.anieto2k.com\">Andr&eacute;s Nieto</a>, in cooperation/base with plugin <a href=\"http://www.deltablog.com/\">PopStats</a>. German and english adjustments, little extensions and new coding by <a href=\"http://bueltge.de\">Frank Bueltge</a>. Thx to <a href=\"http://blog.tomk32.de\">Thomas R. Koll</a> for many improvements for a better code and performance."
+msgstr "Плагин направљен са <a href=\"http://www.anieto2k.com\">AndrÉs Nieto</a> у кооперацији са плагином <a href=\"http://www.deltablog.com/\">PopStats</a>. Немачка и Енглеска прилагођавања, мале екстензије и нова кодирања <a href=\"http://bueltge.de\">Frank Bueltge</a>. Захваљујемо <a href=\"http://blog.tomk32.de\">Thomas R. Koll</a> за многа побољшања кодова и извршења"
+
+#: wp-feedstats.php:736
+msgid "Further information: Visit the <a href=\"http://bueltge.de/wp-feedstats-de-plugin/171/\">plugin homepage</a> for further information or to grab the latest version of this plugin."
+msgstr "За више информација: Посети<a href=\"http://bueltge.de/wp-feedstats-de-plugin/171/\"> почетну старну плагина </a> за више информација или да набавите последњу верзију овог плагина."
+
+#: wp-feedstats.php:736
+msgid "You want to thank me? Visit my <a href='http://bueltge.de/wunschliste'>wishlist</a>."
+msgstr "Желиш да ми се захвалиш? Посети моју <a href='http://bueltge.de/wunschliste'>листу жеља</a>"
+
+#~ msgid "Description"
+#~ msgstr "Descripción"
+
+#~ msgid "Version"
+#~ msgstr "Versión"
+
+#~ msgid "Value"
+#~ msgstr "Valor"
+
+#~ msgid "Last %N% Days"
+#~ msgstr "%N% Últimos Días"
