@@ -3,7 +3,7 @@
  * Plugin Name: FeedStats
  * Plugin URI:  http://bueltge.de/wp-feedstats-de-plugin/171/
  * Description: Simple statistictool for feeds.
- * Version:     3.8.0
+ * Version:     3.8.1
  * Author:      Andres Nieto Porras, Frank B&uuml;ltge
  * Author URI:  http://bueltge.de/
  * License:     GPLv3
@@ -133,50 +133,53 @@ function feedstats_add_settings_page() {
 // Installation functions
 function feedstats_genereta_tables() {
 	global $wpdb;
-
-	$fs_data_query = "CREATE TABLE " . $wpdb->prefix . "fs_data (
+	
+	$table_name_fs_data_query   = $wpdb->prefix . 'fs_data';
+	$table_name_fs_visits_query = $wpdb->prefix . 'fs_visits';
+	
+	$fs_data_query = "CREATE TABLE $table_name_fs_data_query (
 					time_install int(11) NOT NULL default '0',
 					max_visits mediumint(8) unsigned NOT NULL default '0',
 					max_visits_time int(11) NOT NULL default '0',
 					max_online mediumint(8) unsigned NOT NULL default '0',
 					max_online_time int(11) NOT NULL default '0'
-				) TYPE=MyISAM;";
-	$fs_visits_query = "CREATE TABLE " . $wpdb->prefix . "fs_visits (
+				);";
+	$fs_visits_query = "CREATE TABLE $table_name_fs_visits_query (
 					visit_id mediumint(8) unsigned NOT NULL auto_increment,
 					ip varchar(20) NOT NULL default '',
 					url varchar(255) NOT NULL default '',
 					time_begin int(11) NOT NULL default '0',
 					time_last int(11) NOT NULL default '0',
 					PRIMARY KEY (visit_id)
-				) TYPE=MyISAM;";
+				);";
 
 	$fs_data_index_ip = "CREATE INDEX refresh USING BTREE ON " . $wpdb->prefix . "fs_visits(ip, time_last);";
 	$fs_data_index_tg = "CREATE INDEX time_begin USING BTREE ON " . $wpdb->prefix . "fs_visits(time_begin);";
 	$fs_data_index_tl = "CREATE INDEX time_last USING BTREE ON " . $wpdb->prefix . "fs_visits(time_last);";
-	
+
 	if ( file_exists(ABSPATH . '/wp-admin/includes/upgrade.php') ) {
 		@require_once (ABSPATH . '/wp-admin/includes/upgrade.php');
-	} else if ( file_exists(ABSPATH . '/wp-admin/upgrade-functions.php') ) {
+	} elseif ( file_exists(ABSPATH . '/wp-admin/upgrade-functions.php') ) {
 		@require_once (ABSPATH . '/wp-admin/upgrade-functions.php');
-	} else if ( file_exists(ABSPATH . WPINC . '/upgrade-functions.php') ) {
+	} elseif ( file_exists(ABSPATH . WPINC . '/upgrade-functions.php') ) {
 		@require_once (ABSPATH . WPINC . '/upgrade-functions.php');
-	} else if ( file_exists(ABSPATH . '/wp-admin/upgrades.php') ) {
+	} elseif ( file_exists(ABSPATH . '/wp-admin/upgrades.php') ) {
 		@require_once (ABSPATH . '/wp-admin/upgrades.php');
 	} else {
-		die ( __( 'Error in file: ' . __FILE__ . ' on line: ' . __LINE__ . '.<br />The WordPress file "upgrade-functions.php" or "upgrade.php" could not be included.' ) );
+		die (__('Error in file: ' . __FILE__ . ' on line: ' . __LINE__ . '.<br />The WordPress file "upgrade-functions.php" or "upgrade.php" could not be included.'));
 	}
 	
-	maybe_create_table($wpdb->prefix . 'fs_data', $fs_data_query);
-	maybe_create_table($wpdb->prefix . 'fs_visits', $fs_visits_query);
-
+	dbDelta($fs_data_query);
+	dbDelta($fs_visits_query);
+	
 	$wpdb->query($fs_data_index_ip);
 	$wpdb->query($fs_data_index_tg);
 	$wpdb->query($fs_data_index_tl);
-
+	
 	$time = time();
-
+	
 	$count_data = $wpdb->get_var("SELECT count(*) FROM " . $wpdb->prefix . 'fs_data');
-	if ($count_data==0) {
+	if ( 0 == $count_data ) {
 		$wpdb->query("INSERT INTO " . $wpdb->prefix . "fs_data (time_install, max_visits, max_visits_time) VALUES (".$time.",0,".$time.")");
 	}
 }

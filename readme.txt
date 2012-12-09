@@ -3,8 +3,8 @@ Contributors: Bueltge, benjaminwittorf, inpsyde
 Donate link: http://bueltge.de/wunschliste/
 Tags: feed, statistics, stats, rss
 Requires at least: 1.5
-Tested up to: 3.5-Beta2
-Stable tag: 3.8.0
+Tested up to: 3.5-RC4
+Stable tag: 3.8.1
 
 Simple statistictool for feeds.
 
@@ -118,7 +118,10 @@ The plugin comes with various translations, please refer to the [WordPress Codex
 
 
 == Changelog ==
-= v3.8.0 =
+= 3.8.1 (09/12/2012) =
+* Fix for create new tables to track data with WP 3.4*
+
+= v3.8.0 (13/11/2012) =
 * Fix the different sources for newer WordPress version
 * Different changes on source
 * Enhance the IP check
