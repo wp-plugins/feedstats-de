@@ -33,6 +33,7 @@ Have a look at the premium plugins in our [market](http://marketpress.com).
 1. Got to 'Options' menu and configure the plugin
 
 == Screenshots ==
+1. Statistic-area in WordPress 3.4
 1. Statistic-area in WordPress 2.7
 1. Statistic-area in WordPress 2.5
 1. configure-area
